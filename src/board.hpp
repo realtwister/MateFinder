@@ -1,3 +1,20 @@
+namespace Piece {
+enum Piece : char {
+  whiteKing   = 'K',
+  whiteQueen  = 'Q',
+  whiteRook   = 'R',
+  whiteBishop = 'B',
+  whiteKnight = 'N',
+  whitePawn   = 'P',
+  blackKing   = 'k',
+  blackQueen  = 'q',
+  blackRook   = 'r',
+  blackBishop = 'b',
+  blackKnight = 'n',
+  blackPawn   = 'p'
+};
+}
+
 struct square
 {
   signed char x;
@@ -6,9 +23,9 @@ struct square
 
 struct move
 {
-  square start;
-  square end;
-  char   promoteTo; // what to promote to if promotion is possible
+  square       start;
+  square       end;
+  Piece::Piece promoteTo; // what to promote to if promotion is possible
 };
 
 struct moveArray
@@ -27,14 +44,17 @@ class ChessEnvironment {
 private:
 
   // Properties
-  char board[8][8]; // The board of pieces in FEN notation
-  char flags;       // Environment flags:
-  // 0x01 whiteToMove
-  // 0x02 whiteCastleKingside
-  // 0x04 whiteCastleQueenside
-  // 0x08 blackCastleKingside
-  // 0x10 blackCastleQueenside
-  // 0x20 Check
+  Piece::Piece board[8][8]; // The board of pieces in FEN notation
+  enum STATE_FLAGS : char {
+    whiteToMoveMask          = 0x01,
+    whiteCastleKingsideMask  = 0x02,
+    whiteCastleQueensideMask = 0x04,
+    blackCastleKingsideMask  = 0x08,
+    blackCastleQueensideMask = 0x10,
+    CheckMask                = 0x20,
+  };
+  char state;     // Environment flags
+
   char enPassant; // the x coordinate of the enPassent move
   moveArray legalMoves;
 
