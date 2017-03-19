@@ -1,3 +1,5 @@
+namespace BoardExceptions {}
+
 namespace Piece {
 enum Piece : char {
   whiteKing   = 'K',
@@ -11,8 +13,15 @@ enum Piece : char {
   blackRook   = 'r',
   blackBishop = 'b',
   blackKnight = 'n',
-  blackPawn   = 'p'
+  blackPawn   = 'p',
+  none        = 0
 };
+
+const Piece whitePieces[6] =
+{ whiteKing, whiteQueen, whiteRook, whiteBishop, whiteKnight, whitePawn };
+
+const Piece blackPieces[6] =
+{ blackKing, blackQueen, blackRook, blackBishop, blackKnight, blackPawn };
 }
 
 struct square
@@ -40,7 +49,7 @@ struct Check
   char          heatMap[8];
 };
 
-class ChessEnvironment {
+class Board {
 private:
 
   // Properties
@@ -59,12 +68,10 @@ private:
   moveArray legalMoves;
 
   // IO functions to read FEN notation
-  void fromStr(const char *str);        // read the FEN notation
-                                        // from a
-                                        // string
-  void fromFile(const char *fileName);  // read the FEN notation
-                                        // from a
-                                        // file
+  int fromStr(const char *str);         // read the FEN notation
+                                        // from a string
+  int fromFile(const char *fileName);   // read the FEN notation
+                                        // from a file
 
   // Function and helper functions to calculate the legal moves
   void  calcMoves();                    // Calculate legal moves
@@ -86,21 +93,27 @@ private:
 public:
 
   // Constructors
-  ChessEnvironment() : ChessEnvironment("std",
-                                        false) {}
+  Board() : Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+                  false) {}
 
-  ChessEnvironment(const char *str) : ChessEnvironment(str,
-                                                       false) {}
+  Board(const char *str) : Board(str,
+                                 false) {}
 
-  ChessEnvironment(const char *str,
-                   const bool  file); // read from FEN notation from file or
-                                      // string and calculate legal moves.
+  Board(const char *str,
+        const bool  file); // read from FEN notation from file or
+                           // string and calculate legal moves.
 
   // Getters
-  char getSquare(const square pos);   // get the piece at pos
-  bool isCheck();                     // return checkflag
-  bool isMate();                      // check if current board is mate
+  char getSquare(const square pos) {
+    return board[pos.x][pos.y];
+  } // get the piece at pos
+
+  bool isCheck();                   // return checkflag
+  bool isMate();                    // check if current board is mate
 
   // Setters
-  void execMove(move mv);             // Execute mv.
+  void execMove(move mv); // Execute mv.
+
+  // Print function
+  void printBoard();
 };
