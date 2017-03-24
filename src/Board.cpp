@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <exception>
+#include <cmath>
 
 // PRIVATE METHODS
 
@@ -49,9 +50,9 @@ int Board::fromStr(const char *str) {
       break;
 
       #define NUM_CASE(c, n) case c: \
-  if (x > n) return 1;               \
-  board[x][y] = Piece::none;         \
-  x++;
+        if (x > n) return 1;               \
+        board[x][y] = Piece::none;         \
+        x++;
 
       NUM_CASE('8', 0)
       NUM_CASE('7', 1)
@@ -74,11 +75,11 @@ int Board::fromStr(const char *str) {
   // Who is to move?
   switch (*str++) {
   case 'w':
-    state = whiteToMoveMask;
+    state = 0;
     break;
 
   case 'b':
-    state = 0;
+    state = blackToMoveMask;
     break;
 
   default:
@@ -112,7 +113,7 @@ int Board::fromStr(const char *str) {
     }
   }
   str++;
-  enPassant = (*str >= 'a' and * str <= 'h') ? (char)(0x1 << (*str - 'a')) : 0;
+  enPassant = (*str >= 'a' and * str <= 'h') ? (*str - 'a') : -1;
   return 0;
 }
 
@@ -155,10 +156,15 @@ bool Board::isAttacked(const square piecePos) {
   return false;
 }
 
-bool Board::hasAttacker(const square pos, const square dir) {
+bool Board::hasAttacker(square pos, const square dir) {
   // TODO: implementation
-
+  const unsigned char distx = dir.x>0? 7-pos.x : pos.x;
+  const unsigned char disty = dir.y>0? 7-pos.y : pos.y;
   return false;
+}
+
+bool Board::isFriendly(const square pos) {
+  return !((state ^ board[pos.x][pos.y]) & blackToMoveMask);
 }
 
 // PUBLIC FUNCTIONS
@@ -208,7 +214,6 @@ void Board::printBoard() {
     std::cout << i + 1 << '|';
 
     for (int j = 0; j < 8; j++) {
-      if (board[j][i] == Piece::none) std::cout << ' ';
       std::cout << ' '
                 << (char)board[j][i]
                 << ' ';
@@ -223,7 +228,7 @@ void Board::printBoard() {
 
   // Who to move
   std::cout << "        "
-            << ((state && whiteToMoveMask) ? "white" : "black")
+            << ((state && blackToMoveMask) ? "black" : "white")
             << " to move"
             << std::endl
             << std::endl;
@@ -242,4 +247,10 @@ void Board::printBoard() {
             << "        "
             << ((state && blackCastleKingsideMask) ? "1" : "0")
             << std::endl;
+
+  // enPassant
+  if(enPassant>=0){
+    std::cout << "En passant on file: "<< char('a'+enPassant);
+  }
+
 }

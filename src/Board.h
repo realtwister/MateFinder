@@ -14,7 +14,7 @@ enum Piece : char {
   blackBishop = 'b',
   blackKnight = 'n',
   blackPawn   = 'p',
-  none        = 0
+  none        = ' '
 };
 
 const Piece whitePieces[6] =
@@ -28,6 +28,13 @@ struct square
 {
   signed char x;
   signed char y;
+
+  square operator+(const square &other)const{
+    square res;
+    res.x = x+other.x;
+    res.y = y+other.y;
+    return res;
+  }
 };
 
 struct move
@@ -39,11 +46,11 @@ struct move
 
 struct moveArray
 {
-  int   len;
-  move *moves;
+  unsigned int len;
+  move        *moves;
 };
 
-struct Check
+struct check
 {
   unsigned char len;
   char          heatMap[8];
@@ -54,19 +61,21 @@ private:
 
   // Properties
   Piece::Piece board[8][8]; // The board of pieces in FEN notation
-  enum STATE_FLAGS : char {
-    whiteToMoveMask          = 0x01,
+  enum stateFlags : char {
+    checkMask          = 0x01,
     whiteCastleKingsideMask  = 0x02,
     whiteCastleQueensideMask = 0x04,
     blackCastleKingsideMask  = 0x08,
     blackCastleQueensideMask = 0x10,
-    CheckMask                = 0x20,
+    blackToMoveMask          = 0x20,
   };
   char state;     // Environment flags
 
-  char enPassant; // the x coordinate of the enPassent move
+  signed char enPassant; // the x coordinate of the enPassent move
   moveArray legalMoves;
-
+  #ifdef DEBUG
+public:
+  #endif
   // IO functions to read FEN notation
   int fromStr(const char *str);         // read the FEN notation
                                         // from a string
@@ -75,22 +84,24 @@ private:
 
   // Function and helper functions to calculate the legal moves
   void  calcMoves();                    // Calculate legal moves
-  Check getCheck(const square kingPos); // Get the details about a possible
+  check getCheck(); // Get the details about a possible
                                         // check at kingPos
-  bool  firstPiece(const Check *result,
-                   square       curPos,
-                   square       dir,
-                   char         friendlies); // Investigate the possibility of
+  bool  firstPiece(const check *result,
+                   const square       curPos,
+                   const square       dir,
+
+                   const char         friendlies); // Investigate the possibility of
                                              // attacks from dir to curPos
                                              // (Recursive) with heatmap.
 
   bool isAttacked(const square piecePos);    // Check whether the square at
                                              // piecePos is attacked
   bool hasAttacker(square curPos,
-                   square dir);              // Invesitgate the possibility of
-                                             // attacks from dir at curPos.
-
+                   const square dir);              // Invesitgate the possibility of
+                                             // attacks from dir at curPos
+  bool isFriendly(const square piecePos);
 public:
+
 
   // Constructors
   Board() : Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
@@ -104,15 +115,13 @@ public:
                            // string and calculate legal moves.
 
   // Getters
-  char getSquare(const square pos) {
-    return board[pos.x][pos.y];
-  } // get the piece at pos
+  Piece::Piece getSquare(const square pos){ return board[pos.x][pos.y];}
 
-  bool isCheck();                   // return checkflag
+  bool isCheck(){ return state && checkMask;  }                   // return checkflag
   bool isMate();                    // check if current board is mate
 
   // Setters
-  void execMove(move mv); // Execute mv.
+  void execMove(const move mv); // Execute mv.
 
   // Print function
   void printBoard();
