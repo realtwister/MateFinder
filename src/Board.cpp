@@ -130,7 +130,7 @@ int Board::fromFile(const char *fileName) {
   std::cout << fileName << std::endl;
   file.open(fileName);
 
-  if (!file.good()) return 2;  // Error reaading file
+  if (!file.good()) return 2;  // Error reading file
 
   char str[255];
   file.getline(str, 255);
