@@ -89,7 +89,6 @@ public:
   bool  firstPiece(const check *result,
                    const square       curPos,
                    const square       dir,
-
                    const char         friendlies); // Investigate the possibility of
                                              // attacks from dir to curPos
                                              // (Recursive) with heatmap.

@@ -5,6 +5,7 @@
 
 TEST_CASE("Starting check position") {
   Board b;
+  Board c("3q4/2k5/8/8/3K4/8/8/8 w - -");
 
   SUBCASE("test getters") {
     for (signed char i = 0; i < 8; i++) {
@@ -18,5 +19,10 @@ TEST_CASE("Starting check position") {
       CHECK(b.isFriendly({ i, 1 }));
       CHECK(!b.isFriendly({ i, 6 }));
     }
+  }
+  
+  SUBCASE("getCheck")
+  {
+    CHECK(c.getCheck().len == 0);
   }
 }

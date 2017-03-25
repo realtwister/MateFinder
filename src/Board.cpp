@@ -156,10 +156,68 @@ bool Board::isAttacked(const square piecePos) {
   return false;
 }
 
+/**
+ * This function finds out what is going on in relation to the king of the player that is to move
+ * In particular, it returns a check struct, containing the number of pieces attacking the king,
+ * and 8 charachters containing a bitmap of the entire board, where a set bit indicates either
+ * a possible square to resolve check if the number of attackers is one and the square is empty,
+ * or a pinned piece if it occupied by a friendly piece.
+ */
+check Board::getCheck()
+{
+	check result = {0,{0,0,0,0,0,0,0,0}};
+	
+	//First, get the position of the king
+	signed char x,y;
+	for (x = 0; x < 8; x++)
+	  for (y = 0; y < 8; y++) {
+	    if (!(board[x][y] ^ (Piece::whiteKing | (state & blackToMoveMask)))) goto kingposfound;
+	  }
+	kingposfound:;
+	
+	//Now, find out if the king is under attack
+	signed char xmin = (x == 0 ? 0 : -1);
+	signed char xmax = (x == 7 ? 0 : 1);
+	signed char ymin = (y == 0 ? 0 : -1);
+	signed char ymax = (y == 7 ? 0 : 1);
+	signed char dirx,diry;
+	for (dirx = xmin; dirx <= xmax; dirx++)
+	  for (diry = ymin; diry <= ymax; diry++)
+    {
+      if (dirx != 0 || diry != 0);
+      firstPiece(&result, {x,y}, {dirx,diry}, 0);
+    }
+  
+  signed char newx,newy;
+	for (signed char hordir = -1; hordir <= 1; hordir += 2)
+	  for (signed char verdir = -1; verdir <= 1; verdir += 2)
+	    for (signed char absx = 1; absx <= 2; absx++)
+	    {
+	      newy = x + verdir * (3 - absx);
+	      newx = y + hordir * absx;
+	      
+	      if (newx >= 0 && newx <= 7 && newy >= 0 && newy <= 7 && board[newx][newy] == (Piece::whiteKnight | (state & blackToMoveMask)))
+	      {
+	        result.len++;
+	        result.heatMap[newy] |= (0x1 << newx);
+	      }
+	    }
+	return result;
+}
+
+/**
+ * This function helps the getCheck function to investigate the influence of one of the 8 directions
+ * on the output of the getCheck function.
+ */
+bool Board::firstPiece(const check * result, const square curPos, const square dir, const char friendlies)
+{
+	return false;
+}
+
 bool Board::hasAttacker(square pos, const square dir) {
   // TODO: implementation
-  const unsigned char distx = dir.x>0? 7-pos.x : pos.x;
-  const unsigned char disty = dir.y>0? 7-pos.y : pos.y;
+  //const unsigned char distx = dir.x>0? 7-pos.x : pos.x;
+  //const unsigned char disty = dir.y>0? 7-pos.y : pos.y;
   return false;
 }
 
