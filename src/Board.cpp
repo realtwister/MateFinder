@@ -171,11 +171,11 @@ check Board::getCheck()
 	signed char x,y;
 	for (x = 0; x < 8; x++)
 	  for (y = 0; y < 8; y++) {
-	    if (!(board[x][y] ^ (Piece::whiteKing | (state & blackToMoveMask)))) goto kingposfound;
+	    if (board[x][y] == (Piece::whiteKing ^ (state & blackToMoveMask))) goto kingposfound;
 	  }
 	kingposfound:;
 	
-	//Now, find out if the king is under attack
+	//Now, find out if the king is under attack by some long range piece
 	signed char xmin = (x == 0 ? 0 : -1);
 	signed char xmax = (x == 7 ? 0 : 1);
 	signed char ymin = (y == 0 ? 0 : -1);
@@ -188,6 +188,7 @@ check Board::getCheck()
       firstPiece(&result, {x,y}, {dirx,diry}, 0);
     }
   
+  //Find out if the king is under attack by a knight
   signed char newx,newy;
 	for (signed char hordir = -1; hordir <= 1; hordir += 2)
 	  for (signed char verdir = -1; verdir <= 1; verdir += 2)
@@ -202,6 +203,29 @@ check Board::getCheck()
 	        result.heatMap[newy] |= (0x1 << newx);
 	      }
 	    }
+	
+	//Find out if the king is under attack by a pawn
+	signed char dir = ((state & blackToMoveMask) >> 5) * 2 - 1;
+	if (y + dir < 8 && y + dir >= 0)
+	{
+	  if (x < 7)
+	  {
+	    if (board[y + dir][x + 1] == (Piece::blackPawn ^ (state & blackToMoveMask)))
+	    {
+  	    result.len++;
+	      result.heatMap[y + dir] |= (0x1 << (x + 1));
+	    }
+	  }
+	  if (x > 0)
+	  {
+	    if (board[y + dir][x - 1] == (Piece::blackPawn ^ (state & blackToMoveMask)))
+	    {
+  	    result.len++;
+	      result.heatMap[y + dir] |= (0x1 << (x - 1));
+	    }
+	  }
+	}
+	
 	return result;
 }
 
@@ -209,9 +233,50 @@ check Board::getCheck()
  * This function helps the getCheck function to investigate the influence of one of the 8 directions
  * on the output of the getCheck function.
  */
-bool Board::firstPiece(const check * result, const square curPos, const square dir, const char friendlies)
+bool Board::firstPiece(check * result, const square curPos, const square dir, const char friendlies)
 {
-	return false;
+  signed char newx = curPos.x + dir.x;
+  signed char newy = curPos.y + dir.y;
+  if (newx >= 0 && newx <= 7 && newy >= 0 && newy <= 7)
+  {
+    if (board[newx][newy] == Piece::none)
+    {
+      //Deal with empty squares
+      if (firstPiece(result, {newx,newy}, dir, friendlies))
+      {
+        if (friendlies == 0)
+          result->heatMap[newy] |= (0x1 << newx);
+        return true;
+      }
+      return false;
+    }
+    
+    Piece::Piece newpiece = board[newx][newy];
+    if (isFriendly(newpiece))
+    {
+      //Deal with pinned pieces
+      if (friendlies == 1)
+        return false;
+      if (firstPiece(result, {newx,newy}, dir, 1))
+        result->heatMap[newy] |= (0x1 << newx);
+      return false;
+    }
+    else
+    {
+      //Deal with direct attackers
+      newpiece = (Piece::Piece)(newpiece & ~blackToMoveMask);
+      if (newpiece == Piece::whiteQueen || (newpiece == Piece::whiteRook && dir.x * dir.y == 0) || (newpiece == Piece::whiteBishop && dir.x * dir.y != 0))
+      {
+        if (friendlies == 0)
+        {
+          result->heatMap[newy] |= (0x1 << newx);
+          result->len++;
+        }
+        return true;
+      }
+    }
+  }
+  return false;
 }
 
 bool Board::hasAttacker(square pos, const square dir) {
@@ -223,6 +288,10 @@ bool Board::hasAttacker(square pos, const square dir) {
 
 bool Board::isFriendly(const square pos) {
   return !((state ^ board[pos.x][pos.y]) & blackToMoveMask);
+}
+
+bool Board::isFriendly(const Piece::Piece piece) {
+  return !((state ^ piece) & blackToMoveMask);
 }
 
 // PUBLIC FUNCTIONS

@@ -86,7 +86,7 @@ public:
   void  calcMoves();                    // Calculate legal moves
   check getCheck(); // Get the details about a possible
                                         // check at kingPos
-  bool  firstPiece(const check *result,
+  bool  firstPiece(check *result,
                    const square       curPos,
                    const square       dir,
                    const char         friendlies); // Investigate the possibility of
@@ -99,6 +99,7 @@ public:
                    const square dir);              // Invesitgate the possibility of
                                              // attacks from dir at curPos
   bool isFriendly(const square piecePos);
+  bool isFriendly(const Piece::Piece piece);
 public:
 
 
