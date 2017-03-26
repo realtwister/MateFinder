@@ -2,7 +2,9 @@
 #include <iostream>
 #include <fstream>
 #include <exception>
+#include <iostream>
 #include <cmath>
+#include <tgmath.h>
 
 // PRIVATE METHODS
 
@@ -50,9 +52,9 @@ int Board::fromStr(const char *str) {
       break;
 
       #define NUM_CASE(c, n) case c: \
-        if (x > n) return 1;               \
-        board[x][y] = Piece::none;         \
-        x++;
+  if (x > n) return 1;               \
+  board[x][y] = Piece::none;         \
+  x++;
 
       NUM_CASE('8', 0)
       NUM_CASE('7', 1)
@@ -157,14 +159,54 @@ bool Board::isAttacked(const square piecePos) {
 }
 
 bool Board::hasAttacker(square pos, const square dir) {
-  // TODO: implementation
-  const unsigned char distx = dir.x>0? 7-pos.x : pos.x;
-  const unsigned char disty = dir.y>0? 7-pos.y : pos.y;
+  unsigned char dist = 0;
+  if(dir.x == 0){
+    dist = dir.y >= 0 ? 7 - pos.y : pos.y;
+  }
+  else if(dir.y == 0){
+      dist = dir.x >= 0 ? 7 - pos.x : pos.x;
+  }
+  else{
+    dist = fmin(dir.x >= 0 ? 7 - pos.x : pos.x,dir.y >= 0 ? 7 - pos.y : pos.y);
+  }
+  for (int i = 0; i < dist; i++) {
+    pos += dir;
+    if (board[pos.x][pos.y] != Piece::none) {
+      if (isFriendly(pos)) return false;
+      else if (dir.x * dir.y) {
+        switch (board[pos.x][pos.y] & ~((char)0x20)) {
+        case Piece::whitePawn:
+
+          if (i > 0) return false;
+
+          return !(state & blackToMoveMask) != !(dir.y == 1);
+
+        case Piece::whiteQueen:
+        case Piece::whiteBishop:
+          return true;
+
+        default:
+          return false;
+        }
+      }
+      // TODO: IMPLEMENT KNIGHT
+      else {
+        switch (board[pos.x][pos.y] & ~((char)0x20)) {
+          case Piece::whiteQueen:
+          case Piece::whiteRook:
+            return true;
+          default:
+            return false;
+        }
+      }
+    }
+  }
   return false;
 }
 
 bool Board::isFriendly(const square pos) {
-  return !((state ^ board[pos.x][pos.y]) & blackToMoveMask);
+  return !((state ^ board[pos.x][pos.y]) & blackToMoveMask ||
+           (board[pos.x][pos.y] == Piece::none));
 }
 
 // PUBLIC FUNCTIONS
@@ -228,7 +270,7 @@ void Board::printBoard() {
 
   // Who to move
   std::cout << "        "
-            << ((state && blackToMoveMask) ? "black" : "white")
+            << ((state & blackToMoveMask) ? "black" : "white")
             << " to move"
             << std::endl
             << std::endl;
@@ -249,8 +291,7 @@ void Board::printBoard() {
             << std::endl;
 
   // enPassant
-  if(enPassant>=0){
-    std::cout << "En passant on file: "<< char('a'+enPassant);
+  if (enPassant >= 0) {
+    std::cout << "En passant on file: " << char('a' + enPassant);
   }
-
 }
