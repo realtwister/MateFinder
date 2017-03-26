@@ -54,11 +54,16 @@ struct check
 {
   unsigned char len;
   char          heatMap[8];
+  
+  void display();
 };
 
 class Board {
 private:
 
+  #ifdef DEBUG
+public:
+  #endif
   // Properties
   Piece::Piece board[8][8]; // The board of pieces in FEN notation
   enum stateFlags : char {
@@ -73,9 +78,7 @@ private:
 
   signed char enPassant; // the x coordinate of the enPassent move
   moveArray legalMoves;
-  #ifdef DEBUG
-public:
-  #endif
+
   // IO functions to read FEN notation
   int fromStr(const char *str);         // read the FEN notation
                                         // from a string
