@@ -1,9 +1,19 @@
-#define DEBUG
-#include "Board.h"
+#include <ctime>
+int knightLoop(){
+  
+}
+
+
 
 int main(int argc, char const *argv[]) {
-  Board b;
+  std::clock_t start;
+  double duration;
 
-  b.printBoard();
-  return 0;
+  start = std::clock();
+
+  /* Your algorithm here */
+
+  duration = ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
+
+  std::cout<<"printf: "<< duration <<'\n';
 }

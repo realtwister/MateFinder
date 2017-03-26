@@ -184,6 +184,18 @@ TEST_CASE("Check hasAttacker"){
   }
   SUBCASE("BLACK KNIGHT"){
     b.setPiece({3,3}, Piece::blackKnight);
+    for(int i =1; i<=5; i+=4){
+      attacks[2][i] = true;
+      attacks[4][i] = true;
+      attacks[i][2] = true;
+      attacks[i][4] = true;
+    }
+    BOARD_LOOP{
+      if(i==3 and j==3) continue;
+      dir.x = i==3?0:(i>3?-1:1);
+      dir.y = j==3?0:(j>3?-1:1);
+      CHECK(b.isAttacked({i,j})==attacks[i][j]);
+    }
 
   }
 

@@ -6,6 +6,7 @@
 #include <cmath>
 #include <tgmath.h>
 
+#define KNIGHT_LOOP for
 // PRIVATE METHODS
 
 /**
