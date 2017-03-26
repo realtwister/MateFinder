@@ -131,6 +131,8 @@ public:
   // Setters
   void execMove(const move mv); // Execute mv.
   void changeColor(){ state ^= blackToMoveMask; }
+  void clearBoard(){for(int i=0; i<64; i++) board[i/8][i%8]= Piece::none;}
+  void setPiece(const square sq, const Piece::Piece piece){board[sq.x][sq.y]=piece;}
 
   // Print function
   void printBoard();

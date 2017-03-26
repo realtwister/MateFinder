@@ -150,8 +150,8 @@ bool Board::isAttacked(const square piecePos) {
   ymax = piecePos.y == 7 ? 0 : 1;
 
 
-  for (signed char i = xmin; i < xmax; i++) {
-    for (signed char j = ymin; j < ymax; j++) {
+  for (signed char i = xmin; i <= xmax; i++) {
+    for (signed char j = ymin; j <= ymax; j++) {
       if (!((i == 0) && (j == 0)) && hasAttacker(piecePos, { i, j })) return true;
     }
   }
@@ -177,8 +177,9 @@ bool Board::hasAttacker(square pos, const square dir) {
       if (isFriendly(pos)) return false;
       else if (dir.x * dir.y) {
         switch (board[pos.x][pos.y] & ~((char)0x20)) {
+        case Piece::whiteKing:
+          return i==0;
         case Piece::whitePawn:
-
           if (i > 0) return false;
 
           return !(state & blackToMoveMask) != !(dir.y == 1);
@@ -193,6 +194,8 @@ bool Board::hasAttacker(square pos, const square dir) {
       }
       else {
         switch (board[pos.x][pos.y] & ~((char)0x20)) {
+          case Piece::whiteKing:
+            return i==0;
           case Piece::whiteQueen:
           case Piece::whiteRook:
             return true;
