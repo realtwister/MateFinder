@@ -155,6 +155,8 @@ bool Board::isAttacked(const square piecePos) {
       if (!((i == 0) && (j == 0)) && hasAttacker(piecePos, { i, j })) return true;
     }
   }
+
+  // TODO: implement knight
   return false;
 }
 
@@ -189,7 +191,6 @@ bool Board::hasAttacker(square pos, const square dir) {
           return false;
         }
       }
-      // TODO: IMPLEMENT KNIGHT
       else {
         switch (board[pos.x][pos.y] & ~((char)0x20)) {
           case Piece::whiteQueen:
