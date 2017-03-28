@@ -54,11 +54,16 @@ struct check
 {
   unsigned char len;
   char          heatMap[8];
+  
+  void display();
 };
 
 class Board {
 private:
 
+  #ifdef DEBUG
+public:
+  #endif
   // Properties
   Piece::Piece board[8][8]; // The board of pieces in FEN notation
   enum stateFlags : char {
@@ -73,9 +78,7 @@ private:
 
   signed char enPassant; // the x coordinate of the enPassent move
   moveArray legalMoves;
-  #ifdef DEBUG
-public:
-  #endif
+
   // IO functions to read FEN notation
   int fromStr(const char *str);         // read the FEN notation
                                         // from a string
@@ -86,10 +89,9 @@ public:
   void  calcMoves();                    // Calculate legal moves
   check getCheck(); // Get the details about a possible
                                         // check at kingPos
-  bool  firstPiece(const check *result,
+  bool  firstPiece(check *result,
                    const square       curPos,
                    const square       dir,
-
                    const char         friendlies); // Investigate the possibility of
                                              // attacks from dir to curPos
                                              // (Recursive) with heatmap.
@@ -100,6 +102,7 @@ public:
                    const square dir);              // Invesitgate the possibility of
                                              // attacks from dir at curPos
   bool isFriendly(const square piecePos);
+  bool isFriendly(const Piece::Piece piece);
 public:
 
 

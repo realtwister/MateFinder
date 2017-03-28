@@ -4,6 +4,22 @@
 #include <exception>
 #include <cmath>
 
+void check::display()
+{
+  std::cout << "Debug output of check:" << std::endl;
+  std::cout << " - Length: " << (int)len << std::endl;
+  std::cout << " - Heatmap: " << std::endl;
+  std::cout << "+--------+" << std::endl;
+  for (signed char y = 7; y >= 0; y--)
+  {
+    std::cout << "|";
+    for (signed char x = 0; x < 8; x++)
+      std::cout << ((heatMap[y] >> x) & 0x1 ? "X" : " ");
+    std::cout << "|" << std::endl;
+  }
+  std::cout << "+--------+" << std::endl;
+}
+
 // PRIVATE METHODS
 
 /**
@@ -156,15 +172,147 @@ bool Board::isAttacked(const square piecePos) {
   return false;
 }
 
+/**
+ * This function finds out what is going on in relation to the king of the player that is to move
+ * In particular, it returns a check struct, containing the number of pieces attacking the king,
+ * and 8 charachters containing a bitmap of the entire board, where a set bit indicates either
+ * a possible square to resolve check if the number of attackers is one and the square is empty,
+ * or a pinned piece if it occupied by a friendly piece. Moreover, it updates the check flag.
+ */
+check Board::getCheck()
+{
+	check result = {0,{0,0,0,0,0,0,0,0}};
+	state &= (char)~checkMask;
+	
+	//First, get the position of the king
+	signed char x,y;
+	for (x = 0; x < 8; x++)
+	  for (y = 0; y < 8; y++) {
+	    if (board[x][y] == (Piece::whiteKing ^ (state & blackToMoveMask))) goto kingposfound;
+	  }
+	kingposfound:;
+	
+	//Now, find out if the king is under attack by some long range piece
+	signed char xmin = (x == 0 ? 0 : -1);
+	signed char xmax = (x == 7 ? 0 : 1);
+	signed char ymin = (y == 0 ? 0 : -1);
+	signed char ymax = (y == 7 ? 0 : 1);
+	signed char dirx,diry;
+	for (dirx = xmin; dirx <= xmax; dirx++)
+	  for (diry = ymin; diry <= ymax; diry++)
+    {
+      if (dirx != 0 || diry != 0);
+      if (firstPiece(&result, {x,y}, {dirx,diry}, 0)) {state |= checkMask;}
+    }
+  
+  //Find out if the king is under attack by a knight
+  signed char newx,newy;
+  for (signed char hordir = -1; hordir <= 1; hordir += 2)
+    for (signed char verdir = -1; verdir <= 1; verdir += 2)
+      for (signed char absx = 1; absx <= 2; absx++)
+      {
+        newy = y + verdir * (3 - absx);
+        newx = x + hordir * absx;
+        
+        if (newx >= 0 && newx <= 7 && newy >= 0 && newy <= 7 && board[newx][newy] == (Piece::blackKnight ^ (state & blackToMoveMask)))
+        {
+          result.len++;
+          result.heatMap[newy] |= (0x1 << newx);
+          state |= checkMask;
+        }
+      }
+	
+	//Find out if the king is under attack by a pawn
+	signed char dir = 1 - ((state & blackToMoveMask) >> 5) * 2;
+	if (y + dir < 8 && y + dir >= 0)
+	{
+	  if (x < 7)
+	  {
+	    if (board[x + 1][y + dir] == (Piece::blackPawn ^ (state & blackToMoveMask)))
+	    {
+  	    result.len++;
+	      result.heatMap[y + dir] |= (0x1 << (x + 1));
+	      state |= checkMask;
+	    }
+	  }
+	  if (x > 0)
+	  {
+	    if (board[x - 1][y + dir] == (Piece::blackPawn ^ (state & blackToMoveMask)))
+	    {
+  	    result.len++;
+	      result.heatMap[y + dir] |= (0x1 << (x - 1));
+	      state |= checkMask;
+	    }
+	  }
+	}
+	
+	//Note that the king cannot be attacked by the other king, so we need not check that
+	return result;
+}
+
+/**
+ * This function helps the getCheck function to investigate the influence of one of the 8 directions
+ * on the output of the getCheck function.
+ */
+bool Board::firstPiece(check * result, const square curPos, const square dir, const char friendlies)
+{
+  signed char newx = curPos.x + dir.x;
+  signed char newy = curPos.y + dir.y;
+  if (newx >= 0 && newx <= 7 && newy >= 0 && newy <= 7)
+  {
+    if (board[newx][newy] == Piece::none)
+    {
+      //Deal with empty squares
+      if (firstPiece(result, {newx,newy}, dir, friendlies))
+      {
+        if (friendlies == 0)
+          result->heatMap[newy] |= (0x1 << newx);
+        return true;
+      }
+      return false;
+    }
+    
+    Piece::Piece newpiece = board[newx][newy];
+    if (isFriendly(newpiece))
+    {
+      //Deal with pinned pieces
+      if (friendlies == 1)
+        return false;
+      if (firstPiece(result, {newx,newy}, dir, 1))
+        result->heatMap[newy] |= (0x1 << newx);
+      return false;
+    }
+    else
+    {
+      //Deal with direct attackers
+      newpiece = (Piece::Piece)(newpiece & ~blackToMoveMask);
+      if (newpiece == Piece::whiteQueen || (newpiece == Piece::whiteRook && dir.x * dir.y == 0) || (newpiece == Piece::whiteBishop && dir.x * dir.y != 0))
+      {
+        if (friendlies == 0)
+        {
+          result->heatMap[newy] |= (0x1 << newx);
+          result->len++;
+        }
+        return true;
+      }
+    }
+  }
+  return false;
+}
+
 bool Board::hasAttacker(square pos, const square dir) {
   // TODO: implementation
-  const unsigned char distx = dir.x>0? 7-pos.x : pos.x;
-  const unsigned char disty = dir.y>0? 7-pos.y : pos.y;
+  //const unsigned char distx = dir.x>0? 7-pos.x : pos.x;
+  //const unsigned char disty = dir.y>0? 7-pos.y : pos.y;
   return false;
 }
 
 bool Board::isFriendly(const square pos) {
   return !((state ^ board[pos.x][pos.y]) & blackToMoveMask);
+}
+
+bool Board::isFriendly(const Piece::Piece piece) {
+  return !((state ^ piece) & blackToMoveMask);
 }
 
 // PUBLIC FUNCTIONS
@@ -228,7 +376,7 @@ void Board::printBoard() {
 
   // Who to move
   std::cout << "        "
-            << ((state && blackToMoveMask) ? "black" : "white")
+            << ((state & blackToMoveMask) ? "black" : "white")
             << " to move"
             << std::endl
             << std::endl;
@@ -237,15 +385,15 @@ void Board::printBoard() {
   std::cout << "CASTLE| queenside kingside"
             << std::endl
             << " White|      "
-            << ((state && whiteCastleQueensideMask) ? "1" : "0")
+            << ((state & whiteCastleQueensideMask) ? "1" : "0")
             << "        "
-            << ((state && whiteCastleKingsideMask) ? "1" : "0")
+            << ((state & whiteCastleKingsideMask) ? "1" : "0")
             << std::endl
 
             << " Black|      "
-            << ((state && blackCastleQueensideMask) ? "1" : "0")
+            << ((state & blackCastleQueensideMask) ? "1" : "0")
             << "        "
-            << ((state && blackCastleKingsideMask) ? "1" : "0")
+            << ((state & blackCastleKingsideMask) ? "1" : "0")
             << std::endl;
 
   // enPassant
