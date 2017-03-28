@@ -1,3 +1,5 @@
+#ifndef BOARD_LIBRARY_DEFINED
+#define BOARD_LIBRARY_DEFINED
 namespace BoardExceptions {}
 
 namespace Piece {
@@ -17,10 +19,10 @@ enum Piece : char {
   none        = ' '
 };
 
-const Piece whitePieces[6] =
+static const Piece whitePieces[6] =
 { whiteKing, whiteQueen, whiteRook, whiteBishop, whiteKnight, whitePawn };
 
-const Piece blackPieces[6] =
+static const Piece blackPieces[6] =
 { blackKing, blackQueen, blackRook, blackBishop, blackKnight, blackPawn };
 }
 
@@ -34,6 +36,12 @@ struct square
     res.x = x+other.x;
     res.y = y+other.y;
     return res;
+  }
+
+  square* operator+=(const square &other){
+    x+=other.x;
+    y+=other.y;
+    return this;
   }
 };
 
@@ -54,7 +62,7 @@ struct check
 {
   unsigned char len;
   char          heatMap[8];
-  
+
   void display();
 };
 
@@ -98,7 +106,7 @@ public:
 
   bool isAttacked(const square piecePos);    // Check whether the square at
                                              // piecePos is attacked
-  bool hasAttacker(square curPos,
+  bool hasAttacker(square pos,
                    const square dir);              // Invesitgate the possibility of
                                              // attacks from dir at curPos
   bool isFriendly(const square piecePos);
@@ -120,12 +128,16 @@ public:
   // Getters
   Piece::Piece getSquare(const square pos){ return board[pos.x][pos.y];}
 
-  bool isCheck(){ return state && checkMask;  }                   // return checkflag
+  bool isCheck(){ return state & checkMask;  }                   // return checkflag
+  bool blackToMove(){ return state & blackToMoveMask;}
   bool isMate();                    // check if current board is mate
-
   // Setters
   void execMove(const move mv); // Execute mv.
+  void changeColor(){ state ^= blackToMoveMask; }
+  void clearBoard(){for(int i=0; i<64; i++) board[i/8][i%8]= Piece::none;}
+  void setPiece(const square sq, const Piece::Piece piece){board[sq.x][sq.y]=piece;}
 
   // Print function
   void printBoard();
 };
+#endif
