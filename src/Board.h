@@ -19,10 +19,10 @@ enum Piece : char {
   none        = ' '
 };
 
-const Piece whitePieces[6] =
+static const Piece whitePieces[6] =
 { whiteKing, whiteQueen, whiteRook, whiteBishop, whiteKnight, whitePawn };
 
-const Piece blackPieces[6] =
+static const Piece blackPieces[6] =
 { blackKing, blackQueen, blackRook, blackBishop, blackKnight, blackPawn };
 }
 

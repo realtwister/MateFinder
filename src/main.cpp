@@ -1,8 +1,8 @@
 #include <ctime>
 #include <iostream>
 #include "Board.h"
-#define innerN 1000000
-#define outerN 1000
+#define innerN 100
+#define outerN 10000000
 
 static square knightMoves[8]={
   {1,2},
@@ -29,7 +29,6 @@ unsigned char knightLoop(){
 }
 
 unsigned char knightArray(){
-  signed char newx,newy;
   square mv;
   for(int i=0; i<innerN; i++)
   for(int i=0; i<8; i++){
@@ -45,16 +44,28 @@ int main(int argc, char const *argv[]) {
   double durloop=0;
   double durarray=0;
   unsigned char x;
+  signed char newx,newy;
+  square mv;
   for(int i =0; i<outerN; i++){
 
     start = std::clock();
-    x=knightLoop();
+    for(int i=0; i<innerN; i++)
+      for (signed char hordir = -1; hordir <= 1; hordir += 2)
+        for (signed char verdir = -1; verdir <= 1; verdir += 2)
+          for (signed char absx = 1; absx <= 2; absx++)
+          {
+            newy = verdir * (3 - absx);
+            newx = hordir * absx;
+          }
     durloop+= ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    std::cout<<x;
+    if(i%10000000==0) std::cout<<newx;
       start = std::clock();
-    x=knightArray();
+      for(int i=0; i<innerN; i++)
+      for(int i=0; i<8; i++){
+        mv= knightMoves[i];
+      }
     durarray+= ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    std::cout<<x;
+    if(i%10000000==0) std::cout<<mv.x;
   }
 
   std::cout<<"loop: "<< durloop<<" array:"<<durarray<<'\n';

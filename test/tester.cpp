@@ -7,7 +7,6 @@
 
 #define BOARD_LOOP for(signed char i=0;i<8;i++) for(signed char j=0;j<8;j++)
 #define ROW_LOOP for (signed char i=0;i<8;i++)
-#define KNIGHT_LOOP for()
 
 TEST_CASE("Start position") {
   Board b;

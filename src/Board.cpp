@@ -5,8 +5,16 @@
 #include <iostream>
 #include <cmath>
 #include <tgmath.h>
-
-#define KNIGHT_LOOP for
+static square knightMoves[8]={
+  {-2,1},
+  {-2,-1},
+  {2,1},
+  {2,-1},
+  {1,-2},
+  {-1,-2},
+  {1,2},
+  {-1,2}
+};
 // PRIVATE METHODS
 
 /**
@@ -144,6 +152,7 @@ int Board::fromFile(const char *fileName) {
 
 bool Board::isAttacked(const square piecePos) {
   int xmin, xmax, ymin, ymax;
+  signed char i,j;
 
   xmin = piecePos.x == 0 ? 0 : -1;
   xmax = piecePos.x == 7 ? 0 : 1;
@@ -151,13 +160,16 @@ bool Board::isAttacked(const square piecePos) {
   ymax = piecePos.y == 7 ? 0 : 1;
 
 
-  for (signed char i = xmin; i <= xmax; i++) {
-    for (signed char j = ymin; j <= ymax; j++) {
+  for (i = xmin; i <= xmax; i++) {
+    for (j = ymin; j <= ymax; j++) {
       if (!((i == 0) && (j == 0)) && hasAttacker(piecePos, { i, j })) return true;
     }
   }
-
-  // TODO: implement knight
+  square pos;
+  for(i=0; i<8;i++){
+    pos = piecePos+knightMoves[i];
+    if((pos.x<8 and pos.y<8 and pos.x>=0 and pos.y>=0)and (board[pos.x][pos.y]== (Piece::whiteKnight|(~state & blackToMoveMask)))) return true;
+  }
   return false;
 }
 
