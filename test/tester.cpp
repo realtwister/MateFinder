@@ -60,7 +60,6 @@ TEST_CASE("Testing getCheck function")
           {
             Piece::Piece piece = Piece::blackPieces[j];
             if (((y == 0 || y == 7) && piece == Piece::blackPawn) || piece == Piece::blackKing) {continue;}
-            if (piece == Piece::blackKnight || piece == Piece::blackPawn) {continue;}
             
             c.board[x][y] = (Piece::Piece)(piece ^ (c.state & Board::blackToMoveMask));
             check result = c.getCheck();
@@ -119,6 +118,52 @@ TEST_CASE("Testing getCheck function")
   
   SUBCASE("Blockades and pinned pieces")
   {
-    //Seems to work, thorough checking needed
+    for (int h = 0; h < 64; h++)
+    {
+      signed char xking = h / 8;
+      signed char yking = h % 8;
+      
+      for (int i = 0; i < 64; i++)
+      {
+        if (i == h) {continue;}
+        signed char x = i / 8;
+        signed char y = i % 8;
+        
+        for (int j = 0; j < 64; j++) c.board[j / 8][j % 8] = Piece::none;
+        c.board[xking][yking] = Piece::whiteKing;
+        c.board[x][y] = Piece::blackQueen;
+        check result = c.getCheck();
+        if (result.len != 0)
+        {
+          signed char diffx = abs(xking - x);
+          signed char diffy = abs(yking - y);
+          if (diffx <= 1 && diffy <= 1) {continue;}
+          signed char newx,newy;
+          if (diffx == 0)
+          {
+            newx = xking;
+            newy = yking + (y - yking) / abs(y - yking);
+          }
+          else if (diffy == 0)
+          {
+            newx = xking + (x - xking) / abs(x - xking);
+            newy = yking;
+          }
+          else
+          {
+            newx = xking + (x - xking) / abs(x - xking);
+            newy = yking + (y - yking) / abs(y - yking);
+          }
+          c.board[newx][newy] = Piece::whiteBishop;
+          result = c.getCheck();
+          CHECK(((result.heatMap[newy] >> newx) & 0x1) == 1);
+          CHECK((c.state & Board::checkMask) == 0);
+          c.board[newx][newy] = Piece::blackKnight;
+          result = c.getCheck();
+          CHECK(((result.heatMap[newy] >> newx) & 0x1) == 0);
+          CHECK((c.state & Board::checkMask) == 0);
+        }
+      }
+    }
   }
 }

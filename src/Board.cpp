@@ -207,20 +207,20 @@ check Board::getCheck()
   
   //Find out if the king is under attack by a knight
   signed char newx,newy;
-	for (signed char hordir = -1; hordir <= 1; hordir += 2)
-	  for (signed char verdir = -1; verdir <= 1; verdir += 2)
-	    for (signed char absx = 1; absx <= 2; absx++)
-	    {
-	      newy = y + verdir * (3 - absx);
-	      newx = x + hordir * absx;
-	      
-	      if (newx >= 0 && newx <= 7 && newy >= 0 && newy <= 7 && board[newx][newy] == (Piece::blackKnight ^ (state & blackToMoveMask)))
-	      {
-	        result.len++;
-	        result.heatMap[newy] |= (0x1 << newx);
-	        state |= checkMask;
-	      }
-	    }
+  for (signed char hordir = -1; hordir <= 1; hordir += 2)
+    for (signed char verdir = -1; verdir <= 1; verdir += 2)
+      for (signed char absx = 1; absx <= 2; absx++)
+      {
+        newy = y + verdir * (3 - absx);
+        newx = x + hordir * absx;
+        
+        if (newx >= 0 && newx <= 7 && newy >= 0 && newy <= 7 && board[newx][newy] == (Piece::blackKnight ^ (state & blackToMoveMask)))
+        {
+          result.len++;
+          result.heatMap[newy] |= (0x1 << newx);
+          state |= checkMask;
+        }
+      }
 	
 	//Find out if the king is under attack by a pawn
 	signed char dir = 1 - ((state & blackToMoveMask) >> 5) * 2;
