@@ -5,21 +5,7 @@
 #include <iostream>
 #include <cmath>
 #include <tgmath.h>
-void check::display()
-{
-  std::cout << "Debug output of check:" << std::endl;
-  std::cout << " - Length: " << (int)len << std::endl;
-  std::cout << " - Heatmap: " << std::endl;
-  std::cout << "+--------+" << std::endl;
-  for (signed char y = 7; y >= 0; y--)
-  {
-    std::cout << "|";
-    for (signed char x = 0; x < 8; x++)
-      std::cout << ((heatMap[y] >> x) & 0x1 ? "X" : " ");
-    std::cout << "|" << std::endl;
-  }
-  std::cout << "+--------+" << std::endl;
-}
+
 static square knightMoves[8]={
   {-2,1},
   {-2,-1},
@@ -39,7 +25,7 @@ static square knightMoves[8]={
  *                0: No error
  *                1: Syntax of str is wrong
  */
-int Board::fromStr(const char *str) {
+int Board::fromStr(const char * str) {
   int x = 0, y = 7;
 
   // read Board
@@ -166,8 +152,7 @@ int Board::fromFile(const char *fileName) {
 }
 
 bool Board::isAttacked(const square piecePos) {
-  int xmin, xmax, ymin, ymax;
-  signed char i,j;
+  int xmin, xmax, ymin, ymax, i, j;
 
   xmin = piecePos.x == 0 ? 0 : -1;
   xmax = piecePos.x == 7 ? 0 : 1;
@@ -198,65 +183,64 @@ bool Board::isAttacked(const square piecePos) {
 check Board::getCheck()
 {
 	check result = {0,{0,0,0,0,0,0,0,0}};
-	state &= (char)~checkMask;
+	state &= ~checkMask;
 
 	//First, get the position of the king
-	signed char x,y;
-	for (x = 0; x < 8; x++)
-	  for (y = 0; y < 8; y++) {
-	    if (board[x][y] == (Piece::whiteKing ^ (state & blackToMoveMask))) goto kingposfound;
-	  }
-	kingposfound:;
+	square kingPos;
+	for (int i = 0; i < 64; i++)
+	{
+		if (board[i / 8][i % 8] == (Piece::whiteKing ^ (state & blackToMoveMask)))
+		{
+			kingPos = {i / 8,i % 8};
+			break;
+		}
+	}
 
 	//Now, find out if the king is under attack by some long range piece
-	signed char xmin = (x == 0 ? 0 : -1);
-	signed char xmax = (x == 7 ? 0 : 1);
-	signed char ymin = (y == 0 ? 0 : -1);
-	signed char ymax = (y == 7 ? 0 : 1);
-	signed char dirx,diry;
+	int xmin = (kingPos.x == 0 ? 0 : -1);
+	int xmax = (kingPos.x == 7 ? 0 : 1);
+	int ymin = (kingPos.y == 0 ? 0 : -1);
+	int ymax = (kingPos.y == 7 ? 0 : 1);
+	int dirx,diry;
 	for (dirx = xmin; dirx <= xmax; dirx++)
 	  for (diry = ymin; diry <= ymax; diry++)
     {
       if (dirx != 0 || diry != 0);
-      if (firstPiece(&result, {x,y}, {dirx,diry}, 0)) {state |= checkMask;}
+      if (firstPiece(&result, kingPos, {dirx,diry}, 0)) state |= checkMask;
     }
 
   //Find out if the king is under attack by a knight
-  signed char newx,newy;
-  for (signed char hordir = -1; hordir <= 1; hordir += 2)
-    for (signed char verdir = -1; verdir <= 1; verdir += 2)
-      for (signed char absx = 1; absx <= 2; absx++)
-      {
-        newy = y + verdir * (3 - absx);
-        newx = x + hordir * absx;
-
-        if (newx >= 0 && newx <= 7 && newy >= 0 && newy <= 7 && board[newx][newy] == (Piece::blackKnight ^ (state & blackToMoveMask)))
-        {
-          result.len++;
-          result.heatMap[newy] |= (0x1 << newx);
-          state |= checkMask;
-        }
-      }
+  square newPos;
+  for(int i=0; i<8; i++)
+  {
+    newPos = kingPos + knightMoves[i];
+    if (newPos.x >= 0 && newPos.x <= 7 && newPos.y >= 0 && newPos.y <= 7 && board[newPos.x][newPos.y] == (Piece::blackKnight ^ (state & blackToMoveMask)))
+    {
+      result.len++;
+      result.heatMap[newPos.y] |= (0x1 << newPos.x);
+      state |= checkMask;
+    }
+  }
 
 	//Find out if the king is under attack by a pawn
-	signed char dir = 1 - ((state & blackToMoveMask) >> 5) * 2;
-	if (y + dir < 8 && y + dir >= 0)
+	int dir = 1 - ((state & blackToMoveMask) >> 5) * 2;
+	if (kingPos.y + dir < 8 && kingPos.y + dir >= 0)
 	{
-	  if (x < 7)
+	  if (kingPos.x < 7)
 	  {
-	    if (board[x + 1][y + dir] == (Piece::blackPawn ^ (state & blackToMoveMask)))
+	    if (board[kingPos.x + 1][kingPos.y + dir] == (Piece::blackPawn ^ (state & blackToMoveMask)))
 	    {
   	    result.len++;
-	      result.heatMap[y + dir] |= (0x1 << (x + 1));
+	      result.heatMap[kingPos.y + dir] |= (0x1 << (kingPos.x + 1));
 	      state |= checkMask;
 	    }
 	  }
-	  if (x > 0)
+	  if (kingPos.x > 0)
 	  {
-	    if (board[x - 1][y + dir] == (Piece::blackPawn ^ (state & blackToMoveMask)))
+	    if (board[kingPos.x - 1][kingPos.y + dir] == (Piece::blackPawn ^ (state & blackToMoveMask)))
 	    {
   	    result.len++;
-	      result.heatMap[y + dir] |= (0x1 << (x - 1));
+	      result.heatMap[kingPos.y + dir] |= (0x1 << (kingPos.x - 1));
 	      state |= checkMask;
 	    }
 	  }
@@ -270,43 +254,41 @@ check Board::getCheck()
  * This function helps the getCheck function to investigate the influence of one of the 8 directions
  * on the output of the getCheck function.
  */
-bool Board::firstPiece(check * result, const square curPos, const square dir, const char friendlies)
+bool Board::firstPiece(check * result, const square curPos, const square dir, const int friendlies)
 {
-  signed char newx = curPos.x + dir.x;
-  signed char newy = curPos.y + dir.y;
-  if (newx >= 0 && newx <= 7 && newy >= 0 && newy <= 7)
+	square newsq = curPos + dir;
+  if (newsq.x >= 0 && newsq.x <= 7 && newsq.y >= 0 && newsq.y <= 7)
   {
-    if (board[newx][newy] == Piece::none)
+    if (board[newsq.x][newsq.y] == Piece::none)
     {
       //Deal with empty squares
-      if (firstPiece(result, {newx,newy}, dir, friendlies))
+      if (firstPiece(result, newsq, dir, friendlies))
       {
         if (friendlies == 0)
-          result->heatMap[newy] |= (0x1 << newx);
+          result->heatMap[newsq.y] |= (0x1 << newsq.x);
         return true;
       }
       return false;
     }
 
-    Piece::Piece newpiece = board[newx][newy];
-    if (isFriendly(newpiece))
+    if (isFriendly(newsq))
     {
       //Deal with pinned pieces
       if (friendlies == 1)
         return false;
-      if (firstPiece(result, {newx,newy}, dir, 1))
-        result->heatMap[newy] |= (0x1 << newx);
+      if (firstPiece(result, newsq, dir, 1))
+        result->heatMap[newsq.y] |= (0x1 << newsq.x);
       return false;
     }
     else
     {
       //Deal with direct attackers
-      newpiece = (Piece::Piece)(newpiece & ~blackToMoveMask);
-      if (newpiece == Piece::whiteQueen || (newpiece == Piece::whiteRook && dir.x * dir.y == 0) || (newpiece == Piece::whiteBishop && dir.x * dir.y != 0))
+      Piece::Piece piece = (Piece::Piece)(board[newsq.x][newsq.y] & ~((char)0x20));
+      if (piece == Piece::whiteQueen || (piece == Piece::whiteRook && dir.x * dir.y == 0) || (piece == Piece::whiteBishop && dir.x * dir.y != 0))
       {
         if (friendlies == 0)
         {
-          result->heatMap[newy] |= (0x1 << newx);
+          result->heatMap[newsq.y] |= (0x1 << newsq.x);
           result->len++;
         }
         return true;
@@ -317,7 +299,7 @@ bool Board::firstPiece(check * result, const square curPos, const square dir, co
 }
 
 bool Board::hasAttacker(square pos, const square dir) {
-  unsigned char dist = 0;
+  int dist = 0;
   if(dir.x == 0){
     dist = dir.y >= 0 ? 7 - pos.y : pos.y;
   }

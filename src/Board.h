@@ -1,5 +1,8 @@
 #ifndef BOARD_LIBRARY_DEFINED
 #define BOARD_LIBRARY_DEFINED
+
+#include <iostream>
+
 namespace BoardExceptions {}
 
 namespace Piece {
@@ -28,8 +31,8 @@ static const Piece blackPieces[6] =
 
 struct square
 {
-  signed char x;
-  signed char y;
+  int x;
+  int y;
 
   square operator+(const square &other)const{
     square res;
@@ -38,10 +41,10 @@ struct square
     return res;
   }
 
-  square* operator+=(const square &other){
+  square& operator+=(const square &other){
     x+=other.x;
     y+=other.y;
-    return this;
+    return *this;
   }
 };
 
@@ -63,7 +66,22 @@ struct check
   unsigned char len;
   char          heatMap[8];
 
-  void display();
+  void display()
+  {
+    int x,y;
+    std::cout << "Debug output of check:" << std::endl;
+    std::cout << " - Length: " << (int)len << std::endl;
+    std::cout << " - Heatmap: " << std::endl;
+    std::cout << "+--------+" << std::endl;
+    for (y = 7; y >= 0; y--)
+    {
+      std::cout << "|";
+      for (x = 0; x < 8; x++)
+        std::cout << ((heatMap[y] >> x) & 0x1 ? "X" : " ");
+      std::cout << "|" << std::endl;
+    }
+    std::cout << "+--------+" << std::endl;
+  }
 };
 
 class Board {
@@ -75,7 +93,7 @@ public:
   // Properties
   Piece::Piece board[8][8]; // The board of pieces in FEN notation
   enum stateFlags : char {
-    checkMask          = 0x01,
+    checkMask                = 0x01,
     whiteCastleKingsideMask  = 0x02,
     whiteCastleQueensideMask = 0x04,
     blackCastleKingsideMask  = 0x08,
@@ -100,7 +118,7 @@ public:
   bool  firstPiece(check *result,
                    const square       curPos,
                    const square       dir,
-                   const char         friendlies); // Investigate the possibility of
+                   const int          friendlies); // Investigate the possibility of
                                              // attacks from dir to curPos
                                              // (Recursive) with heatmap.
 
@@ -111,9 +129,10 @@ public:
                                              // attacks from dir at curPos
   bool isFriendly(const square piecePos);
   bool isFriendly(const Piece::Piece piece);
+  Piece::Piece getPieceType(const square piecePos);
+  Piece::Piece getPieceType(const Piece::Piece piece);
+
 public:
-
-
   // Constructors
   Board() : Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
                   false) {}
@@ -131,6 +150,7 @@ public:
   bool isCheck(){ return state & checkMask;  }                   // return checkflag
   bool blackToMove(){ return state & blackToMoveMask;}
   bool isMate();                    // check if current board is mate
+  
   // Setters
   void execMove(const move mv); // Execute mv.
   void changeColor(){ state ^= blackToMoveMask; }
