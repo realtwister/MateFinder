@@ -59,12 +59,14 @@ struct moveArray
 {
   unsigned int len;
   move        *moves;
+  moveArray() : len(0), moves(nullptr) {}
+  moveArray(int n) : len(n), moves(new move[n]) {}
 };
 
 struct check
 {
   unsigned char len;
-  char          heatMap[8];
+  bool          heatMap[8][8];
 
   void display()
   {
@@ -77,7 +79,7 @@ struct check
     {
       std::cout << "|";
       for (x = 0; x < 8; x++)
-        std::cout << ((heatMap[y] >> x) & 0x1 ? "X" : " ");
+        std::cout << (heatMap[x][y] ? "X" : " ");
       std::cout << "|" << std::endl;
     }
     std::cout << "+--------+" << std::endl;
@@ -113,7 +115,7 @@ public:
 
   // Function and helper functions to calculate the legal moves
   void  calcMoves();                    // Calculate legal moves
-  check getCheck(); // Get the details about a possible
+  check getCheck(const square kingPos); // Get the details about a possible
                                         // check at kingPos
   bool  firstPiece(check *result,
                    const square       curPos,
@@ -127,8 +129,14 @@ public:
   bool hasAttacker(square pos,
                    const square dir);              // Invesitgate the possibility of
                                              // attacks from dir at curPos
-  bool isFriendly(const square piecePos);
-  bool isFriendly(const Piece::Piece piece);
+  inline bool isFriendly(const Piece::Piece piece) {
+	  return (piece != Piece::none) && !((state ^ piece) & blackToMoveMask);
+	}
+
+	inline bool isFriendly(const square pos) {
+	  return isFriendly(board[pos.x][pos.y]);
+	}
+	
   Piece::Piece getPieceType(const square piecePos);
   Piece::Piece getPieceType(const Piece::Piece piece);
 

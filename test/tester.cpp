@@ -240,7 +240,7 @@ TEST_CASE("Testing getCheck function")
             if (((y == 0 || y == 7) && piece == Piece::blackPawn) || piece == Piece::blackKing) {continue;}
 
             c.board[x][y] = (Piece::Piece)(piece ^ (c.state & Board::blackToMoveMask));
-            check result = c.getCheck();
+            check result = c.getCheck({xking,yking});
 
             //Check for check
             if (((diffx == 0 || diffy == 0) && (piece == Piece::blackQueen || piece == Piece::blackRook))
@@ -255,30 +255,30 @@ TEST_CASE("Testing getCheck function")
                   if (piece == Piece::blackKnight || piece == Piece::blackPawn)
                   {
                     if (newx == x && newy == y)
-                      CHECK(((result.heatMap[newy] >> newx) & 0x1) == 1);
+                      CHECK(result.heatMap[newx][newy] == true);
                     else
-                      CHECK(((result.heatMap[newy] >> newx) & 0x1) == 0);
+                      CHECK(result.heatMap[newx][newy] == false);
                   }
                   else if (diffy == 0)
                   {
                     if (((newx >= x && newx < xking) || (newx > xking && newx <= x)) && newy == y)
-                      CHECK(((result.heatMap[newy] >> newx) & 0x1) == 1);
+                      CHECK(result.heatMap[newx][newy] == true);
                     else
-                      CHECK(((result.heatMap[newy] >> newx) & 0x1) == 0);
+                      CHECK(result.heatMap[newx][newy] == false);
                   }
                   else if (diffx == 0)
                   {
                     if (((newy >= y && newy < yking) || (newy > yking && newy <= y)) && newx == x)
-                      CHECK(((result.heatMap[newy] >> newx) & 0x1) == 1);
+                      CHECK(result.heatMap[newx][newy] == true);
                     else
-                      CHECK(((result.heatMap[newy] >> newx) & 0x1) == 0);
+                      CHECK(result.heatMap[newx][newy] == false);
                   }
                   else
                   {
                     if ((abs(newx - xking) == abs(newy - yking)) && ((newx >= x && newx < xking) || (newx > xking && newx <= x)) && ((newy >= y && newy < yking) || (newy > yking && newy <= y)))
-                      CHECK(((result.heatMap[newy] >> newx) & 0x1) == 1);
+                      CHECK(result.heatMap[newx][newy]) & 0x1) == true);
                     else
-                      CHECK(((result.heatMap[newy] >> newx) & 0x1) == 0);
+                      CHECK(result.heatMap[newx][newy] == false);
                   }
             }
             else
@@ -286,7 +286,8 @@ TEST_CASE("Testing getCheck function")
               CHECK((c.state & Board::checkMask) == 0);
               CHECK(result.len == 0);
               for (signed char y = 0; y < 8; y++)
-                CHECK(result.heatMap[y] == 0);
+              	for (signed char x = 0; x < 8; x++)
+                  CHECK(result.heatMap[x][y] == false);
             }
           }
         }
@@ -310,7 +311,7 @@ TEST_CASE("Testing getCheck function")
         for (int j = 0; j < 64; j++) c.board[j / 8][j % 8] = Piece::none;
         c.board[xking][yking] = Piece::whiteKing;
         c.board[x][y] = Piece::blackQueen;
-        check result = c.getCheck();
+        check result = c.getCheck({xking,yking});
         if (result.len != 0)
         {
           signed char diffx = abs(xking - x);
@@ -333,12 +334,12 @@ TEST_CASE("Testing getCheck function")
             newy = yking + (y - yking) / abs(y - yking);
           }
           c.board[newx][newy] = Piece::whiteBishop;
-          result = c.getCheck();
-          CHECK(((result.heatMap[newy] >> newx) & 0x1) == 1);
+          result = c.getCheck({xking,yking});
+          CHECK(result.heatMap[newx][newy] == true);
           CHECK((c.state & Board::checkMask) == 0);
           c.board[newx][newy] = Piece::blackKnight;
-          result = c.getCheck();
-          CHECK(((result.heatMap[newy] >> newx) & 0x1) == 0);
+          result = c.getCheck({xking,yking});
+          CHECK(result.heatMap[newx][newy] == false);
           CHECK((c.state & Board::checkMask) == 0);
         }
       }
