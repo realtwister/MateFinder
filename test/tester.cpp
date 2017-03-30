@@ -276,7 +276,7 @@ TEST_CASE("Testing getCheck function")
                   else
                   {
                     if ((abs(newx - xking) == abs(newy - yking)) && ((newx >= x && newx < xking) || (newx > xking && newx <= x)) && ((newy >= y && newy < yking) || (newy > yking && newy <= y)))
-                      CHECK(result.heatMap[newx][newy]) & 0x1) == true);
+                      CHECK(result.heatMap[newx][newy] == true);
                     else
                       CHECK(result.heatMap[newx][newy] == false);
                   }
