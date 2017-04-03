@@ -210,8 +210,8 @@ TEST_CASE("Testing getCheck function")
     //King can be placed anywhere
     for (int h = 0; h < 64; h++)
     {
-      signed char xking = h / 8;
-      signed char yking = h % 8;
+      int xking = h / 8;
+      int yking = h % 8;
 
       //Other piece can be placed anywhere
       for (int i = 0; i < 64; i++)
@@ -226,12 +226,12 @@ TEST_CASE("Testing getCheck function")
           c.board[xking][yking] = (move == 0 ? Piece::whiteKing : Piece::blackKing);
 
           //Calculate location of the other piece
-          signed char x = i % 8;
-          signed char y = i / 8;
+          int x = i % 8;
+          int y = i / 8;
           if (x == xking && y == yking) {continue;}
-          signed char diffx = abs(x - xking);
-          signed char diffy = abs(y - yking);
-          signed char dir = 2 * move - 1;
+          int diffx = abs(x - xking);
+          int diffy = abs(y - yking);
+          int dir = 2 * move - 1;
 
           //Loop through all the pieces
           for (unsigned char j = 0; j < sizeof(Piece::blackPieces) / sizeof(Piece::Piece); j++)
@@ -250,44 +250,44 @@ TEST_CASE("Testing getCheck function")
             {
               CHECK((c.state & Board::checkMask) == Board::checkMask);
               CHECK(result.len == 1);
-              for (signed char newy = 0; newy < 8; newy++)
-                for (signed char newx = 0; newx < 8; newx++)
+              for (int newy = 0; newy < 8; newy++)
+                for (int newx = 0; newx < 8; newx++)
                   if (piece == Piece::blackKnight || piece == Piece::blackPawn)
                   {
                     if (newx == x && newy == y)
-                      CHECK(result.heatMap[newx][newy] == true);
+                      CHECK(result.heatMap[newx][newy] == 1);
                     else
-                      CHECK(result.heatMap[newx][newy] == false);
+                      CHECK(result.heatMap[newx][newy] == 0);
                   }
                   else if (diffy == 0)
                   {
                     if (((newx >= x && newx < xking) || (newx > xking && newx <= x)) && newy == y)
-                      CHECK(result.heatMap[newx][newy] == true);
+                      CHECK(result.heatMap[newx][newy] == 1);
                     else
-                      CHECK(result.heatMap[newx][newy] == false);
+                      CHECK(result.heatMap[newx][newy] == 0);
                   }
                   else if (diffx == 0)
                   {
                     if (((newy >= y && newy < yking) || (newy > yking && newy <= y)) && newx == x)
-                      CHECK(result.heatMap[newx][newy] == true);
+                      CHECK(result.heatMap[newx][newy] == 1);
                     else
-                      CHECK(result.heatMap[newx][newy] == false);
+                      CHECK(result.heatMap[newx][newy] == 0);
                   }
                   else
                   {
                     if ((abs(newx - xking) == abs(newy - yking)) && ((newx >= x && newx < xking) || (newx > xking && newx <= x)) && ((newy >= y && newy < yking) || (newy > yking && newy <= y)))
-                      CHECK(result.heatMap[newx][newy] == true);
+                      CHECK(result.heatMap[newx][newy] == 1);
                     else
-                      CHECK(result.heatMap[newx][newy] == false);
+                      CHECK(result.heatMap[newx][newy] == 0);
                   }
             }
             else
             {
               CHECK((c.state & Board::checkMask) == 0);
               CHECK(result.len == 0);
-              for (signed char y = 0; y < 8; y++)
-              	for (signed char x = 0; x < 8; x++)
-                  CHECK(result.heatMap[x][y] == false);
+              for (int y = 0; y < 8; y++)
+              	for (int x = 0; x < 8; x++)
+                  CHECK(result.heatMap[x][y] == 0);
             }
           }
         }
@@ -299,14 +299,14 @@ TEST_CASE("Testing getCheck function")
   {
     for (int h = 0; h < 64; h++)
     {
-      signed char xking = h / 8;
-      signed char yking = h % 8;
+      int xking = h / 8;
+      int yking = h % 8;
 
       for (int i = 0; i < 64; i++)
       {
         if (i == h) {continue;}
-        signed char x = i / 8;
-        signed char y = i % 8;
+        int x = i / 8;
+        int y = i % 8;
 
         for (int j = 0; j < 64; j++) c.board[j / 8][j % 8] = Piece::none;
         c.board[xking][yking] = Piece::whiteKing;
@@ -314,10 +314,10 @@ TEST_CASE("Testing getCheck function")
         check result = c.getCheck({xking,yking});
         if (result.len != 0)
         {
-          signed char diffx = abs(xking - x);
-          signed char diffy = abs(yking - y);
+          int diffx = abs(xking - x);
+          int diffy = abs(yking - y);
           if (diffx <= 1 && diffy <= 1) {continue;}
-          signed char newx,newy;
+          int newx,newy;
           if (diffx == 0)
           {
             newx = xking;
@@ -335,14 +335,30 @@ TEST_CASE("Testing getCheck function")
           }
           c.board[newx][newy] = Piece::whiteBishop;
           result = c.getCheck({xking,yking});
-          CHECK(result.heatMap[newx][newy] == true);
+          
+          diffx = newx - xking;
+          diffy = newy - yking;
+          if (diffx * diffy == -1) CHECK(result.heatMap[newx][newy] == 3);
+          else if (diffx * diffy == 1) CHECK(result.heatMap[newx][newy] == 5);
+          else if (diffx == 0) CHECK(result.heatMap[newx][newy] == 9);
+          else CHECK(result.heatMap[newx][newy] == 17);
           CHECK((c.state & Board::checkMask) == 0);
           c.board[newx][newy] = Piece::blackKnight;
           result = c.getCheck({xking,yking});
-          CHECK(result.heatMap[newx][newy] == false);
+          CHECK(result.heatMap[newx][newy] == 0);
           CHECK((c.state & Board::checkMask) == 0);
         }
       }
     }
+  }
+}
+
+TEST_CASE("Testing calcMoves function")
+{
+  SUBCASE("Standard board position")
+  {
+    Board b("k7/8/4r3/8/5b2/4P3/3K4/8 w - -");
+    b.calcMoves();
+    b.printLegalMoves();
   }
 }

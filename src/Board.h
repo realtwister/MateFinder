@@ -57,33 +57,36 @@ struct move
 
 struct moveArray
 {
-  unsigned int len;
+  int len;
   move        *moves;
   moveArray() : len(0), moves(nullptr) {}
-  moveArray(int n) : len(n), moves(new move[n]) {}
+  moveArray(int n) : len(0), moves(new move[n]) {}
+  ~moveArray() {delete [] moves;}
 };
 
 struct check
 {
-  unsigned char len;
-  bool          heatMap[8][8];
+  int len;
+  char heatMap[8][8];
 
-  void display()
-  {
-    int x,y;
-    std::cout << "Debug output of check:" << std::endl;
-    std::cout << " - Length: " << (int)len << std::endl;
-    std::cout << " - Heatmap: " << std::endl;
-    std::cout << "+--------+" << std::endl;
-    for (y = 7; y >= 0; y--)
+  #ifdef DEBUG
+    void display()
     {
-      std::cout << "|";
-      for (x = 0; x < 8; x++)
-        std::cout << (heatMap[x][y] ? "X" : " ");
-      std::cout << "|" << std::endl;
+      int x,y;
+      std::cout << "Debug output of check:" << std::endl;
+      std::cout << " - Length: " << (int)len << std::endl;
+      std::cout << " - Heatmap: " << std::endl;
+      std::cout << "+--------+" << std::endl;
+      for (y = 7; y >= 0; y--)
+      {
+        std::cout << "|";
+        for (x = 0; x < 8; x++)
+          std::cout << (heatMap[x][y] ? "X" : " ");
+        std::cout << "|" << std::endl;
+      }
+      std::cout << "+--------+" << std::endl;
     }
-    std::cout << "+--------+" << std::endl;
-  }
+  #endif
 };
 
 class Board {
@@ -115,6 +118,9 @@ public:
 
   // Function and helper functions to calculate the legal moves
   void  calcMoves();                    // Calculate legal moves
+  void	getMoves(moveArray * result, check * kingEnv, const square curPos);	//Calculate the legal moves of the piece on square curPos
+  void  checkDir(moveArray * result, check * kingEnv, const square basePos, const square curPos, const square dir); //Check the possible moves of a piece along some file, rank or diagonal
+  
   check getCheck(const square kingPos); // Get the details about a possible
                                         // check at kingPos
   bool  firstPiece(check *result,
@@ -127,15 +133,15 @@ public:
   bool isAttacked(const square piecePos);    // Check whether the square at
                                              // piecePos is attacked
   bool hasAttacker(square pos,
-                   const square dir);              // Invesitgate the possibility of
+                   const square dir);        // Invesitgate the possibility of
                                              // attacks from dir at curPos
   inline bool isFriendly(const Piece::Piece piece) {
-	  return (piece != Piece::none) && !((state ^ piece) & blackToMoveMask);
-	}
+    return (piece != Piece::none) && !((state ^ piece) & blackToMoveMask);
+  }
 
-	inline bool isFriendly(const square pos) {
-	  return isFriendly(board[pos.x][pos.y]);
-	}
+  inline bool isFriendly(const square pos) {
+    return isFriendly(board[pos.x][pos.y]);
+  }
 	
   Piece::Piece getPieceType(const square piecePos);
   Piece::Piece getPieceType(const Piece::Piece piece);
@@ -167,5 +173,6 @@ public:
 
   // Print function
   void printBoard();
+  void printLegalMoves();
 };
 #endif
