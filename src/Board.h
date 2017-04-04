@@ -118,7 +118,7 @@ public:
 
   // Function and helper functions to calculate the legal moves
   void  calcMoves();                    // Calculate legal moves
-  void	getMoves(moveArray * result, check * kingEnv, const square curPos);	//Calculate the legal moves of the piece on square curPos
+  void	getMoves(moveArray * result, check * kingEnv, const square curPos, const square kingPos);	//Calculate the legal moves of the piece on square curPos
   void  checkDir(moveArray * result, check * kingEnv, const square basePos, const square curPos, const square dir); //Check the possible moves of a piece along some file, rank or diagonal
   
   check getCheck(const square kingPos); // Get the details about a possible
