@@ -354,32 +354,34 @@ void Board::calcMoves()
   int friendlySquaresCtr = 0;
   
   //Next, we determine the position of the king
-  int globalCounter, x, y;
+  int globalCounter;
   check kingEnv;
+  square kingPos;
   for (globalCounter = 0; globalCounter < 64; globalCounter++)
   {
-    x = globalCounter / 8;
-    y = globalCounter % 8;
-    if (board[x][y] == (Piece::whiteKing ^ (state & blackToMoveMask)))
+    kingPos.x = globalCounter / 8;
+    kingPos.y = globalCounter % 8;
+    if (board[kingPos.x][kingPos.y] == (Piece::whiteKing ^ (state & blackToMoveMask)))
     {
-      kingEnv = getCheck({x,y});
+      kingEnv = getCheck(kingPos);
       break;
     }
-    if (isFriendly({x,y})) friendlySquares[friendlySquaresCtr++] = {x,y};
+    if (isFriendly(kingPos)) friendlySquares[friendlySquaresCtr++] = kingPos;
   }
   
   //Then, we determine the possible moves of the king
-  int xmin = (x == 0 ? 0 : -1);
-  int xmax = (x == 7 ? 0 : 1);
-  int ymin = (y == 0 ? 0 : -1);
-  int ymax = (y == 7 ? 0 : 1);
+  int xmin = (kingPos.x == 0 ? 0 : -1);
+  int xmax = (kingPos.x == 7 ? 0 : 1);
+  int ymin = (kingPos.y == 0 ? 0 : -1);
+  int ymax = (kingPos.y == 7 ? 0 : 1);
   
-  board[x][y] = Piece::none;
-  for (int dirx = xmin; dirx <= xmax; dirx++)
-    for (int diry = ymin; diry <= ymax; diry++)
-      if ((dirx != 0 || diry != 0) && !isFriendly({x + dirx, y + diry}) && !isAttacked({x + dirx, y + diry}))
-        result.moves[result.len++] = {{x,y}, {x + dirx, y + diry}};
-  board[x][y] = (Piece::Piece)((char)Piece::whiteKing | (char)(state & blackToMoveMask));
+  board[kingPos.x][kingPos.y] = Piece::none;
+  square dir;
+  for (dir.x = xmin; dir.x <= xmax; dir.x++)
+    for (dir.y = ymin; dir.y <= ymax; dir.y++)
+      if ((dir.x != 0 || dir.y != 0) && !isFriendly(kingPos + dir) && !isAttacked(kingPos + dir))
+        result.moves[result.len++] = {kingPos, kingPos + dir};
+  board[kingPos.x][kingPos.y] = (Piece::Piece)((char)Piece::whiteKing | (char)(state & blackToMoveMask));
   
   //We look at castles now
   if (!(state & blackToMoveMask))
@@ -408,15 +410,16 @@ void Board::calcMoves()
   {
     //Now, loop over all the squares in the friendlySquares array
     for (int i = 0; i < friendlySquaresCtr; i++)
-      getMoves(&result, &kingEnv, friendlySquares[i]);
+      getMoves(&result, &kingEnv, friendlySquares[i], kingPos);
     
     //Finally, loop over all remaining squares
+    square remaining;
     for (globalCounter++; globalCounter < 64; globalCounter++)
     {
-      x = globalCounter / 8;
-      y = globalCounter % 8;
-      if (isFriendly({x,y}))
-        getMoves(&result, &kingEnv, {x,y});
+      remaining.x = globalCounter / 8;
+      remaining.y = globalCounter % 8;
+      if (isFriendly(remaining))
+        getMoves(&result, &kingEnv, remaining, kingPos);
     }
   }
   
@@ -430,7 +433,7 @@ void Board::calcMoves()
   delete[] friendlySquares;
 }
 
-void Board::getMoves(moveArray * result, check * kingEnv, const square curPos)
+void Board::getMoves(moveArray * result, check * kingEnv, const square curPos, const square kingPos)
 {
   int xmin, xmax, ymin, ymax, dir;
   square newPos;
@@ -537,7 +540,14 @@ void Board::getMoves(moveArray * result, check * kingEnv, const square curPos)
                 result->moves[result->len++] = {curPos,{curPos.x+diffx,curPos.y+dir}};
             }
             else if (curPos.y == (dir == 1 ? 4 : 3) && enPassant == curPos.x + diffx)
-              result->moves[result->len++] = {curPos,{curPos.x+diffx,curPos.y+dir}};
+            {
+              board[curPos.x][curPos.y] = Piece::none;
+              board[curPos.x + diffx][curPos.y] = Piece::none;
+              if (!isAttacked(kingPos))   //OPTIMIZATION POSSIBLE
+                result->moves[result->len++] = {curPos,{curPos.x+diffx,curPos.y+dir}};
+              board[curPos.x][curPos.y] = (Piece::Piece)(Piece::whitePawn ^ (state & blackToMoveMask));
+              board[curPos.x + diffx][curPos.y] = (Piece::Piece)(Piece::blackPawn ^ (state & blackToMoveMask));
+            }
           }
         }
       }
@@ -640,7 +650,7 @@ void Board::printBoard() {
 
   // enPassant
   if (enPassant >= 0) {
-    std::cout << "En passant on file: " << char('a' + enPassant);
+    std::cout << "En passant on file: " << char('a' + enPassant) << std::endl;
   }
 }
 
