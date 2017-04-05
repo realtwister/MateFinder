@@ -410,7 +410,7 @@ void Board::calcMoves()
   {
     //Now, loop over all the squares in the friendlySquares array
     for (int i = 0; i < friendlySquaresCtr; i++)
-      getMoves(&result, &kingEnv, friendlySquares[i], kingPos);
+      getPieceMoves(&result, &kingEnv, friendlySquares[i], kingPos);
     
     //Finally, loop over all remaining squares
     square remaining;
@@ -419,7 +419,7 @@ void Board::calcMoves()
       remaining.x = globalCounter / 8;
       remaining.y = globalCounter % 8;
       if (isFriendly(remaining))
-        getMoves(&result, &kingEnv, remaining, kingPos);
+        getPieceMoves(&result, &kingEnv, remaining, kingPos);
     }
   }
   
@@ -433,7 +433,7 @@ void Board::calcMoves()
   delete[] friendlySquares;
 }
 
-void Board::getMoves(moveArray * result, check * kingEnv, const square curPos, const square kingPos)
+void Board::getPieceMoves(moveArray * result, check * kingEnv, const square curPos, const square kingPos)
 {
   int xmin, xmax, ymin, ymax, dir;
   square newPos;
@@ -601,6 +601,8 @@ Board::Board(const char *str,
       throw std::runtime_error("Unexpected return value");
     }
   }
+  
+  calcMoves();
 }
 
 /**
