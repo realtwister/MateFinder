@@ -357,8 +357,7 @@ TEST_CASE("Testing calcMoves function")
 {
   SUBCASE("Standard board position")
   {
-    Board b("1k6/8/8/r1Pp1K2/8/8/8/8 w - d6");
-    b.calcMoves();
+    Board b("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -");
     b.printLegalMoves();
   }
 }

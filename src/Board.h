@@ -118,7 +118,7 @@ public:
 
   // Function and helper functions to calculate the legal moves
   void  calcMoves();                    // Calculate legal moves
-  void	getMoves(moveArray * result, check * kingEnv, const square curPos, const square kingPos);	//Calculate the legal moves of the piece on square curPos
+  void	getPieceMoves(moveArray * result, check * kingEnv, const square curPos, const square kingPos);	//Calculate the legal moves of the piece on square curPos
   void  checkDir(moveArray * result, check * kingEnv, const square basePos, const square curPos, const square dir); //Check the possible moves of a piece along some file, rank or diagonal
   
   check getCheck(const square kingPos); // Get the details about a possible
@@ -161,9 +161,11 @@ public:
   // Getters
   Piece::Piece getSquare(const square pos){ return board[pos.x][pos.y];}
 
-  bool isCheck(){ return state & checkMask;  }                   // return checkflag
-  bool blackToMove(){ return state & blackToMoveMask;}
-  bool isMate();                    // check if current board is mate
+  bool isCheck() {return state & checkMask;  }                   // return checkflag
+  bool blackToMove() {return state & blackToMoveMask;}
+  bool isMate() {return (legalMoves.len == 0 && state & checkMask);}  // check if current board is mate
+  bool isStaleMate() {return (legalMoves.len == 0 && !(state & checkMask));} //check if the current position is mate
+  moveArray getMoves() {return legalMoves;}
   
   // Setters
   void execMove(const move mv); // Execute mv.
