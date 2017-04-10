@@ -1,6 +1,4 @@
-
-CC := g++ # This is the main compiler
-# CC := clang --analyze # and comment out the linker last line for sanity
+CC := g++
 SRCDIR := src
 BUILDDIR := build
 TARGET := bin/main
@@ -9,8 +7,8 @@ TEST := bin/tester
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS :=  -g -Wall -Og
-LIB :=
+CFLAGS := -std=c++11 -g -Wall -Og
+LIB := -pthread -lprofiler
 INC :=
 
 $(TARGET): $(OBJECTS)
@@ -21,22 +19,25 @@ $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
 	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
-
-
 clean:
 	@echo " Cleaning...";
 	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
 
 run: $(TARGET)
-	@echo "Running $(TARGET):";
+	@echo " Running $(TARGET):";
 	$(TARGET)
+
+profile: $(TARGET)
+	@echo " Profiling $(TARGET):";
+	LD_PRELOAD=/usr/lib/libprofiler.so CPUPROFILE=/tmp/prof.out $(TARGET) $(depth)
+	google-pprof --gv $(TARGET) /tmp/prof.out
 
 # Tests
 test: test/tester.cpp build/Board.o
 	$(CC) $(CFLAGS) build/Board.o test/tester.cpp $(INC) $(LIB) -o bin/tester
 
 runtest: test
-	@echo "Running tests:"
-	bin/tester
+	@echo " Running tests:"
+	bin/tester $(flags)
 
 .PHONY: clean

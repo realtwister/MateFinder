@@ -1,71 +1,47 @@
-#include <ctime>
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
+#include <chrono>
 #include "Board.h"
-#define innerN 100
-#define outerN 10000000
-static square knightMoves[8]={
-  {1,2},
-  {-1,2},
-  {2,1},
-  {2,-1},
-  {1,-2},
-  {-1,-2},
-  {-2,1},
-  {-2,-1}
-};
 
-unsigned char knightLoop(){
-  signed char newx,newy;
-  for(int i=0; i<innerN; i++)
-    for (signed char hordir = -1; hordir <= 1; hordir += 2)
-      for (signed char verdir = -1; verdir <= 1; verdir += 2)
-        for (signed char absx = 1; absx <= 2; absx++)
-        {
-          newy = verdir * (3 - absx);
-          newx = hordir * absx;
-        }
-  return newx;
+void executeAllMoves(Board b, int depth, int maxDepth)
+{
+  if (depth == maxDepth) return;
+  for (unsigned int i = 0; i < b.getMoves().size(); i++)
+  {
+    if (depth == 1)
+      std::cout << "Executing move " << i+1 << "/" << b.getMoves().size() << std::endl;
+    executeAllMoves(b.cloneAndExecMove(b.getMoves()[i]), depth + 1, maxDepth);
+  }
 }
 
-unsigned char knightArray(){
-  square mv;
-  for(int i=0; i<innerN; i++)
-  for(int i=0; i<8; i++){
-    mv= knightMoves[i];
+int main(int argc, char * argv[])
+{
+  //Set up the random number generator
+  std::srand(std::time(0));
+  
+  //Check if the number of moves is given as an argument
+  int N;
+  if (argc <= 1)
+  {
+    std::cout << "You can supply the number of moves if you want." << std::endl;
+    std::cout << "For now, the default value of 5 is used." << std::endl;
+    N = 5;
   }
-  return mv.x;
-}
-
-
-
-int main(int argc, char const *argv[]) {
-  std::clock_t start;
-  double durloop=0;
-  double durarray=0;
-  unsigned char x;
-  signed char newx,newy;
-  square mv;
-  for(int i =0; i<outerN; i++){
-
-    start = std::clock();
-    for(int i=0; i<innerN; i++)
-      for (signed char hordir = -1; hordir <= 1; hordir += 2)
-        for (signed char verdir = -1; verdir <= 1; verdir += 2)
-          for (signed char absx = 1; absx <= 2; absx++)
-          {
-            newy = verdir * (3 - absx);
-            newx = hordir * absx;
-          }
-    durloop+= ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    if(i%10000000==0) std::cout<<newx;
-      start = std::clock();
-      for(int i=0; i<innerN; i++)
-      for(int i=0; i<8; i++){
-        mv= knightMoves[i];
-      }
-    durarray+= ( std::clock() - start ) / (double) CLOCKS_PER_SEC;
-    if(i%10000000==0) std::cout<<mv.x;
+  else
+  {
+    N = std::atoi(argv[1]);
+    if (N <= 0)
+    {
+      std::cout << "You cannot supply a non-positive number of moves. Exiting." << std::endl;
+      return 1;
+    }
   }
-
-  std::cout<<"loop: "<< durloop<<" array:"<<durarray<<'\n';
+  
+  //Time the program
+  auto start = std::chrono::high_resolution_clock::now();
+  executeAllMoves(Board(), 1, N);
+  auto end = std::chrono::high_resolution_clock::now();
+  std::cout << "The program ran in " << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count() << " milliseconds." << std::endl;
+  return 0;
 }

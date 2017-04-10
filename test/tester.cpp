@@ -13,107 +13,107 @@ TEST_CASE("Start position") {
 
   SUBCASE("test getters") {
     for (signed char i = 0; i < 8; i++) {
-      CHECK(b.getSquare({ i, 1 }) == 'P');
-      CHECK(b.getSquare({ i, 6 }) == 'p');
+      REQUIRE(b.getSquare({ i, 1 }) == 'P');
+      REQUIRE(b.getSquare({ i, 6 }) == 'p');
     }
   }
 
   SUBCASE("Test color get/set"){
-    CHECK(!b.blackToMove());
+    REQUIRE(!b.blackToMove());
     b.changeColor();
-    CHECK(b.blackToMove());
+    REQUIRE(b.blackToMove());
     b.clearBoard();
     for( signed char i =0; i<8;i++)
       for(signed char j=0; j<8;j++){
-        CHECK(b.getSquare({i,j}) == Piece::none);
+        REQUIRE(b.getSquare({i,j}) == Piece::none);
     }
     b.setPiece({3,3},Piece::blackKing);
-    CHECK(b.getSquare({3,3}) == Piece::blackKing);
+    REQUIRE(b.getSquare({3,3}) == Piece::blackKing);
   }
 
   SUBCASE("isFriendly"){
     for (signed char i = 0; i < 7; i++) {
-      CHECK(b.isFriendly({ i, 1 }));
-      CHECK(b.isFriendly({ i, 0 }));
-      CHECK(!b.isFriendly({ i, 6 }));
-      CHECK(!b.isFriendly({ i, 7 }));
+      REQUIRE(b.isFriendly({ i, 1 }));
+      REQUIRE(b.isFriendly({ i, 0 }));
+      REQUIRE(!b.isFriendly({ i, 6 }));
+      REQUIRE(!b.isFriendly({ i, 7 }));
     }
-    CHECK(!b.isFriendly({1, 3}));
+    REQUIRE(!b.isFriendly({1, 3}));
     b.changeColor();
-    CHECK(!b.isFriendly({1,3}));
+    REQUIRE(!b.isFriendly({1,3}));
   }
 
   SUBCASE("hasAttacker"){
     //black pawn
     for (signed char i = 1; i < 7; i++) {
-    CHECK(b.hasAttacker({i,5},{1,1}));
-    CHECK(b.hasAttacker({i,5},{-1,1}));
+    REQUIRE(b.hasAttacker({i,5},{1,1}));
+    REQUIRE(b.hasAttacker({i,5},{-1,1}));
     }
-    CHECK(b.hasAttacker({0,5},{1,1}));
-    CHECK(b.hasAttacker({7,5},{-1,1}));
+    REQUIRE(b.hasAttacker({0,5},{1,1}));
+    REQUIRE(b.hasAttacker({7,5},{-1,1}));
     //black bishop
-    CHECK(b.hasAttacker({1,6},{1,1}));
-    CHECK(b.hasAttacker({3,6},{-1,1}));
-    CHECK(b.hasAttacker({6,6},{-1,1}));
-    CHECK(b.hasAttacker({4,6},{1,1}));
+    REQUIRE(b.hasAttacker({1,6},{1,1}));
+    REQUIRE(b.hasAttacker({3,6},{-1,1}));
+    REQUIRE(b.hasAttacker({6,6},{-1,1}));
+    REQUIRE(b.hasAttacker({4,6},{1,1}));
     //black rook
-    CHECK(b.hasAttacker({1,7},{-1,0}));
-    CHECK(b.hasAttacker({0,6},{0,1}));
-    CHECK(b.hasAttacker({6,7},{1,0}));
-    CHECK(b.hasAttacker({7,6},{0,1}));
+    REQUIRE(b.hasAttacker({1,7},{-1,0}));
+    REQUIRE(b.hasAttacker({0,6},{0,1}));
+    REQUIRE(b.hasAttacker({6,7},{1,0}));
+    REQUIRE(b.hasAttacker({7,6},{0,1}));
 
     //black queen
-    CHECK(b.hasAttacker({2,7},{1,0}));
-    CHECK(b.hasAttacker({2,6},{1,1}));
-    CHECK(b.hasAttacker({3,6},{0,1}));
-    CHECK(b.hasAttacker({4,6},{-1,1}));
-    CHECK(b.hasAttacker({4,7},{-1,0}));
+    REQUIRE(b.hasAttacker({2,7},{1,0}));
+    REQUIRE(b.hasAttacker({2,6},{1,1}));
+    REQUIRE(b.hasAttacker({3,6},{0,1}));
+    REQUIRE(b.hasAttacker({4,6},{-1,1}));
+    REQUIRE(b.hasAttacker({4,7},{-1,0}));
 
     b.changeColor();
     //white pawn
     for (signed char i = 1; i < 7; i++) {
-    CHECK(b.hasAttacker({i,2},{-1,-1}));
-    CHECK(b.hasAttacker({i,2},{1,-1}));
+    REQUIRE(b.hasAttacker({i,2},{-1,-1}));
+    REQUIRE(b.hasAttacker({i,2},{1,-1}));
     }
-    CHECK(b.hasAttacker({7,2},{-1,-1}));
-    CHECK(b.hasAttacker({0,2},{1,-1}));
+    REQUIRE(b.hasAttacker({7,2},{-1,-1}));
+    REQUIRE(b.hasAttacker({0,2},{1,-1}));
     // white bishop
-    CHECK(b.hasAttacker({1,1},{1,-1}));
-    CHECK(b.hasAttacker({3,1},{-1,-1}));
-    CHECK(b.hasAttacker({6,1},{-1,-1}));
-    CHECK(b.hasAttacker({4,1},{1,-1}));
+    REQUIRE(b.hasAttacker({1,1},{1,-1}));
+    REQUIRE(b.hasAttacker({3,1},{-1,-1}));
+    REQUIRE(b.hasAttacker({6,1},{-1,-1}));
+    REQUIRE(b.hasAttacker({4,1},{1,-1}));
 
     //black rook
-    CHECK(b.hasAttacker({1,0},{-1,0}));
-    CHECK(b.hasAttacker({0,1},{0,-1}));
-    CHECK(b.hasAttacker({6,0},{1,0}));
-    CHECK(b.hasAttacker({7,1},{0,-1}));
+    REQUIRE(b.hasAttacker({1,0},{-1,0}));
+    REQUIRE(b.hasAttacker({0,1},{0,-1}));
+    REQUIRE(b.hasAttacker({6,0},{1,0}));
+    REQUIRE(b.hasAttacker({7,1},{0,-1}));
 
     //black queen
-    CHECK(b.hasAttacker({2,0},{1,0}));
-    CHECK(b.hasAttacker({2,1},{1,-1}));
-    CHECK(b.hasAttacker({3,1},{0,-1}));
-    CHECK(b.hasAttacker({4,1},{-1,-1}));
-    CHECK(b.hasAttacker({4,0},{-1,0}));
+    REQUIRE(b.hasAttacker({2,0},{1,0}));
+    REQUIRE(b.hasAttacker({2,1},{1,-1}));
+    REQUIRE(b.hasAttacker({3,1},{0,-1}));
+    REQUIRE(b.hasAttacker({4,1},{-1,-1}));
+    REQUIRE(b.hasAttacker({4,0},{-1,0}));
 
     //none
     for(signed char i =0; i<8; i++){
-      CHECK(!b.hasAttacker({i,3},{1,0}));
-      CHECK(!b.hasAttacker({i,3},{1,1}));
-      CHECK(!b.hasAttacker({i,3},{1,-1}));
-      CHECK(!b.hasAttacker({i,3},{0,1}));
-      CHECK(!b.hasAttacker({i,3},{0,-1}));
-      CHECK(!b.hasAttacker({i,3},{1,0}));
-      CHECK(!b.hasAttacker({i,3},{1,-1}));
-      CHECK(!b.hasAttacker({i,3},{1,1}));
-      CHECK(!b.hasAttacker({i,4},{1,0}));
-      CHECK(!b.hasAttacker({i,4},{1,1}));
-      CHECK(!b.hasAttacker({i,4},{1,-1}));
-      CHECK(!b.hasAttacker({i,4},{0,1}));
-      CHECK(!b.hasAttacker({i,4},{0,-1}));
-      CHECK(!b.hasAttacker({i,4},{1,0}));
-      CHECK(!b.hasAttacker({i,4},{1,-1}));
-      CHECK(!b.hasAttacker({i,4},{1,1}));
+      REQUIRE(!b.hasAttacker({i,3},{1,0}));
+      REQUIRE(!b.hasAttacker({i,3},{1,1}));
+      REQUIRE(!b.hasAttacker({i,3},{1,-1}));
+      REQUIRE(!b.hasAttacker({i,3},{0,1}));
+      REQUIRE(!b.hasAttacker({i,3},{0,-1}));
+      REQUIRE(!b.hasAttacker({i,3},{1,0}));
+      REQUIRE(!b.hasAttacker({i,3},{1,-1}));
+      REQUIRE(!b.hasAttacker({i,3},{1,1}));
+      REQUIRE(!b.hasAttacker({i,4},{1,0}));
+      REQUIRE(!b.hasAttacker({i,4},{1,1}));
+      REQUIRE(!b.hasAttacker({i,4},{1,-1}));
+      REQUIRE(!b.hasAttacker({i,4},{0,1}));
+      REQUIRE(!b.hasAttacker({i,4},{0,-1}));
+      REQUIRE(!b.hasAttacker({i,4},{1,0}));
+      REQUIRE(!b.hasAttacker({i,4},{1,-1}));
+      REQUIRE(!b.hasAttacker({i,4},{1,1}));
 
     }
   }
@@ -123,7 +123,7 @@ TEST_CASE("Start position") {
 TEST_CASE("Check hasAttacker"){
   Board b;
   bool attacks[8][8]={false};
-  square dir={};
+  square<int> dir={};
   b.clearBoard();
   SUBCASE("hasAttacker"){
     SUBCASE("BLACK PAWN LOOP"){
@@ -177,8 +177,8 @@ TEST_CASE("Check hasAttacker"){
       dir.x = i==3?0:(i>3?-1:1);
       dir.y = j==3?0:(j>3?-1:1);
 
-      CHECK(b.hasAttacker({i,j},dir)==attacks[i][j]);
-      CHECK(b.isAttacked({i,j})==attacks[i][j]);
+      REQUIRE(b.hasAttacker({i,j},dir)==attacks[i][j]);
+      REQUIRE(b.isAttacked({i,j})==attacks[i][j]);
     }
   }
   SUBCASE("BLACK KNIGHT"){
@@ -193,7 +193,7 @@ TEST_CASE("Check hasAttacker"){
       if(i==3 and j==3) continue;
       dir.x = i==3?0:(i>3?-1:1);
       dir.y = j==3?0:(j>3?-1:1);
-      CHECK(b.isAttacked({i,j})==attacks[i][j]);
+      REQUIRE(b.isAttacked({i,j})==attacks[i][j]);
     }
 
   }
@@ -248,46 +248,46 @@ TEST_CASE("Testing getCheck function")
                 || (piece == Piece::blackKnight && diffx + diffy == 3 && diffx != 0 && diffy != 0)
                 || (piece == Piece::blackPawn && diffx == 1 && yking - y == dir))
             {
-              CHECK((c.state & Board::checkMask) == Board::checkMask);
-              CHECK(result.len == 1);
+              REQUIRE((c.state & Board::checkMask) == Board::checkMask);
+              REQUIRE(result.len == 1);
               for (int newy = 0; newy < 8; newy++)
                 for (int newx = 0; newx < 8; newx++)
                   if (piece == Piece::blackKnight || piece == Piece::blackPawn)
                   {
                     if (newx == x && newy == y)
-                      CHECK(result.heatMap[newx][newy] == 1);
+                      REQUIRE(result.heatMap[newx][newy] == 1);
                     else
-                      CHECK(result.heatMap[newx][newy] == 0);
+                      REQUIRE(result.heatMap[newx][newy] == 0);
                   }
                   else if (diffy == 0)
                   {
                     if (((newx >= x && newx < xking) || (newx > xking && newx <= x)) && newy == y)
-                      CHECK(result.heatMap[newx][newy] == 1);
+                      REQUIRE(result.heatMap[newx][newy] == 1);
                     else
-                      CHECK(result.heatMap[newx][newy] == 0);
+                      REQUIRE(result.heatMap[newx][newy] == 0);
                   }
                   else if (diffx == 0)
                   {
                     if (((newy >= y && newy < yking) || (newy > yking && newy <= y)) && newx == x)
-                      CHECK(result.heatMap[newx][newy] == 1);
+                      REQUIRE(result.heatMap[newx][newy] == 1);
                     else
-                      CHECK(result.heatMap[newx][newy] == 0);
+                      REQUIRE(result.heatMap[newx][newy] == 0);
                   }
                   else
                   {
                     if ((abs(newx - xking) == abs(newy - yking)) && ((newx >= x && newx < xking) || (newx > xking && newx <= x)) && ((newy >= y && newy < yking) || (newy > yking && newy <= y)))
-                      CHECK(result.heatMap[newx][newy] == 1);
+                      REQUIRE(result.heatMap[newx][newy] == 1);
                     else
-                      CHECK(result.heatMap[newx][newy] == 0);
+                      REQUIRE(result.heatMap[newx][newy] == 0);
                   }
             }
             else
             {
-              CHECK((c.state & Board::checkMask) == 0);
-              CHECK(result.len == 0);
+              REQUIRE((c.state & Board::checkMask) == 0);
+              REQUIRE(result.len == 0);
               for (int y = 0; y < 8; y++)
               	for (int x = 0; x < 8; x++)
-                  CHECK(result.heatMap[x][y] == 0);
+                  REQUIRE(result.heatMap[x][y] == 0);
             }
           }
         }
@@ -338,26 +338,276 @@ TEST_CASE("Testing getCheck function")
           
           diffx = newx - xking;
           diffy = newy - yking;
-          if (diffx * diffy == -1) CHECK(result.heatMap[newx][newy] == 3);
-          else if (diffx * diffy == 1) CHECK(result.heatMap[newx][newy] == 5);
-          else if (diffx == 0) CHECK(result.heatMap[newx][newy] == 9);
-          else CHECK(result.heatMap[newx][newy] == 17);
-          CHECK((c.state & Board::checkMask) == 0);
+          if (diffx * diffy == -1) REQUIRE(result.heatMap[newx][newy] == 3);
+          else if (diffx * diffy == 1) REQUIRE(result.heatMap[newx][newy] == 5);
+          else if (diffx == 0) REQUIRE(result.heatMap[newx][newy] == 9);
+          else REQUIRE(result.heatMap[newx][newy] == 17);
+          REQUIRE((c.state & Board::checkMask) == 0);
           c.board[newx][newy] = Piece::blackKnight;
           result = c.getCheck({xking,yking});
-          CHECK(result.heatMap[newx][newy] == 0);
-          CHECK((c.state & Board::checkMask) == 0);
+          REQUIRE(result.heatMap[newx][newy] == 0);
+          REQUIRE((c.state & Board::checkMask) == 0);
         }
       }
     }
   }
 }
 
-TEST_CASE("Testing calcMoves function")
+//Check if move specified by the movestring is present in the moveArray
+void CheckPresence(Board * b, const std::vector<move> moves, const char * movestr, bool checkPresent)
+{
+  move checkMove = {{(int)(movestr[0] - 'a'), (int)(movestr[1] - '1')}, {(int)(movestr[3] - 'a'), (int)(movestr[4] - '1')}, (Piece::Piece)movestr[5]};
+  for (unsigned int i = 0; i < moves.size(); i++)
+  {
+    if (moves[i].start.x == checkMove.start.x && moves[i].start.y == checkMove.start.y
+        && moves[i].end.x == checkMove.end.x && moves[i].end.y == checkMove.end.y
+        && (checkMove.promoteTo == 0 || moves[i].promoteTo == checkMove.promoteTo))
+    {
+      if (!checkPresent)
+      {
+        b->printLegalMoves();
+        std::cout << "The move " << movestr << " is not present." << std::endl;
+        REQUIRE(0);
+      }
+      else
+      {
+        REQUIRE(1);
+        return;
+      }
+      return;
+    }
+  }
+  if (checkPresent)
+  {
+    b->printLegalMoves();
+    std::cout << "The move " << movestr << " is not present." << std::endl;
+    REQUIRE(0);
+  }
+  else
+  {
+    REQUIRE(1);
+  }
+}
+
+#define CheckBoard(BOARDSTR, LEGALMOVES...)  {Board b(BOARDSTR); \
+                                              std::vector<move> moves = b.getMoves(); \
+                                              const char * legalMoves[] = {LEGALMOVES}; \
+                                              REQUIRE(sizeof(legalMoves) / sizeof(char*) == moves.size()); \
+                                              for (unsigned int i = 0; i < sizeof(legalMoves) / sizeof(char*); i++) \
+                                                CheckPresence(&b, moves, legalMoves[i], true);}
+
+#define CheckMove(BOARDSTR, LEGALMOVE) {Board b(BOARDSTR); \
+                                        std::vector<move> moves = b.getMoves(); \
+                                        CheckPresence(&b, moves, LEGALMOVE, true);}
+                                        
+#define CheckMoveAbsent(BOARDSTR, LEGALMOVE) {Board b(BOARDSTR); \
+                                              std::vector<move> moves = b.getMoves(); \
+                                              CheckPresence(&b, moves, LEGALMOVE, false);}
+
+TEST_CASE("calcMoves")
 {
   SUBCASE("Standard board position")
   {
-    Board b("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -");
-    b.printLegalMoves();
+    CheckBoard("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq -",
+    "a2-a3",
+    "a2-a4",
+    "b2-b3",
+    "b2-b4",
+    "c2-c3",
+    "c2-c4",
+    "d2-d3",
+    "d2-d4",
+    "e2-e3",
+    "e2-e4",
+    "f2-f3",
+    "f2-f4",
+    "g2-g3",
+    "g2-g4",
+    "h2-h3",
+    "h2-h4",
+    "b1-a3",
+    "b1-c3",
+    "g1-f3",
+    "g1-h3");
+    
+    CheckBoard("rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq -",
+    "a7-a6",
+    "a7-a5",
+    "b7-b6",
+    "b7-b5",
+    "c7-c6",
+    "c7-c5",
+    "d7-d6",
+    "d7-d5",
+    "e7-e6",
+    "e7-e5",
+    "f7-f6",
+    "f7-f5",
+    "g7-g6",
+    "g7-g5",
+    "h7-h6",
+    "h7-h5",
+    "b8-a6",
+    "b8-c6",
+    "g8-f6",
+    "g8-h6");
   }
+  
+  SUBCASE("Castles")
+  {
+    //Check castles
+    CheckMove("4k3/8/8/8/8/8/8/4K2R w K -", "e1-g1");
+    CheckMove("4k3/3r4/8/8/8/8/8/4K2R w K -", "e1-g1");
+    CheckMove("4k3/7r/8/8/8/8/8/4K2R w K -", "e1-g1");
+    CheckMoveAbsent("4k3/4r3/8/8/8/8/8/4K2R w K -", "e1-g1"); //Check if being checked prevents castles
+    CheckMoveAbsent("4k3/5r2/8/8/8/8/8/4K2R w K -", "e1-g1"); //Check if moving over an attacked square prevents castles
+    CheckMoveAbsent("4k3/6r1/8/8/8/8/8/4K2R w K -", "e1-g1"); //Check if an attacked target square prevents castles
+    CheckMoveAbsent("4k3/8/8/8/8/8/8/4K1NR w K -", "e1-g1");  //Check if an obstruction prevents castles
+    CheckMoveAbsent("4k3/8/8/8/8/8/8/4K1nR w K -", "e1-g1");
+    CheckMoveAbsent("4k3/8/8/8/8/8/8/4K2R w - -","e1-g1");
+    
+    //Auxilliary checks on queenside and opponent
+    CheckMoveAbsent("4k3/8/8/8/8/8/8/RN2K3 w Q -","e1-c1");
+    CheckMoveAbsent("4k3/8/8/8/8/8/8/R2NK3 w Q -","e1-c1");
+    CheckMove("r3k3/8/8/8/8/8/8/4K3 b q -","e8-c8");
+    CheckMoveAbsent("r3k3/8/8/8/7Q/8/8/4K3 b q -","e8-c8");
+    CheckMove("4k2r/8/8/8/8/8/8/4K3 b k -","e8-g8");
+  }
+  
+  SUBCASE("Pawn")
+  {
+    CheckBoard("3r3k/2P5/8/8/8/8/8/4K3 w - -",
+    "e1-e2",
+    "e1-f2",
+    "e1-f1",
+    "c7-c8Q",
+    "c7-c8R",
+    "c7-c8B",
+    "c7-c8N",
+    "c7-d8Q",
+    "c7-d8R",
+    "c7-d8B",
+    "c7-d8N");
+    CheckMove("7k/8/3r4/1pP5/8/8/8/3K4 w - b6","c5-d6");
+    CheckMoveAbsent("7k/8/3r4/1pP5/8/8/8/3K4 w - b6","c5-b6");
+    CheckMoveAbsent("7k/8/3r4/1pP5/8/8/8/3K4 w - b6","c5-c6");
+    CheckMove("7k/8/8/r1Pp1K2/8/8/8/8 w - d6","c5-c6");
+    CheckMoveAbsent("7k/8/8/r1Pp1K2/8/8/8/8 w - d6","c5-d6");
+    CheckMove("7k/8/8/r4K2/2P5/8/8/8 w - -","c4-c5");
+    CheckMoveAbsent("8/8/8/8/R1Pp1k2/8/8/7K b - c3","d4-c3");
+    CheckMove("8/8/8/8/R1Pp1k2/8/8/7K b - c3","d4-d3");
+    CheckMove("7k/2b5/8/3pP3/8/6K1/8/8 w - d6","e5-d6");
+    CheckMove("7k/2b5/3p4/4P3/8/6K1/8/8 w - -","e5-d6");
+    CheckMove("7k/4r3/8/8/8/8/4P3/4K3 w - -","e2-e4");
+    CheckMove("7k/4r3/8/8/8/8/4P3/4K3 w - -","e2-e3");
+  }
+  
+  SUBCASE("Blocking")
+  {
+    CheckBoard("7k/3r4/8/4N3/8/5q2/4B3/3K4 w - -",
+    "d1-c1",
+    "d1-c2",
+    "d1-e1",
+    "e5-d7",
+    "e5-d3");
+    CheckMove("7k/3r4/8/8/8/5q2/3NB3/3K4 w - -","e2-f3");
+  }
+  
+  SUBCASE("Double check")
+  {
+  	CheckBoard("7k/8/8/6q1/3r4/2Q5/2QKQ3/4Q3 w - -");
+  }
+  
+  SUBCASE("Draw")
+  {
+    Board b;
+    REQUIRE(!(b.state & Board::drawMask));
+    
+    b = Board("8/8/4k3/8/8/2K5/5N2/8 w - -");
+    REQUIRE((b.state & Board::drawMask));
+    
+    b = Board("8/8/2k5/5B2/8/3K4/8/8 w - -");
+    REQUIRE((b.state & Board::drawMask));
+    
+    b = Board("8/4n3/2k5/8/5B2/3K4/8/8 w - -");
+    REQUIRE(!(b.state & Board::drawMask));
+    
+    b = Board("8/8/2k5/8/5R2/3K4/8/8 w - -");
+    REQUIRE(!(b.state & Board::drawMask));
+    
+    b = Board("8/4b3/2k5/8/8/3K4/8/8 w - -");
+    REQUIRE((b.state & Board::drawMask));
+  }
+}
+
+TEST_CASE("execMove")
+{
+  //Test if pieces get moved
+  SUBCASE("Basic functionality")
+  {
+    Board b;
+    b.execMove({{0,1},{0,3}});
+    REQUIRE(b.board[0][1] == Piece::none);
+    REQUIRE(b.board[0][3] == Piece::whitePawn);
+    REQUIRE((b.state & Board::whiteCastleKingsideMask));
+    REQUIRE((b.state & Board::whiteCastleQueensideMask));
+    REQUIRE((b.state & Board::blackCastleKingsideMask));
+    REQUIRE((b.state & Board::blackCastleQueensideMask));
+    REQUIRE(b.enPassant == 0);
+    REQUIRE((b.state & Board::blackToMoveMask));
+    REQUIRE(b.legalMoves.size() == 20);
+  }
+  
+  //Test if the castle is unset
+  SUBCASE("Castle flags")
+  {
+    Board b("r1bqkbnr/pp1p1ppp/2n1p3/1Bp5/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq -");
+    Board c = b;
+    c.execMove({{4,0},{6,0}});
+    REQUIRE(c.board[4][0] == Piece::none);
+    REQUIRE(c.board[7][0] == Piece::none);
+    REQUIRE(c.board[6][0] == Piece::whiteKing);
+    REQUIRE(c.board[5][0] == Piece::whiteRook);
+    REQUIRE(!(c.state & Board::whiteCastleKingsideMask));
+    REQUIRE(!(c.state & Board::whiteCastleQueensideMask));
+    REQUIRE((c.state & Board::blackCastleKingsideMask));
+    REQUIRE((c.state & Board::blackCastleQueensideMask));
+    
+    c = b;
+    c.execMove({{7,0},{6,0}});
+    REQUIRE(!(c.state & Board::whiteCastleKingsideMask));
+    REQUIRE((c.state & Board::whiteCastleQueensideMask));
+    REQUIRE((c.state & Board::blackCastleKingsideMask));
+    REQUIRE((c.state & Board::blackCastleQueensideMask));
+  }
+  
+  SUBCASE("En passant")
+  {
+    Board b("rnbqkbnr/ppp2ppp/4p3/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6");
+    b.execMove({{4,4},{3,5}});
+    REQUIRE(b.board[4][4] == Piece::none);
+    REQUIRE(b.board[3][5] == Piece::whitePawn);
+    REQUIRE(b.board[3][4] == Piece::none);
+    REQUIRE(b.enPassant == -1);
+  }
+  
+  SUBCASE("Promotion")
+  {
+    Board b("k7/2P5/1K6/8/8/8/8/8 w - -");
+    b.execMove({{2,6},{2,7},Piece::whiteQueen});
+    REQUIRE(b.board[2][6] == Piece::none);
+    REQUIRE(b.board[2][7] == Piece::whiteQueen);
+  }
+}
+
+TEST_CASE("TEST")
+{
+  std::cout << "Generating start position:" << std::endl;
+  Board b;
+  std::cout << "Executing a move:" << std::endl;
+  b.execMove(b.getMoves()[0]);
+  std::cout << "Copying resulting board and executing a move:" << std::endl;
+  Board c = b.cloneAndExecMove(b.getMoves()[0]);
+  std::cout << "The resulting board is:" << std::endl;
+  c.printBoard();
 }
