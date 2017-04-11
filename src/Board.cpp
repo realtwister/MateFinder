@@ -577,7 +577,7 @@ void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, con
             {
               board[curPos.x][curPos.y] = Piece::none;
               board[curPos.x + diffx][curPos.y] = Piece::none;
-              if (curPos.y != kingPos.y || !isAttacked(kingPos))   //OPTIMIZATION POSSIBLE
+              if (curPos.y != kingPos.y || !hasAttacker(kingPos, {(curPos.x < kingPos.x ? -1 : 1),0}))
                 result.push_back({curPos,{curPos.x+diffx,curPos.y+dir}});
               board[curPos.x][curPos.y] = (Piece::Piece)(Piece::whitePawn ^ (state & blackToMoveMask));
               board[curPos.x + diffx][curPos.y] = (Piece::Piece)(Piece::blackPawn ^ (state & blackToMoveMask));

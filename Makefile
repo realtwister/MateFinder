@@ -7,7 +7,7 @@ TEST := bin/tester
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -std=c++11 -g -Wall -O6
+CFLAGS := -std=c++17 -g -Wall -O6
 LIB := -pthread -lprofiler
 INC :=
 
