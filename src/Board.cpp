@@ -151,7 +151,7 @@ int Board::fromFile(const char *fileName) {
   return fromStr(str);
 }
 
-bool Board::isAttacked(const square<int> piecePos) {
+bool Board::isAttacked(const square<int> piecePos) const {
   int xmin, xmax, ymin, ymax, i, j;
 
   xmin = piecePos.x == 0 ? 0 : -1;
@@ -243,14 +243,14 @@ check Board::getCheck(const square<int> kingPos)
  * This function helps the getCheck function to investigate the influence of one of the 8 directions
  * on the output of the getCheck function.
  */
-bool Board::firstPiece(check & result, const square<int> curPos, const square<int> dir, const int friendlies)
+bool Board::firstPiece(check & result, const square<int> curPos, const square<int> dir, const int friendlies) const
 {
 	square<int> newsq = curPos + dir;
   if (newsq.x >= 0 && newsq.x <= 7 && newsq.y >= 0 && newsq.y <= 7)
   {
     if (board[newsq.x][newsq.y] == Piece::none)
     {
-      //Deal with empty square<int>s
+      //Deal with empty squares
       if (firstPiece(result, newsq, dir, friendlies))
       {
         if (friendlies == 0)
@@ -293,7 +293,7 @@ bool Board::firstPiece(check & result, const square<int> curPos, const square<in
   return false;
 }
 
-bool Board::hasAttacker(square<int> pos, const square<int> dir) {
+bool Board::hasAttacker(square<int> pos, const square<int> dir) const {
   int dist = 0;
   if(dir.x == 0){
     dist = dir.y >= 0 ? 7 - pos.y : pos.y;
@@ -589,7 +589,7 @@ void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, con
   }
 }
 
-void Board::checkDir(std::vector<move> & result, const check & kingEnv, const square<int> basePos, const square<int> curPos, const square<int> dir)
+void Board::checkDir(std::vector<move> & result, const check & kingEnv, const square<int> basePos, const square<int> curPos, const square<int> dir) const
 {
   square<int> newPos = curPos + dir;
   if (newPos.x >= 0 && newPos.y >= 0 && newPos.x <= 7 && newPos.y <= 7 && !isFriendly(newPos))
@@ -691,7 +691,7 @@ void Board::execMove(const move move)
   calcMoves();
 }
 
-Board Board::cloneAndExecMove(const move mv)
+Board Board::cloneAndExecMove(const move mv) const
 {
   return Board(*this, mv);
 }
@@ -699,7 +699,8 @@ Board Board::cloneAndExecMove(const move mv)
 /**
  * Print a formatted representation of the board.
  */
-void Board::printBoard() {
+void Board::printBoard() const 
+{
   // Board
   std::cout << " +------------------------+" << std::endl;
 
@@ -747,7 +748,7 @@ void Board::printBoard() {
   }
 }
 
-void Board::printLegalMoves()
+void Board::printLegalMoves() const
 {
   std::cout << "Below, we will show a list of legal moves." << std::endl;
   std::cout << "The current position is depicted below." << std::endl;

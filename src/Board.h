@@ -100,7 +100,6 @@ public:
     drawMask                 = 0x40
   };
   char state;     // Environment flags
-
   signed char enPassant; // the x coordinate of the enPassent move
   std::vector<move> legalMoves;
 
@@ -111,23 +110,20 @@ public:
   // Function and helper functions to calculate the legal moves
   void calcMoves();                    // Calculate legal moves
   void getPieceMoves(std::vector<move>& result, const check& kingEnv, const square<int> curPos, const square<int> kingPos);	//Calculate the legal moves of the piece on square<int> curPos
-  void checkDir(std::vector<move>& result, const check& kingEnv, const square<int> basePos, const square<int> curPos, const square<int> dir); //Check the possible moves of a piece along some file, rank or diagonal
+  void checkDir(std::vector<move>& result, const check& kingEnv, const square<int> basePos, const square<int> curPos, const square<int> dir) const; //Check the possible moves of a piece along some file, rank or diagonal
   
   check getCheck(const square<int> kingPos); // Get the details about a possible check at kingPos
-  bool firstPiece(check& result, const square<int> curPos, const square<int> dir, const int friendlies); // Investigate the possibility of attacks from dir to curPos (Recursive) with heatmap.
+  bool firstPiece(check& result, const square<int> curPos, const square<int> dir, const int friendlies) const; // Investigate the possibility of attacks from dir to curPos (Recursive) with heatmap.
 
-  bool isAttacked(const square<int> piecePos);    // Check whether the square<int> at piecePos is attacked
-  bool hasAttacker(square<int> pos, const square<int> dir);        // Invesitgate the possibility of attacks from dir at curPos
-  inline bool isFriendly(const Piece::Piece piece) {
+  bool isAttacked(const square<int> piecePos) const;    // Check whether the square<int> at piecePos is attacked
+  bool hasAttacker(square<int> pos, const square<int> dir) const;        // Invesitgate the possibility of attacks from dir at curPos
+  inline bool isFriendly(const Piece::Piece piece) const {
     return (piece != Piece::none) && !((state ^ piece) & blackToMoveMask);
   }
 
-  inline bool isFriendly(const square<int> pos) {
+  inline bool isFriendly(const square<int> pos) const {
     return isFriendly(board[pos.x][pos.y]);
   }
-	
-  Piece::Piece getPieceType(const square<int> piecePos);
-  Piece::Piece getPieceType(const Piece::Piece piece);
   
   //Private constructor
   Board(const Board& other, const move mv);
@@ -139,12 +135,12 @@ public:
   Board(const char *str, const bool file); // read from FEN notation from file or string and calculate legal moves.
 
   // Getters
-  Piece::Piece getSquare(const square<int> pos){ return board[pos.x][pos.y];}
-  bool isCheck() {return state & checkMask;  }                   // return checkflag
-  bool blackToMove() {return state & blackToMoveMask;}
-  bool isMate() {return (legalMoves.size() == 0 && state & checkMask);}  // check if current board is mate
-  bool isDraw() {return (state & drawMask);} //check if the current position is stalemated
-  std::vector<move> getMoves() {return legalMoves;}
+  Piece::Piece getSquare(const square<int> pos) const {return board[pos.x][pos.y];}
+  bool isCheck() const {return state & checkMask;}                   // return checkflag
+  bool blackToMove() const {return state & blackToMoveMask;}
+  bool isMate() const {return (legalMoves.size() == 0 && state & checkMask);}  // check if current board is mate
+  bool isDraw() const {return (state & drawMask);} //check if the current position is stalemated
+  std::vector<move> getMoves() const {return legalMoves;}
   
   // Setters
   void execMove(const move mv); // Execute mv.
@@ -153,10 +149,10 @@ public:
   void setPiece(const square<int> sq, const Piece::Piece piece) {board[sq.x][sq.y]=piece;}
   
   // Cloning function
-  Board cloneAndExecMove(const move mv);
+  Board cloneAndExecMove(const move mv) const;
 
   // Print function
-  void printBoard();
-  void printLegalMoves();
+  void printBoard() const;
+  void printLegalMoves() const;
 };
 #endif
