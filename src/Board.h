@@ -85,24 +85,22 @@ struct check
   int len;
   char heatMap[8][8];
 
-  #ifdef DEBUG
-    void display()
+  void display()
+  {
+    int x,y;
+    std::cout << "Debug output of check:" << std::endl;
+    std::cout << " - Length: " << (int)len << std::endl;
+    std::cout << " - Heatmap: " << std::endl;
+    std::cout << "+--------+" << std::endl;
+    for (y = 7; y >= 0; y--)
     {
-      int x,y;
-      std::cout << "Debug output of check:" << std::endl;
-      std::cout << " - Length: " << (int)len << std::endl;
-      std::cout << " - Heatmap: " << std::endl;
-      std::cout << "+--------+" << std::endl;
-      for (y = 7; y >= 0; y--)
-      {
-        std::cout << "|";
-        for (x = 0; x < 8; x++)
-          std::cout << (heatMap[x][y] ? "X" : " ");
-        std::cout << "|" << std::endl;
-      }
-      std::cout << "+--------+" << std::endl;
+      std::cout << "|";
+      for (x = 0; x < 8; x++)
+        std::cout << (heatMap[x][y] ? "X" : " ");
+      std::cout << "|" << std::endl;
     }
-  #endif
+    std::cout << "+--------+" << std::endl;
+  }
 };
 
 class Board {
@@ -133,7 +131,7 @@ public:
   // Function and helper functions to calculate the legal moves
   void calcMoves();                    // Calculate legal moves
   void getPieceMoves(std::vector<move>& result, const check& kingEnv, const square<int> curPos, const square<int> kingPos);	//Calculate the legal moves of the piece on square<int> curPos
-  void checkDir(std::vector<move>& result, const check& kingEnv, const square<int> basePos, const square<int> curPos, const square<int> dir) const; //Check the possible moves of a piece along some file, rank or diagonal
+  inline void checkDir(std::vector<move>& result, const check& kingEnv, const square<int> basePos, const square<int> dir) const; //Check the possible moves of a piece along some file, rank or diagonal
   
   check getCheck(const square<int> kingPos); // Get the details about a possible check at kingPos
   bool firstPiece(check& result, const square<int> curPos, const square<int> dir, const int friendlies) const; // Investigate the possibility of attacks from dir to curPos (Recursive) with heatmap.
@@ -141,12 +139,14 @@ public:
   bool isAttacked(const square<int> piecePos) const;    // Check whether the square<int> at piecePos is attacked
   bool hasAttacker(square<int> pos, const square<int> dir) const;        // Invesitgate the possibility of attacks from dir at curPos
   inline bool isFriendly(const Piece::Piece piece) const {
-    return (piece != Piece::none) && !((state ^ piece) & blackToMoveMask);
+    return !(piece & 0x20);
   }
 
   inline bool isFriendly(const square<int> pos) const {
     return isFriendly(board[pos.x][pos.y]);
   }
+  
+  void flipBoard();
   
   //Private constructor
   Board(const Board& other, const move mv);

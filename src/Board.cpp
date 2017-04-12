@@ -126,6 +126,8 @@ int Board::fromStr(const char * str) {
   }
   str++;
   enPassant = (*str >= 'a' and * str <= 'h') ? (*str - 'a') : -1;
+  
+  if (state & blackToMoveMask) {flipBoard();}
   return 0;
 }
 
@@ -168,7 +170,7 @@ bool Board::isAttacked(const square<int> piecePos) const {
   square<int> pos;
   for(i=0; i<8;i++){
     pos = piecePos+knightMoves[i];
-    if((pos.x<8 and pos.y<8 and pos.x>=0 and pos.y>=0)and (board[pos.x][pos.y]== (Piece::whiteKnight|(~state & blackToMoveMask)))) return true;
+    if ((pos.x<8 and pos.y<8 and pos.x>=0 and pos.y>=0) and (board[pos.x][pos.y] == Piece::blackKnight)) return true;
   }
   return false;
 }
@@ -203,7 +205,7 @@ check Board::getCheck(const square<int> kingPos)
   for(int i=0; i<8; i++)
   {
     newPos = kingPos + knightMoves[i];
-    if (newPos.x >= 0 && newPos.x <= 7 && newPos.y >= 0 && newPos.y <= 7 && board[newPos.x][newPos.y] == (Piece::blackKnight ^ (state & blackToMoveMask)))
+    if (newPos.x >= 0 && newPos.x <= 7 && newPos.y >= 0 && newPos.y <= 7 && board[newPos.x][newPos.y] == Piece::blackKnight)
     {
       result.len++;
       result.heatMap[newPos.x][newPos.y] = 1;
@@ -212,24 +214,23 @@ check Board::getCheck(const square<int> kingPos)
   }
 
 	//Find out if the king is under attack by a pawn
-  int dir = 1 - ((state & blackToMoveMask) >> 5) * 2;
-  if (kingPos.y + dir < 8 && kingPos.y + dir >= 0)
+  if (kingPos.y + 1 < 8 && kingPos.y + 1 >= 0)
   {
     if (kingPos.x < 7)
     {
-      if (board[kingPos.x + 1][kingPos.y + dir] == (Piece::blackPawn ^ (state & blackToMoveMask)))
+      if (board[kingPos.x + 1][kingPos.y + 1] == Piece::blackPawn)
       {
         result.len++;
-        result.heatMap[kingPos.x + 1][kingPos.y + dir] = 1;
+        result.heatMap[kingPos.x + 1][kingPos.y + 1] = 1;
         state |= checkMask;
       }
     }
     if (kingPos.x > 0)
     {
-      if (board[kingPos.x - 1][kingPos.y + dir] == (Piece::blackPawn ^ (state & blackToMoveMask)))
+      if (board[kingPos.x - 1][kingPos.y + 1] == Piece::blackPawn)
       {
   	    result.len++;
-        result.heatMap[kingPos.x - 1][kingPos.y + dir] = 1;
+        result.heatMap[kingPos.x - 1][kingPos.y + 1] = 1;
         state |= checkMask;
       }
     }
@@ -266,20 +267,14 @@ bool Board::firstPiece(check & result, const square<int> curPos, const square<in
       if (friendlies == 1)
         return false;
       if (firstPiece(result, newsq, dir, 1))
-      {
-        result.heatMap[newsq.x][newsq.y] = 1;
-        if (dir.x * dir.y == -1) result.heatMap[newsq.x][newsq.y] |= (0x1 << 1);
-        else if (dir.x * dir.y == 1) result.heatMap[newsq.x][newsq.y] |= (0x1 << 2);
-        else if (dir.x == 0) result.heatMap[newsq.x][newsq.y] |= (0x1 << 3);
-        else result.heatMap[newsq.x][newsq.y] |= (0x1 << 4);
-      }
+        result.heatMap[newsq.x][newsq.y] = 2 + dir.x * dir.y + 2 * (dir.x == 0);
       return false;
     }
     else
     {
       //Deal with direct attackers
-      Piece::Piece piece = (Piece::Piece)(board[newsq.x][newsq.y] & ~((char)0x20));
-      if (piece == Piece::whiteQueen || (piece == Piece::whiteRook && dir.x * dir.y == 0) || (piece == Piece::whiteBishop && dir.x * dir.y != 0))
+      Piece::Piece piece = board[newsq.x][newsq.y];
+      if (piece == Piece::blackQueen || (piece == Piece::blackRook && dir.x * dir.y == 0) || (piece == Piece::blackBishop && dir.x * dir.y != 0))
       {
         if (friendlies == 0)
         {
@@ -299,7 +294,7 @@ bool Board::hasAttacker(square<int> pos, const square<int> dir) const {
     dist = dir.y >= 0 ? 7 - pos.y : pos.y;
   }
   else if(dir.y == 0){
-      dist = dir.x >= 0 ? 7 - pos.x : pos.x;
+    dist = dir.x >= 0 ? 7 - pos.x : pos.x;
   }
   else{
     dist = fmin(dir.x >= 0 ? 7 - pos.x : pos.x,dir.y >= 0 ? 7 - pos.y : pos.y);
@@ -314,8 +309,7 @@ bool Board::hasAttacker(square<int> pos, const square<int> dir) const {
           return i==0;
         case Piece::whitePawn:
           if (i > 0) return false;
-
-          return !(state & blackToMoveMask) != !(dir.y == 1);
+          return dir.y == 1;
 
         case Piece::whiteQueen:
         case Piece::whiteBishop:
@@ -369,7 +363,7 @@ void Board::calcMoves()
   {
     kingPos.x = globalCounter / 8;
     kingPos.y = globalCounter % 8;
-    if (board[kingPos.x][kingPos.y] == (Piece::whiteKing ^ (state & blackToMoveMask)))
+    if (board[kingPos.x][kingPos.y] == Piece::whiteKing)
     {
       kingEnv = getCheck(kingPos);
       break;
@@ -382,7 +376,7 @@ void Board::calcMoves()
         friendlyCtr++;
         lastFriendly = board[kingPos.x][kingPos.y];
       }
-      else if (board[kingPos.x][kingPos.y] != (Piece::blackKing ^ (state & blackToMoveMask)))
+      else if (board[kingPos.x][kingPos.y] != Piece::blackKing)
       {
         enemyCtr++;
         lastEnemy = board[kingPos.x][kingPos.y];
@@ -402,38 +396,27 @@ void Board::calcMoves()
     for (dir.y = ymin; dir.y <= ymax; dir.y++)
       if ((dir.x != 0 || dir.y != 0) && !isFriendly(kingPos + dir) && !isAttacked(kingPos + dir))
         legalMoves.push_back({kingPos, kingPos + dir});
-  board[kingPos.x][kingPos.y] = (Piece::Piece)((char)Piece::whiteKing | (char)(state & blackToMoveMask));
+  board[kingPos.x][kingPos.y] = Piece::whiteKing;
   
   //We look at castles now
-  if (!(state & blackToMoveMask))
+  if (!(state & checkMask))
   {
-  	//White is to move
-  	if ((state & whiteCastleKingsideMask) && !(state & checkMask) && board[5][0] == Piece::none && board[6][0] == Piece::none
-  	    && !isAttacked({5,0}) && !isAttacked({6,0}))
-  	  legalMoves.push_back({{4,0},{6,0}});
-  	if ((state & whiteCastleQueensideMask) && !(state & checkMask) && board[3][0] == Piece::none && board[2][0] == Piece::none && board[1][0] == Piece::none
-  	    && !isAttacked({3,0}) && !isAttacked({2,0}))
-  	  legalMoves.push_back({{4,0},{2,0}});
-  }
-  else
-  {
-    //Black is to move
-    if ((state & blackCastleKingsideMask) && !(state & checkMask) && board[5][7] == Piece::none && board[6][7] == Piece::none
-        && !isAttacked({5,7}) && !isAttacked({6,7}))
-      legalMoves.push_back({{4,7},{6,7}});
-    if ((state & blackCastleQueensideMask) && !(state & checkMask) && board[3][7] == Piece::none && board[2][7] == Piece::none&& board[1][7] == Piece::none
-        && !isAttacked({3,7}) && !isAttacked({2,7}))
-      legalMoves.push_back({{4,7},{2,7}});
+    if ((state & whiteCastleKingsideMask) && board[5][0] == Piece::none && board[6][0] == Piece::none
+        && !isAttacked({5,0}) && !isAttacked({6,0}))
+      legalMoves.push_back({{4,0},{6,0}});
+    if ((state & whiteCastleQueensideMask) && board[3][0] == Piece::none && board[2][0] == Piece::none && board[1][0] == Piece::none
+        && !isAttacked({3,0}) && !isAttacked({2,0}))
+      legalMoves.push_back({{4,0},{2,0}});
   }
   
   //We can only move other pieces if at most one piece is attacking the king
   if (kingEnv.len <= 1)
   {
-    //Now, loop over all the square<int>s in the friendlySquares array
+    //Now, loop over all the squares in the friendlySquares array
     for (int i = 0; i < friendlySquaresCtr; i++)
       getPieceMoves(legalMoves, kingEnv, friendlySquares[i], kingPos);
     
-    //Finally, loop over all remaining square<int>s
+    //Finally, loop over all remaining squares
     square<int> remaining;
     for (globalCounter++; globalCounter < 64; globalCounter++)
     {
@@ -447,7 +430,7 @@ void Board::calcMoves()
           friendlyCtr++;
           lastFriendly = board[remaining.x][remaining.y];
         }
-        else if (board[remaining.x][remaining.y] != (Piece::blackKing ^ (state & blackToMoveMask)))
+        else if (board[remaining.x][remaining.y] != Piece::blackKing)
         {
           enemyCtr++;
           lastEnemy = board[remaining.x][remaining.y];
@@ -458,8 +441,8 @@ void Board::calcMoves()
   
   //Determine if we have a draw
   if (friendlyCtr + enemyCtr <= 1
-      && (friendlyCtr == 0 || (friendlyCtr == 1 && ((lastFriendly & (char)(~0x20)) == Piece::whiteKnight || (lastFriendly & (char)(~0x20)) == Piece::whiteBishop)))
-      && (enemyCtr == 0 || (enemyCtr == 1 && ((lastEnemy & (char)(~0x20)) == Piece::whiteKnight || (lastEnemy & (char)(~0x20)) == Piece::whiteBishop))))
+      && (friendlyCtr == 0 || (friendlyCtr == 1 && (lastFriendly == Piece::whiteKnight || lastFriendly == Piece::whiteBishop)))
+      && (enemyCtr == 0 || (enemyCtr == 1 && (lastEnemy == Piece::blackKnight || lastEnemy == Piece::blackBishop))))
     state |= drawMask;
   
   //Deallocate the temporary variables
@@ -469,9 +452,9 @@ void Board::calcMoves()
 
 void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, const square<int> curPos, const square<int> kingPos)
 {
-  int xmin, xmax, ymin, ymax, dir;
-  square<int> newPos;
-  switch (board[curPos.x][curPos.y] & (char)~0x20)
+  int xmin, xmax, ymin, ymax;
+  square<int> newPos, dir;
+  switch ((char)board[curPos.x][curPos.y])
   {
     case Piece::whiteQueen:
       xmin = (curPos.x == 0 ? 0 : -1);
@@ -479,15 +462,10 @@ void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, con
       ymin = (curPos.y == 0 ? 0 : -1);
       ymax = (curPos.y == 7 ? 0 : 1);
       
-      for (int dirx = xmin; dirx <= xmax; dirx++)
-        for (int diry = ymin; diry <= ymax; diry++)
-          if (dirx != 0 || diry != 0)
-            if (kingEnv.heatMap[curPos.x][curPos.y] == 0
-                || (dirx * diry == -1 && kingEnv.heatMap[curPos.x][curPos.y] & 0x2)
-                || (dirx * diry == 1 && kingEnv.heatMap[curPos.x][curPos.y] & 0x4)
-                || (dirx == 0 && kingEnv.heatMap[curPos.x][curPos.y] & 0x8)
-                || (diry == 0 && kingEnv.heatMap[curPos.x][curPos.y] & 0x10))
-              checkDir(result, kingEnv, curPos, curPos, {dirx,diry});
+      for (dir.x = xmin; dir.x <= xmax; dir.x++)
+        for (dir.y = ymin; dir.y <= ymax; dir.y++)
+          if ((dir.x != 0 || dir.y != 0) && (kingEnv.heatMap[curPos.x][curPos.y] == 0 || kingEnv.heatMap[curPos.x][curPos.y] == 2 + dir.x * dir.y + 2 * (dir.x == 0)))
+            checkDir(result, kingEnv, curPos, dir);
       break;
     
     case Piece::whiteRook:
@@ -496,12 +474,14 @@ void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, con
       ymin = (curPos.y == 0 ? 1 : -1);
       ymax = (curPos.y == 7 ? -1 : 1);
       
-      if (kingEnv.heatMap[curPos.x][curPos.y] == 0 || kingEnv.heatMap[curPos.x][curPos.y] & 0x10)
-        for (int dirx = xmin; dirx <= xmax; dirx += 2)
-          checkDir(result, kingEnv, curPos, curPos, {dirx,0});
-      if (kingEnv.heatMap[curPos.x][curPos.y] == 0 || kingEnv.heatMap[curPos.x][curPos.y] & 0x8)
-        for (int diry = ymin; diry <= ymax; diry += 2)
-          checkDir(result, kingEnv, curPos, curPos, {0,diry});
+      dir.y = 0;
+      if (kingEnv.heatMap[curPos.x][curPos.y] == 0 || kingEnv.heatMap[curPos.x][curPos.y] == 2)
+        for (dir.x = xmin; dir.x <= xmax; dir.x += 2)
+          checkDir(result, kingEnv, curPos, dir);
+      dir.x = 0;
+      if (kingEnv.heatMap[curPos.x][curPos.y] == 0 || kingEnv.heatMap[curPos.x][curPos.y] == 4)
+        for (dir.y = ymin; dir.y <= ymax; dir.y += 2)
+          checkDir(result, kingEnv, curPos, dir);
       break;
     
     case Piece::whiteBishop:
@@ -510,16 +490,14 @@ void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, con
       ymin = (curPos.y == 0 ? 1 : -1);
       ymax = (curPos.y == 7 ? -1 : 1);
       
-      for (int dirx = xmin; dirx <= xmax; dirx += 2)
-        for (int diry = ymin; diry <= ymax; diry += 2)
-          if (kingEnv.heatMap[curPos.x][curPos.y] == 0
-              || (dirx * diry == -1 && kingEnv.heatMap[curPos.x][curPos.y] & 0x2)
-              || (dirx * diry == 1 && kingEnv.heatMap[curPos.x][curPos.y] & 0x4))
-            checkDir(result, kingEnv, curPos, curPos, {dirx,diry});
+      for (dir.x = xmin; dir.x <= xmax; dir.x += 2)
+        for (dir.y = ymin; dir.y <= ymax; dir.y += 2)
+          if (kingEnv.heatMap[curPos.x][curPos.y] == 0 || kingEnv.heatMap[curPos.x][curPos.y] == 2 + dir.x * dir.y + 2 * (dir.x == 0))
+            checkDir(result, kingEnv, curPos, dir);
       break;
     
     case Piece::whiteKnight:
-      for(int i=0; i<8; i++)
+      for (int i = 0; i < 8; i++)
       {
         newPos = curPos + knightMoves[i];
         if (newPos.x >= 0 && newPos.x <= 7 && newPos.y >= 0 && newPos.y <= 7 && !isFriendly(newPos)
@@ -529,59 +507,53 @@ void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, con
       break;
       
     case Piece::whitePawn:
-      dir = 1 - 2 * (int)((state & blackToMoveMask) >> 5);
-      xmin = (curPos.x == 0 ? 0 : -1);
-      xmax = (curPos.x == 7 ? 0 : 1);
-      for (int diffx = xmin; diffx <= xmax; diffx++)
+      //Check straight ahead
+      if (board[curPos.x][curPos.y + 1] == Piece::none && (kingEnv.heatMap[curPos.x][curPos.y] == 0 || kingEnv.heatMap[curPos.x][curPos.y] == 4))
       {
-        if (diffx == 0)
-        {
-          if (board[curPos.x][curPos.y + dir] == Piece::none && (kingEnv.heatMap[curPos.x][curPos.y] == 0 || kingEnv.heatMap[curPos.x][curPos.y] & 0x8))
+      	if (!(state & checkMask) || kingEnv.heatMap[curPos.x][curPos.y+1] != 0)
+      	{
+          if (curPos.y == 6)
           {
-          	if (!(state & checkMask) || kingEnv.heatMap[curPos.x][curPos.y+dir] != 0)
-          	{
-              if ((curPos.y + dir) % 7 == 0)
-              {
-                result.push_back({curPos,{curPos.x,curPos.y+dir},(state & blackToMoveMask ? Piece::blackQueen : Piece::whiteQueen)});
-                result.push_back({curPos,{curPos.x,curPos.y+dir},(state & blackToMoveMask ? Piece::blackRook : Piece::whiteRook)});
-                result.push_back({curPos,{curPos.x,curPos.y+dir},(state & blackToMoveMask ? Piece::blackBishop : Piece::whiteBishop)});
-                result.push_back({curPos,{curPos.x,curPos.y+dir},(state & blackToMoveMask ? Piece::blackKnight : Piece::whiteKnight)});
-              }
-              else
-                result.push_back({curPos,{curPos.x,curPos.y+dir}});
-            }
-            if ((curPos.y - dir) % 7 == 0 && board[curPos.x][curPos.y+2*dir] == Piece::none && (!(state & checkMask) || kingEnv.heatMap[curPos.x][curPos.y+2*dir] != 0))
-              result.push_back({curPos,{curPos.x,curPos.y+2*dir}});
+            result.push_back({curPos,{curPos.x,curPos.y+1},Piece::whiteQueen});
+            result.push_back({curPos,{curPos.x,curPos.y+1},Piece::whiteRook});
+            result.push_back({curPos,{curPos.x,curPos.y+1},Piece::whiteBishop});
+            result.push_back({curPos,{curPos.x,curPos.y+1},Piece::whiteKnight});
           }
+          else
+            result.push_back({curPos,{curPos.x,curPos.y+1}});
         }
-        else
+        if (curPos.y == 1 && board[curPos.x][3] == Piece::none && (!(state & checkMask) || kingEnv.heatMap[curPos.x][3] != 0))
+          result.push_back({curPos,{curPos.x,3}});
+      }
+      
+      //Check taking
+      xmin = (curPos.x == 0 ? 1 : -1);
+      xmax = (curPos.x == 7 ? -1 : 1);
+      for (int diffx = xmin; diffx <= xmax; diffx += 2)
+      {
+        if ((kingEnv.heatMap[curPos.x][curPos.y] == 0 || kingEnv.heatMap[curPos.x][curPos.y] == 2 + diffx)
+             && (!(state & checkMask) || kingEnv.heatMap[curPos.x+diffx][curPos.y+1] != 0))
         {
-          if ((kingEnv.heatMap[curPos.x][curPos.y] == 0
-                   || (dir * diffx == -1 && kingEnv.heatMap[curPos.x][curPos.y] & 0x2)
-                   || (dir * diffx == 1 && kingEnv.heatMap[curPos.x][curPos.y] & 0x4))
-               && (!(state & checkMask) || kingEnv.heatMap[curPos.x+diffx][curPos.y+dir] != 0))
+          if (board[curPos.x + diffx][curPos.y + 1] != Piece::none && !isFriendly({curPos.x + diffx, curPos.y + 1}))
           {
-            if (board[curPos.x + diffx][curPos.y + dir] != Piece::none && !isFriendly({curPos.x + diffx, curPos.y + dir}))
+            if (curPos.y == 6)
             {
-              if ((curPos.y + dir) % 7 == 0)
-              {
-                result.push_back({curPos,{curPos.x+diffx,curPos.y+dir},(state & blackToMoveMask ? Piece::blackQueen : Piece::whiteQueen)});
-                result.push_back({curPos,{curPos.x+diffx,curPos.y+dir},(state & blackToMoveMask ? Piece::blackRook : Piece::whiteRook)});
-                result.push_back({curPos,{curPos.x+diffx,curPos.y+dir},(state & blackToMoveMask ? Piece::blackBishop : Piece::whiteBishop)});
-                result.push_back({curPos,{curPos.x+diffx,curPos.y+dir},(state & blackToMoveMask ? Piece::blackKnight : Piece::whiteKnight)});
-              }
-              else
-                result.push_back({curPos,{curPos.x+diffx,curPos.y+dir}});
+              result.push_back({curPos,{curPos.x+diffx,curPos.y+1},Piece::whiteQueen});
+              result.push_back({curPos,{curPos.x+diffx,curPos.y+1},Piece::whiteRook});
+              result.push_back({curPos,{curPos.x+diffx,curPos.y+1},Piece::whiteBishop});
+              result.push_back({curPos,{curPos.x+diffx,curPos.y+1},Piece::whiteKnight});
             }
-            else if (curPos.y == (dir == 1 ? 4 : 3) && enPassant == curPos.x + diffx)
-            {
-              board[curPos.x][curPos.y] = Piece::none;
-              board[curPos.x + diffx][curPos.y] = Piece::none;
-              if (curPos.y != kingPos.y || !hasAttacker(kingPos, {(curPos.x < kingPos.x ? -1 : 1),0}))
-                result.push_back({curPos,{curPos.x+diffx,curPos.y+dir}});
-              board[curPos.x][curPos.y] = (Piece::Piece)(Piece::whitePawn ^ (state & blackToMoveMask));
-              board[curPos.x + diffx][curPos.y] = (Piece::Piece)(Piece::blackPawn ^ (state & blackToMoveMask));
-            }
+            else
+              result.push_back({curPos,{curPos.x+diffx,curPos.y+1}});
+          }
+          else if (curPos.y == 4 && enPassant == curPos.x + diffx)
+          {
+            board[curPos.x][curPos.y] = Piece::none;
+            board[curPos.x + diffx][curPos.y] = Piece::none;
+            if (curPos.y != kingPos.y || !hasAttacker(kingPos, {(curPos.x < kingPos.x ? -1 : 1),0}))
+              result.push_back({curPos,{curPos.x+diffx,curPos.y+1}});
+            board[curPos.x][curPos.y] = Piece::whitePawn;
+            board[curPos.x + diffx][curPos.y] = Piece::blackPawn;
           }
         }
       }
@@ -589,16 +561,39 @@ void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, con
   }
 }
 
-void Board::checkDir(std::vector<move> & result, const check & kingEnv, const square<int> basePos, const square<int> curPos, const square<int> dir) const
+inline void Board::checkDir(std::vector<move> & result, const check & kingEnv, const square<int> basePos, const square<int> dir) const
 {
-  square<int> newPos = curPos + dir;
-  if (newPos.x >= 0 && newPos.y >= 0 && newPos.x <= 7 && newPos.y <= 7 && !isFriendly(newPos))
+  int dist;
+  if (dir.x == 0) dist = (dir.y >= 0 ? 7 - basePos.y : basePos.y);
+  else if (dir.y == 0) dist = (dir.x >= 0 ? 7 - basePos.x : basePos.x);
+  else dist = fmin(dir.y >= 0 ? 7 - basePos.y : basePos.y, dir.x >= 0 ? 7 - basePos.x : basePos.x);
+  
+  square<int> curPos = basePos;
+  for (int i = 0; i < dist; i++)
   {
-    if (!(state & checkMask) || kingEnv.heatMap[newPos.x][newPos.y] != 0)
-      result.push_back({basePos, newPos});
-    if (board[newPos.x][newPos.y] == Piece::none)
-      checkDir(result, kingEnv, basePos, newPos, dir);
+    curPos += dir;
+    if (!isFriendly(curPos) && (!(state & checkMask) || kingEnv.heatMap[curPos.x][curPos.y] != 0))
+      result.push_back({basePos, curPos});
+    if (board[curPos.x][curPos.y] != Piece::none)
+      return;
   }
+}
+
+void Board::flipBoard()
+{
+  char tmp;
+  for (int x = 0; x < 8; x++)
+    for (int y = 0; y < 4; y++)
+    {
+      tmp = board[x][y];
+      board[x][y] = (Piece::Piece)(board[x][7-y] != Piece::none ? board[x][7-y] ^ (char)0x20 : Piece::none);
+      board[x][7-y] = (Piece::Piece)(tmp != Piece::none ? tmp ^ (char)0x20 : Piece::none);
+    }
+  
+  state = (state & ~(whiteCastleKingsideMask | whiteCastleQueensideMask | blackCastleKingsideMask | blackCastleQueensideMask))
+           | ((state & (blackCastleKingsideMask | blackCastleQueensideMask)) >> 2)
+           | ((state & (whiteCastleKingsideMask | whiteCastleQueensideMask)) << 2);
+  return;
 }
 
 Board::Board(const Board& other, const move mv)
@@ -664,15 +659,9 @@ void Board::execMove(const move move)
     
     case Piece::whiteRook:
       if (move.start.x == 0)
-      {
-        if (state & blackToMoveMask) {state &= (char)(~blackCastleQueensideMask);}
-        else {state &= (char)(~whiteCastleQueensideMask);}
-      }
+        state &= (char)(~whiteCastleQueensideMask);
       else if (move.start.x == 7)
-      {
-        if (state & blackToMoveMask) {state &= (char)(~blackCastleKingsideMask);}
-        else {state &= (char)(~whiteCastleKingsideMask);}
-      }
+        state &= (char)(~whiteCastleKingsideMask);
       board[move.end.x][move.end.y] = board[move.start.x][move.start.y];
       board[move.start.x][move.start.y] = Piece::none;
       break;
@@ -680,14 +669,14 @@ void Board::execMove(const move move)
     case Piece::whiteKing:
       if (move.start.x == 4 && move.end.x == 6) {board[5][move.start.y] = board[7][move.start.y]; board[7][move.start.y] = Piece::none;}
       else if (move.start.x == 4 && move.end.x == 2) {board[3][move.start.y] = board[0][move.start.y]; board[0][move.start.y] = Piece::none;}
-      if (state & blackToMoveMask) {state &= (char)(~(blackCastleKingsideMask | blackCastleQueensideMask));}
-      else {state &= (char)(~(whiteCastleKingsideMask | whiteCastleQueensideMask));}
+      state &= (char)(~(whiteCastleKingsideMask | whiteCastleQueensideMask));
     default:
       board[move.end.x][move.end.y] = board[move.start.x][move.start.y];
       board[move.start.x][move.start.y] = Piece::none;
       break;
   }
   state ^= blackToMoveMask;
+  flipBoard();
   calcMoves();
 }
 
@@ -701,6 +690,9 @@ Board Board::cloneAndExecMove(const move mv) const
  */
 void Board::printBoard() const 
 {
+  Board c = *this;
+  if (c.state & blackToMoveMask) {c.flipBoard();}
+  
   // Board
   std::cout << " +------------------------+" << std::endl;
 
@@ -709,7 +701,7 @@ void Board::printBoard() const
 
     for (int j = 0; j < 8; j++) {
       std::cout << ' '
-                << (char)board[j][i]
+                << (char)c.board[j][i]
                 << ' ';
     }
     std::cout << '|' << std::endl;
@@ -722,7 +714,7 @@ void Board::printBoard() const
 
   // Who to move
   std::cout << "        "
-            << ((state & blackToMoveMask) ? "black" : "white")
+            << ((c.state & blackToMoveMask) ? "black" : "white")
             << " to move"
             << std::endl
             << std::endl;
@@ -731,20 +723,20 @@ void Board::printBoard() const
   std::cout << "CASTLE| queenside kingside"
             << std::endl
             << " White|      "
-            << ((state & whiteCastleQueensideMask) ? "1" : "0")
+            << ((c.state & whiteCastleQueensideMask) ? "1" : "0")
             << "        "
-            << ((state & whiteCastleKingsideMask) ? "1" : "0")
+            << ((c.state & whiteCastleKingsideMask) ? "1" : "0")
             << std::endl
 
             << " Black|      "
-            << ((state & blackCastleQueensideMask) ? "1" : "0")
+            << ((c.state & blackCastleQueensideMask) ? "1" : "0")
             << "        "
-            << ((state & blackCastleKingsideMask) ? "1" : "0")
+            << ((c.state & blackCastleKingsideMask) ? "1" : "0")
             << std::endl;
 
   // enPassant
-  if (enPassant >= 0) {
-    std::cout << "En passant on file: " << char('a' + enPassant) << std::endl;
+  if (c.enPassant >= 0) {
+    std::cout << "En passant on file: " << char('a' + c.enPassant) << std::endl;
   }
 }
 
@@ -756,7 +748,7 @@ void Board::printLegalMoves() const
   std::cout << "There are " << legalMoves.size() << " legal moves." << std::endl;
   for (unsigned int i = 0; i < legalMoves.size(); i++)
   {
-    std::cout << (i+1) << ": " << (char)(legalMoves[i].start.x + 'a') << (legalMoves[i].start.y + 1)
-              << "-" << (char)(legalMoves[i].end.x + 'a') << (legalMoves[i].end.y + 1) << std::endl;
+    std::cout << (i+1) << ": " << (char)(legalMoves[i].start.x + 'a') << ((state & blackToMoveMask ? 7 - legalMoves[i].start.y : legalMoves[i].start.y) + 1)
+              << "-" << (char)(legalMoves[i].end.x + 'a') << ((state & blackToMoveMask ? 7 - legalMoves[i].end.y : legalMoves[i].end.y) + 1) << std::endl;
   }
 }

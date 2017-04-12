@@ -51,11 +51,13 @@ TEST_CASE("Start position") {
     }
     REQUIRE(b.hasAttacker({0,5},{1,1}));
     REQUIRE(b.hasAttacker({7,5},{-1,1}));
+    
     //black bishop
     REQUIRE(b.hasAttacker({1,6},{1,1}));
     REQUIRE(b.hasAttacker({3,6},{-1,1}));
     REQUIRE(b.hasAttacker({6,6},{-1,1}));
     REQUIRE(b.hasAttacker({4,6},{1,1}));
+    
     //black rook
     REQUIRE(b.hasAttacker({1,7},{-1,0}));
     REQUIRE(b.hasAttacker({0,6},{0,1}));
@@ -69,7 +71,7 @@ TEST_CASE("Start position") {
     REQUIRE(b.hasAttacker({4,6},{-1,1}));
     REQUIRE(b.hasAttacker({4,7},{-1,0}));
 
-    b.changeColor();
+    /*b.changeColor();
     //white pawn
     for (signed char i = 1; i < 7; i++) {
     REQUIRE(b.hasAttacker({i,2},{-1,-1}));
@@ -94,7 +96,7 @@ TEST_CASE("Start position") {
     REQUIRE(b.hasAttacker({2,1},{1,-1}));
     REQUIRE(b.hasAttacker({3,1},{0,-1}));
     REQUIRE(b.hasAttacker({4,1},{-1,-1}));
-    REQUIRE(b.hasAttacker({4,0},{-1,0}));
+    REQUIRE(b.hasAttacker({4,0},{-1,0}));*/
 
     //none
     for(signed char i =0; i<8; i++){
@@ -114,7 +116,6 @@ TEST_CASE("Start position") {
       REQUIRE(!b.hasAttacker({i,4},{1,0}));
       REQUIRE(!b.hasAttacker({i,4},{1,-1}));
       REQUIRE(!b.hasAttacker({i,4},{1,1}));
-
     }
   }
 }
@@ -130,12 +131,6 @@ TEST_CASE("Check hasAttacker"){
       b.setPiece({3,3}, Piece::blackPawn);
       attacks[2][2]=true;
       attacks[4][2]=true;
-    }
-    SUBCASE("WHITE PAWN LOOP"){
-      b.changeColor();
-      b.setPiece({3,3}, Piece::whitePawn);
-      attacks[2][4]=true;
-      attacks[4][4]=true;
     }
     SUBCASE("BLACK BISHOP"){
       std::cout<<"BLACK BISHOP"<<std::endl;
@@ -216,79 +211,72 @@ TEST_CASE("Testing getCheck function")
       //Other piece can be placed anywhere
       for (int i = 0; i < 64; i++)
       {
-        //Toggle between who is to move
-        for (char move = 0; move <= 1; move++)
+        //Set up the board except for the other piece
+        for (int j = 0; j < 64; j++) {c.board[j / 8][j % 8] = Piece::none;}
+        c.board[xking][yking] = Piece::whiteKing;
+
+        //Calculate location of the other piece
+        int x = i % 8;
+        int y = i / 8;
+        if (x == xking && y == yking) {continue;}
+        int diffx = abs(x - xking);
+        int diffy = abs(y - yking);
+
+        //Loop through all the pieces
+        for (unsigned char j = 0; j < sizeof(Piece::blackPieces) / sizeof(Piece::Piece); j++)
         {
-          //Set up the board except for the other piece
-          for (int j = 0; j < 64; j++) {c.board[j / 8][j % 8] = Piece::none;}
-          if (move != 0) {c.state |= Board::blackToMoveMask;}
-          else {c.state &= (char)~Board::blackToMoveMask;}
-          c.board[xking][yking] = (move == 0 ? Piece::whiteKing : Piece::blackKing);
+          Piece::Piece piece = Piece::blackPieces[j];
+          if (((y == 0 || y == 7) && piece == Piece::blackPawn) || piece == Piece::blackKing) {continue;}
 
-          //Calculate location of the other piece
-          int x = i % 8;
-          int y = i / 8;
-          if (x == xking && y == yking) {continue;}
-          int diffx = abs(x - xking);
-          int diffy = abs(y - yking);
-          int dir = 2 * move - 1;
+          c.board[x][y] = piece;
+          check result = c.getCheck({xking,yking});
 
-          //Loop through all the pieces
-          for (unsigned char j = 0; j < sizeof(Piece::blackPieces) / sizeof(Piece::Piece); j++)
+          //Check for check
+          if (((diffx == 0 || diffy == 0) && (piece == Piece::blackQueen || piece == Piece::blackRook))
+              || (diffx == diffy && (piece == Piece::blackQueen || piece == Piece::blackBishop))
+              || (piece == Piece::blackKnight && diffx + diffy == 3 && diffx != 0 && diffy != 0)
+              || (piece == Piece::blackPawn && diffx == 1 && yking - y == -1))
           {
-            Piece::Piece piece = Piece::blackPieces[j];
-            if (((y == 0 || y == 7) && piece == Piece::blackPawn) || piece == Piece::blackKing) {continue;}
-
-            c.board[x][y] = (Piece::Piece)(piece ^ (c.state & Board::blackToMoveMask));
-            check result = c.getCheck({xking,yking});
-
-            //Check for check
-            if (((diffx == 0 || diffy == 0) && (piece == Piece::blackQueen || piece == Piece::blackRook))
-                || (diffx == diffy && (piece == Piece::blackQueen || piece == Piece::blackBishop))
-                || (piece == Piece::blackKnight && diffx + diffy == 3 && diffx != 0 && diffy != 0)
-                || (piece == Piece::blackPawn && diffx == 1 && yking - y == dir))
-            {
-              REQUIRE((c.state & Board::checkMask) == Board::checkMask);
-              REQUIRE(result.len == 1);
-              for (int newy = 0; newy < 8; newy++)
-                for (int newx = 0; newx < 8; newx++)
-                  if (piece == Piece::blackKnight || piece == Piece::blackPawn)
-                  {
-                    if (newx == x && newy == y)
-                      REQUIRE(result.heatMap[newx][newy] == 1);
-                    else
-                      REQUIRE(result.heatMap[newx][newy] == 0);
-                  }
-                  else if (diffy == 0)
-                  {
-                    if (((newx >= x && newx < xking) || (newx > xking && newx <= x)) && newy == y)
-                      REQUIRE(result.heatMap[newx][newy] == 1);
-                    else
-                      REQUIRE(result.heatMap[newx][newy] == 0);
-                  }
-                  else if (diffx == 0)
-                  {
-                    if (((newy >= y && newy < yking) || (newy > yking && newy <= y)) && newx == x)
-                      REQUIRE(result.heatMap[newx][newy] == 1);
-                    else
-                      REQUIRE(result.heatMap[newx][newy] == 0);
-                  }
+            REQUIRE((c.state & Board::checkMask) == Board::checkMask);
+            REQUIRE(result.len == 1);
+            for (int newy = 0; newy < 8; newy++)
+              for (int newx = 0; newx < 8; newx++)
+                if (piece == Piece::blackKnight || piece == Piece::blackPawn)
+                {
+                  if (newx == x && newy == y)
+                    REQUIRE(result.heatMap[newx][newy] == 1);
                   else
-                  {
-                    if ((abs(newx - xking) == abs(newy - yking)) && ((newx >= x && newx < xking) || (newx > xking && newx <= x)) && ((newy >= y && newy < yking) || (newy > yking && newy <= y)))
-                      REQUIRE(result.heatMap[newx][newy] == 1);
-                    else
-                      REQUIRE(result.heatMap[newx][newy] == 0);
-                  }
-            }
-            else
-            {
-              REQUIRE((c.state & Board::checkMask) == 0);
-              REQUIRE(result.len == 0);
-              for (int y = 0; y < 8; y++)
-              	for (int x = 0; x < 8; x++)
-                  REQUIRE(result.heatMap[x][y] == 0);
-            }
+                    REQUIRE(result.heatMap[newx][newy] == 0);
+                }
+                else if (diffy == 0)
+                {
+                  if (((newx >= x && newx < xking) || (newx > xking && newx <= x)) && newy == y)
+                    REQUIRE(result.heatMap[newx][newy] == 1);
+                  else
+                    REQUIRE(result.heatMap[newx][newy] == 0);
+                }
+                else if (diffx == 0)
+                {
+                  if (((newy >= y && newy < yking) || (newy > yking && newy <= y)) && newx == x)
+                    REQUIRE(result.heatMap[newx][newy] == 1);
+                  else
+                    REQUIRE(result.heatMap[newx][newy] == 0);
+                }
+                else
+                {
+                  if ((abs(newx - xking) == abs(newy - yking)) && ((newx >= x && newx < xking) || (newx > xking && newx <= x)) && ((newy >= y && newy < yking) || (newy > yking && newy <= y)))
+                    REQUIRE(result.heatMap[newx][newy] == 1);
+                  else
+                    REQUIRE(result.heatMap[newx][newy] == 0);
+                }
+          }
+          else
+          {
+            REQUIRE((c.state & Board::checkMask) == 0);
+            REQUIRE(result.len == 0);
+            for (int y = 0; y < 8; y++)
+            	for (int x = 0; x < 8; x++)
+                REQUIRE(result.heatMap[x][y] == 0);
           }
         }
       }
@@ -338,10 +326,10 @@ TEST_CASE("Testing getCheck function")
           
           diffx = newx - xking;
           diffy = newy - yking;
-          if (diffx * diffy == -1) REQUIRE(result.heatMap[newx][newy] == 3);
-          else if (diffx * diffy == 1) REQUIRE(result.heatMap[newx][newy] == 5);
-          else if (diffx == 0) REQUIRE(result.heatMap[newx][newy] == 9);
-          else REQUIRE(result.heatMap[newx][newy] == 17);
+          if (diffx * diffy == -1) REQUIRE(result.heatMap[newx][newy] == 1);
+          else if (diffx * diffy == 1) REQUIRE(result.heatMap[newx][newy] == 3);
+          else if (diffx == 0) REQUIRE(result.heatMap[newx][newy] == 4);
+          else REQUIRE(result.heatMap[newx][newy] == 2);
           REQUIRE((c.state & Board::checkMask) == 0);
           c.board[newx][newy] = Piece::blackKnight;
           result = c.getCheck({xking,yking});
@@ -357,6 +345,7 @@ TEST_CASE("Testing getCheck function")
 void CheckPresence(Board * b, const std::vector<move> moves, const char * movestr, bool checkPresent)
 {
   move checkMove = {{(int)(movestr[0] - 'a'), (int)(movestr[1] - '1')}, {(int)(movestr[3] - 'a'), (int)(movestr[4] - '1')}, (Piece::Piece)movestr[5]};
+  if (b->state & Board::blackToMoveMask) {checkMove.start.y = 7 - checkMove.start.y; checkMove.end.y = 7 - checkMove.end.y;}
   for (unsigned int i = 0; i < moves.size(); i++)
   {
     if (moves[i].start.x == checkMove.start.x && moves[i].start.y == checkMove.start.y
@@ -451,6 +440,37 @@ TEST_CASE("calcMoves")
     "b8-c6",
     "g8-f6",
     "g8-h6");
+    
+    CheckBoard("8/8/8/8/6q1/8/5k2/7K b - -",
+    "f2-e3",
+    "f2-e2",
+    "f2-e1",
+    "f2-f1",
+    "f2-f3",
+    "f2-g3",
+    "g4-c8",
+    "g4-d7",
+    "g4-e6",
+    "g4-f5",
+    "g4-a4",
+    "g4-b4",
+    "g4-c4",
+    "g4-d4",
+    "g4-e4",
+    "g4-f4",
+    "g4-d1",
+    "g4-e2",
+    "g4-f3",
+    "g4-g8",
+    "g4-g7",
+    "g4-g6",
+    "g4-g5",
+    "g4-g3",
+    "g4-g2",
+    "g4-g1",
+    "g4-h5",
+    "g4-h4",
+    "g4-h3");
   }
   
   SUBCASE("Castles")
@@ -547,8 +567,8 @@ TEST_CASE("execMove")
   {
     Board b;
     b.execMove({{0,1},{0,3}});
-    REQUIRE(b.board[0][1] == Piece::none);
-    REQUIRE(b.board[0][3] == Piece::whitePawn);
+    REQUIRE(b.board[0][6] == Piece::none);
+    REQUIRE(b.board[0][4] == Piece::blackPawn);
     REQUIRE((b.state & Board::whiteCastleKingsideMask));
     REQUIRE((b.state & Board::whiteCastleQueensideMask));
     REQUIRE((b.state & Board::blackCastleKingsideMask));
@@ -564,30 +584,30 @@ TEST_CASE("execMove")
     Board b("r1bqkbnr/pp1p1ppp/2n1p3/1Bp5/4P3/5N2/PPPP1PPP/RNBQK2R w KQkq -");
     Board c = b;
     c.execMove({{4,0},{6,0}});
-    REQUIRE(c.board[4][0] == Piece::none);
-    REQUIRE(c.board[7][0] == Piece::none);
-    REQUIRE(c.board[6][0] == Piece::whiteKing);
-    REQUIRE(c.board[5][0] == Piece::whiteRook);
-    REQUIRE(!(c.state & Board::whiteCastleKingsideMask));
-    REQUIRE(!(c.state & Board::whiteCastleQueensideMask));
-    REQUIRE((c.state & Board::blackCastleKingsideMask));
-    REQUIRE((c.state & Board::blackCastleQueensideMask));
+    REQUIRE(c.board[4][7] == Piece::none);
+    REQUIRE(c.board[7][7] == Piece::none);
+    REQUIRE(c.board[6][7] == Piece::blackKing);
+    REQUIRE(c.board[5][7] == Piece::blackRook);
+    REQUIRE(!(c.state & Board::blackCastleKingsideMask));
+    REQUIRE(!(c.state & Board::blackCastleQueensideMask));
+    REQUIRE((c.state & Board::whiteCastleKingsideMask));
+    REQUIRE((c.state & Board::whiteCastleQueensideMask));
     
     c = b;
     c.execMove({{7,0},{6,0}});
-    REQUIRE(!(c.state & Board::whiteCastleKingsideMask));
-    REQUIRE((c.state & Board::whiteCastleQueensideMask));
-    REQUIRE((c.state & Board::blackCastleKingsideMask));
+    REQUIRE(!(c.state & Board::blackCastleKingsideMask));
     REQUIRE((c.state & Board::blackCastleQueensideMask));
+    REQUIRE((c.state & Board::whiteCastleKingsideMask));
+    REQUIRE((c.state & Board::whiteCastleQueensideMask));
   }
   
   SUBCASE("En passant")
   {
     Board b("rnbqkbnr/ppp2ppp/4p3/3pP3/8/8/PPPP1PPP/RNBQKBNR w KQkq d6");
     b.execMove({{4,4},{3,5}});
-    REQUIRE(b.board[4][4] == Piece::none);
-    REQUIRE(b.board[3][5] == Piece::whitePawn);
-    REQUIRE(b.board[3][4] == Piece::none);
+    REQUIRE(b.board[4][3] == Piece::none);
+    REQUIRE(b.board[3][2] == Piece::blackPawn);
+    REQUIRE(b.board[3][3] == Piece::none);
     REQUIRE(b.enPassant == -1);
   }
   
@@ -595,19 +615,7 @@ TEST_CASE("execMove")
   {
     Board b("k7/2P5/1K6/8/8/8/8/8 w - -");
     b.execMove({{2,6},{2,7},Piece::whiteQueen});
-    REQUIRE(b.board[2][6] == Piece::none);
-    REQUIRE(b.board[2][7] == Piece::whiteQueen);
+    REQUIRE(b.board[2][1] == Piece::none);
+    REQUIRE(b.board[2][0] == Piece::blackQueen);
   }
-}
-
-TEST_CASE("TEST")
-{
-  std::cout << "Generating start position:" << std::endl;
-  Board b;
-  std::cout << "Executing a move:" << std::endl;
-  b.execMove(b.getMoves()[0]);
-  std::cout << "Copying resulting board and executing a move:" << std::endl;
-  Board c = b.cloneAndExecMove(b.getMoves()[0]);
-  std::cout << "The resulting board is:" << std::endl;
-  c.printBoard();
 }
