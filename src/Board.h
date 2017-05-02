@@ -2,6 +2,7 @@
 #define BOARD_LIBRARY_DEFINED
 
 #include <iostream>
+#include <vector>
 
 namespace BoardExceptions {}
 
@@ -29,39 +30,54 @@ static const Piece blackPieces[6] =
 { blackKing, blackQueen, blackRook, blackBishop, blackKnight, blackPawn };
 }
 
+template <typename T>
 struct square
 {
-  int x;
-  int y;
+  T x;
+  T y;
 
-  square operator+(const square &other)const{
-    square res;
-    res.x = x+other.x;
-    res.y = y+other.y;
-    return res;
-  }
+  square<T>() {}
+  square<T>(const T x, const T y) : x(x), y(y) {}
+  template<typename newT>
+  square<T>(const square<newT>& other) : x(other.x), y(other.y) {}
+  
+  template<typename newT>
+  square<typename std::common_type<T,newT>::type> operator+(const square<newT> &other) const {return square<typename std::common_type<T,newT>::type>(x+other.x,y+other.y);}
+  square<T> operator+(const square<void> &other) const;
 
-  square& operator+=(const square &other){
-    x+=other.x;
-    y+=other.y;
-    return *this;
-  }
+  square<T>& operator+=(const square<T> &other) {x+=other.x; y+=other.y; return *this;}
+  square<T>& operator+=(const square<void> &other);
 };
+
+template<>
+struct square<void>
+{
+  signed char x:4;
+  signed char y:4;
+  
+  square<void>() {}
+  square<void>(const int x, const int y) : x(x), y(y) {}
+  template<typename newT>
+  square<void>(const square<newT>& other) : x(other.x), y(other.y) {}
+  
+  template<typename newT>
+  square<newT> operator+(const square<newT>& other) {return square<newT>(x+other.x,y+other.y);}
+  
+  template<typename newT>
+  square<void>& operator+=(const square<newT>& other) {x += other.x; y += other.y; return *this;}
+};
+
+template<typename T>
+square<T> square<T>::operator+(const square<void> &other) const {return square<T>(x + other.x,y + other.y);}
+
+template<typename T>
+square<T>& square<T>::operator+=(const square<void> &other) {x += other.x; y+= other.y; return *this;}
 
 struct move
 {
-  square       start;
-  square       end;
+  square<void> start;
+  square<void> end;
   Piece::Piece promoteTo; // what to promote to if promotion is possible
-};
-
-struct moveArray
-{
-  int len;
-  move        *moves;
-  moveArray() : len(0), moves(nullptr) {}
-  moveArray(int n) : len(0), moves(new move[n]) {}
-  ~moveArray() {delete [] moves;}
 };
 
 struct check
@@ -69,24 +85,22 @@ struct check
   int len;
   char heatMap[8][8];
 
-  #ifdef DEBUG
-    void display()
+  void display()
+  {
+    int x,y;
+    std::cout << "Debug output of check:" << std::endl;
+    std::cout << " - Length: " << (int)len << std::endl;
+    std::cout << " - Heatmap: " << std::endl;
+    std::cout << "+--------+" << std::endl;
+    for (y = 7; y >= 0; y--)
     {
-      int x,y;
-      std::cout << "Debug output of check:" << std::endl;
-      std::cout << " - Length: " << (int)len << std::endl;
-      std::cout << " - Heatmap: " << std::endl;
-      std::cout << "+--------+" << std::endl;
-      for (y = 7; y >= 0; y--)
-      {
-        std::cout << "|";
-        for (x = 0; x < 8; x++)
-          std::cout << (heatMap[x][y] ? "X" : " ");
-        std::cout << "|" << std::endl;
-      }
-      std::cout << "+--------+" << std::endl;
+      std::cout << "|";
+      for (x = 0; x < 8; x++)
+        std::cout << (heatMap[x][y] ? "X" : " ");
+      std::cout << "|" << std::endl;
     }
-  #endif
+    std::cout << "+--------+" << std::endl;
+  }
 };
 
 class Board {
@@ -104,77 +118,64 @@ public:
     blackCastleKingsideMask  = 0x08,
     blackCastleQueensideMask = 0x10,
     blackToMoveMask          = 0x20,
+    drawMask                 = 0x40
   };
   char state;     // Environment flags
-
   signed char enPassant; // the x coordinate of the enPassent move
-  moveArray legalMoves;
+  std::vector<move> legalMoves;
 
   // IO functions to read FEN notation
-  int fromStr(const char *str);         // read the FEN notation
-                                        // from a string
-  int fromFile(const char *fileName);   // read the FEN notation
-                                        // from a file
+  int fromStr(const char * str);         // read the FEN notation from a string
+  int fromFile(const char * fileName);   // read the FEN notation from a file
 
   // Function and helper functions to calculate the legal moves
-  void  calcMoves();                    // Calculate legal moves
-  void	getPieceMoves(moveArray * result, check * kingEnv, const square curPos, const square kingPos);	//Calculate the legal moves of the piece on square curPos
-  void  checkDir(moveArray * result, check * kingEnv, const square basePos, const square curPos, const square dir); //Check the possible moves of a piece along some file, rank or diagonal
+  void calcMoves();                    // Calculate legal moves
+  void getPieceMoves(std::vector<move>& result, const check& kingEnv, const square<int> curPos, const square<int> kingPos);	//Calculate the legal moves of the piece on square<int> curPos
+  inline void checkDir(std::vector<move>& result, const check& kingEnv, const square<int> basePos, const square<int> dir) const; //Check the possible moves of a piece along some file, rank or diagonal
   
-  check getCheck(const square kingPos); // Get the details about a possible
-                                        // check at kingPos
-  bool  firstPiece(check *result,
-                   const square       curPos,
-                   const square       dir,
-                   const int          friendlies); // Investigate the possibility of
-                                             // attacks from dir to curPos
-                                             // (Recursive) with heatmap.
+  check getCheck(const square<int> kingPos); // Get the details about a possible check at kingPos
+  bool firstPiece(check& result, const square<int> curPos, const square<int> dir, const int friendlies) const; // Investigate the possibility of attacks from dir to curPos (Recursive) with heatmap.
 
-  bool isAttacked(const square piecePos);    // Check whether the square at
-                                             // piecePos is attacked
-  bool hasAttacker(square pos,
-                   const square dir);        // Invesitgate the possibility of
-                                             // attacks from dir at curPos
-  inline bool isFriendly(const Piece::Piece piece) {
-    return (piece != Piece::none) && !((state ^ piece) & blackToMoveMask);
+  bool isAttacked(const square<int> piecePos) const;    // Check whether the square<int> at piecePos is attacked
+  bool hasAttacker(square<int> pos, const square<int> dir) const;        // Invesitgate the possibility of attacks from dir at curPos
+  inline bool isFriendly(const Piece::Piece piece) const {
+    return !(piece & 0x20);
   }
 
-  inline bool isFriendly(const square pos) {
+  inline bool isFriendly(const square<int> pos) const {
     return isFriendly(board[pos.x][pos.y]);
   }
-	
-  Piece::Piece getPieceType(const square piecePos);
-  Piece::Piece getPieceType(const Piece::Piece piece);
+  
+  void flipBoard();
+  
+  //Private constructor
+  Board(const Board& other, const move mv);
 
 public:
   // Constructors
-  Board() : Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-                  false) {}
-
-  Board(const char *str) : Board(str,
-                                 false) {}
-
-  Board(const char *str,
-        const bool  file); // read from FEN notation from file or
-                           // string and calculate legal moves.
+  Board() : Board("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", false) {}
+  Board(const char *str) : Board(str, false) {}
+  Board(const char *str, const bool file); // read from FEN notation from file or string and calculate legal moves.
 
   // Getters
-  Piece::Piece getSquare(const square pos){ return board[pos.x][pos.y];}
-
-  bool isCheck() {return state & checkMask;  }                   // return checkflag
-  bool blackToMove() {return state & blackToMoveMask;}
-  bool isMate() {return (legalMoves.len == 0 && state & checkMask);}  // check if current board is mate
-  bool isStaleMate() {return (legalMoves.len == 0 && !(state & checkMask));} //check if the current position is mate
-  moveArray getMoves() {return legalMoves;}
+  Piece::Piece getSquare(const square<int> pos) const {return board[pos.x][pos.y];}
+  bool isCheck() const {return state & checkMask;}                   // return checkflag
+  bool blackToMove() const {return state & blackToMoveMask;}
+  bool isMate() const {return (legalMoves.size() == 0 && state & checkMask);}  // check if current board is mate
+  bool isDraw() const {return (state & drawMask);} //check if the current position is stalemated
+  std::vector<move> getMoves() const {return legalMoves;}
   
   // Setters
   void execMove(const move mv); // Execute mv.
-  void changeColor(){ state ^= blackToMoveMask; }
-  void clearBoard(){for(int i=0; i<64; i++) board[i/8][i%8]= Piece::none;}
-  void setPiece(const square sq, const Piece::Piece piece){board[sq.x][sq.y]=piece;}
+  void changeColor() {state ^= blackToMoveMask;}
+  void clearBoard() {for(int i=0; i<64; i++) board[i/8][i%8] = Piece::none;}
+  void setPiece(const square<int> sq, const Piece::Piece piece) {board[sq.x][sq.y]=piece;}
+  
+  // Cloning function
+  Board cloneAndExecMove(const move mv) const;
 
   // Print function
-  void printBoard();
-  void printLegalMoves();
+  void printBoard() const;
+  void printLegalMoves() const;
 };
 #endif
