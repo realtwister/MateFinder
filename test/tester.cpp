@@ -342,11 +342,11 @@ TEST_CASE("Testing getCheck function")
 }
 
 //Check if move specified by the movestring is present in the moveArray
-void CheckPresence(Board * b, const std::vector<move> moves, const char * movestr, bool checkPresent)
+void CheckPresence(Board * b, const moveArray moves, const char * movestr, bool checkPresent)
 {
   move checkMove = {{(int)(movestr[0] - 'a'), (int)(movestr[1] - '1')}, {(int)(movestr[3] - 'a'), (int)(movestr[4] - '1')}, (Piece::Piece)movestr[5]};
   if (b->state & Board::blackToMoveMask) {checkMove.start.y = 7 - checkMove.start.y; checkMove.end.y = 7 - checkMove.end.y;}
-  for (unsigned int i = 0; i < moves.size(); i++)
+  for (int i = 0; i < moves.size(); i++)
   {
     if (moves[i].start.x == checkMove.start.x && moves[i].start.y == checkMove.start.y
         && moves[i].end.x == checkMove.end.x && moves[i].end.y == checkMove.end.y
@@ -379,18 +379,18 @@ void CheckPresence(Board * b, const std::vector<move> moves, const char * movest
 }
 
 #define CheckBoard(BOARDSTR, LEGALMOVES...)  {Board b(BOARDSTR); \
-                                              std::vector<move> moves = b.getMoves(); \
+                                              moveArray moves = b.getMoves(); \
                                               const char * legalMoves[] = {LEGALMOVES}; \
                                               REQUIRE(sizeof(legalMoves) / sizeof(char*) == moves.size()); \
                                               for (unsigned int i = 0; i < sizeof(legalMoves) / sizeof(char*); i++) \
                                                 CheckPresence(&b, moves, legalMoves[i], true);}
 
 #define CheckMove(BOARDSTR, LEGALMOVE) {Board b(BOARDSTR); \
-                                        std::vector<move> moves = b.getMoves(); \
+                                        moveArray moves = b.getMoves(); \
                                         CheckPresence(&b, moves, LEGALMOVE, true);}
                                         
 #define CheckMoveAbsent(BOARDSTR, LEGALMOVE) {Board b(BOARDSTR); \
-                                              std::vector<move> moves = b.getMoves(); \
+                                              moveArray moves = b.getMoves(); \
                                               CheckPresence(&b, moves, LEGALMOVE, false);}
 
 TEST_CASE("calcMoves")

@@ -103,6 +103,68 @@ struct check
   }
 };
 
+struct moveArray
+{
+  int num;
+  int ctr;
+  move * moves;
+  
+  moveArray() : num(0), ctr(0), moves(NULL) {}
+  moveArray(const int n) : num(n), ctr(0), moves(new move[n]) {}
+  moveArray(const moveArray& other)
+  {
+    num = other.num;
+    ctr = other.ctr;
+    moves = new move[num];
+    for (int i = 0; i < ctr; i++)
+      moves[i] = other.moves[i];
+  }
+  ~moveArray() {delete[] moves;}
+  
+  moveArray& operator=(const moveArray& other)
+  {
+    num = other.num;
+    ctr = other.ctr;
+    moves = new move[num];
+    for (int i = 0; i < ctr; i++)
+      moves[i] = other.moves[i];
+    return *this;
+  }
+  
+  moveArray& operator=(moveArray&& other)
+  {
+    num = other.num;
+    ctr = other.ctr;
+    moves = other.moves;
+    other.moves = NULL;
+    return *this;
+  }
+  
+  inline move& operator[](const int n) const {return moves[n];}
+  inline int size() const {return ctr;}
+  
+  inline void push_back(const move toAdd)
+  {
+    #ifdef DEBUG
+    if (ctr >= num)
+    {
+      std::cout << "Overflow in the moveArray." << std::endl;
+      return;
+    }
+    #endif
+    moves[ctr++] = toAdd;
+  }
+  
+  inline moveArray shrink_to_fit()
+  {
+    moveArray result(ctr);
+    result.ctr = ctr;
+    for (int i = 0; i < ctr; i++)
+      result.moves[i] = moves[i];
+    return result;
+  }
+};
+
 class Board {
 private:
 
@@ -122,7 +184,7 @@ public:
   };
   char state;     // Environment flags
   signed char enPassant; // the x coordinate of the enPassent move
-  std::vector<move> legalMoves;
+  moveArray legalMoves;
 
   // IO functions to read FEN notation
   int fromStr(const char * str);         // read the FEN notation from a string
@@ -130,8 +192,8 @@ public:
 
   // Function and helper functions to calculate the legal moves
   void calcMoves();                    // Calculate legal moves
-  void getPieceMoves(std::vector<move>& result, const check& kingEnv, const square<int> curPos, const square<int> kingPos);	//Calculate the legal moves of the piece on square<int> curPos
-  inline void checkDir(std::vector<move>& result, const check& kingEnv, const square<int> basePos, const square<int> dir) const; //Check the possible moves of a piece along some file, rank or diagonal
+  void getPieceMoves(moveArray& result, const check& kingEnv, const square<int> curPos, const square<int> kingPos);	//Calculate the legal moves of the piece on square<int> curPos
+  inline void checkDir(moveArray& result, const check& kingEnv, const square<int> basePos, const square<int> dir) const; //Check the possible moves of a piece along some file, rank or diagonal
   
   check getCheck(const square<int> kingPos); // Get the details about a possible check at kingPos
   bool firstPiece(check& result, const square<int> curPos, const square<int> dir, const int friendlies) const; // Investigate the possibility of attacks from dir to curPos (Recursive) with heatmap.
@@ -163,7 +225,7 @@ public:
   bool blackToMove() const {return state & blackToMoveMask;}
   bool isMate() const {return (legalMoves.size() == 0 && state & checkMask);}  // check if current board is mate
   bool isDraw() const {return (state & drawMask);} //check if the current position is stalemated
-  std::vector<move> getMoves() const {return legalMoves;}
+  moveArray& getMoves() {return legalMoves;}
   
   // Setters
   void execMove(const move mv); // Execute mv.

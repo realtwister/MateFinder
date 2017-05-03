@@ -246,7 +246,7 @@ check Board::getCheck(const square<int> kingPos)
  */
 bool Board::firstPiece(check & result, const square<int> curPos, const square<int> dir, const int friendlies) const
 {
-	square<int> newsq = curPos + dir;
+  square<int> newsq = curPos + dir;
   if (newsq.x >= 0 && newsq.x <= 7 && newsq.y >= 0 && newsq.y <= 7)
   {
     if (board[newsq.x][newsq.y] == Piece::none)
@@ -342,9 +342,8 @@ bool Board::hasAttacker(square<int> pos, const square<int> dir) const {
 
 void Board::calcMoves()
 {
-  //First we allocate space for the friendly squares array and the array of moves
-  legalMoves.clear();
-  legalMoves.reserve(256);
+  //First we allocate space for the friendly squares array
+  moveArray tempLegalMoves(256);
   square<int> * friendlySquares = new square<int>[15];
   int friendlySquaresCtr = 0;
   
@@ -395,7 +394,7 @@ void Board::calcMoves()
   for (dir.x = xmin; dir.x <= xmax; dir.x++)
     for (dir.y = ymin; dir.y <= ymax; dir.y++)
       if ((dir.x != 0 || dir.y != 0) && !isFriendly(kingPos + dir) && !isAttacked(kingPos + dir))
-        legalMoves.push_back({kingPos, kingPos + dir});
+        tempLegalMoves.push_back({kingPos, kingPos + dir});
   board[kingPos.x][kingPos.y] = Piece::whiteKing;
   
   //We look at castles now
@@ -403,10 +402,10 @@ void Board::calcMoves()
   {
     if ((state & whiteCastleKingsideMask) && board[5][0] == Piece::none && board[6][0] == Piece::none
         && !isAttacked({5,0}) && !isAttacked({6,0}))
-      legalMoves.push_back({{4,0},{6,0}});
+      tempLegalMoves.push_back({{4,0},{6,0}});
     if ((state & whiteCastleQueensideMask) && board[3][0] == Piece::none && board[2][0] == Piece::none && board[1][0] == Piece::none
         && !isAttacked({3,0}) && !isAttacked({2,0}))
-      legalMoves.push_back({{4,0},{2,0}});
+      tempLegalMoves.push_back({{4,0},{2,0}});
   }
   
   //We can only move other pieces if at most one piece is attacking the king
@@ -414,7 +413,7 @@ void Board::calcMoves()
   {
     //Now, loop over all the squares in the friendlySquares array
     for (int i = 0; i < friendlySquaresCtr; i++)
-      getPieceMoves(legalMoves, kingEnv, friendlySquares[i], kingPos);
+      getPieceMoves(tempLegalMoves, kingEnv, friendlySquares[i], kingPos);
     
     //Finally, loop over all remaining squares
     square<int> remaining;
@@ -426,7 +425,7 @@ void Board::calcMoves()
       {
         if (isFriendly(remaining))
         {
-          getPieceMoves(legalMoves, kingEnv, remaining, kingPos);
+          getPieceMoves(tempLegalMoves, kingEnv, remaining, kingPos);
           friendlyCtr++;
           lastFriendly = board[remaining.x][remaining.y];
         }
@@ -446,11 +445,11 @@ void Board::calcMoves()
     state |= drawMask;
   
   //Deallocate the temporary variables
-  legalMoves.shrink_to_fit();
+  legalMoves = tempLegalMoves.shrink_to_fit();
   delete[] friendlySquares;
 }
 
-void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, const square<int> curPos, const square<int> kingPos)
+void Board::getPieceMoves(moveArray& result, const check & kingEnv, const square<int> curPos, const square<int> kingPos)
 {
   int xmin, xmax, ymin, ymax;
   square<int> newPos, dir;
@@ -548,12 +547,17 @@ void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, con
           }
           else if (curPos.y == 4 && enPassant == curPos.x + diffx)
           {
-            board[curPos.x][curPos.y] = Piece::none;
-            board[curPos.x + diffx][curPos.y] = Piece::none;
-            if (curPos.y != kingPos.y || !hasAttacker(kingPos, {(curPos.x < kingPos.x ? -1 : 1),0}))
-              result.push_back({curPos,{curPos.x+diffx,curPos.y+1}});
-            board[curPos.x][curPos.y] = Piece::whitePawn;
-            board[curPos.x + diffx][curPos.y] = Piece::blackPawn;
+            if (curPos.y != kingPos.y)
+       		    result.push_back({curPos,{curPos.x+diffx,curPos.y+1}});
+       		  else
+       		  {
+              board[curPos.x][curPos.y] = Piece::none;
+              board[curPos.x + diffx][curPos.y] = Piece::none;
+              if (!hasAttacker(kingPos, {(curPos.x < kingPos.x ? -1 : 1),0}))
+                result.push_back({curPos,{curPos.x+diffx,curPos.y+1}});
+              board[curPos.x][curPos.y] = Piece::whitePawn;
+              board[curPos.x + diffx][curPos.y] = Piece::blackPawn;
+            }
           }
         }
       }
@@ -561,7 +565,7 @@ void Board::getPieceMoves(std::vector<move> & result, const check & kingEnv, con
   }
 }
 
-inline void Board::checkDir(std::vector<move> & result, const check & kingEnv, const square<int> basePos, const square<int> dir) const
+inline void Board::checkDir(moveArray& result, const check & kingEnv, const square<int> basePos, const square<int> dir) const
 {
   int dist;
   if (dir.x == 0) dist = (dir.y >= 0 ? 7 - basePos.y : basePos.y);
@@ -746,7 +750,7 @@ void Board::printLegalMoves() const
   std::cout << "The current position is depicted below." << std::endl;
   printBoard();
   std::cout << "There are " << legalMoves.size() << " legal moves." << std::endl;
-  for (unsigned int i = 0; i < legalMoves.size(); i++)
+  for (int i = 0; i < legalMoves.size(); i++)
   {
     std::cout << (i+1) << ": " << (char)(legalMoves[i].start.x + 'a') << ((state & blackToMoveMask ? 7 - legalMoves[i].start.y : legalMoves[i].start.y) + 1)
               << "-" << (char)(legalMoves[i].end.x + 'a') << ((state & blackToMoveMask ? 7 - legalMoves[i].end.y : legalMoves[i].end.y) + 1) << std::endl;

@@ -7,7 +7,7 @@
 void executeAllMoves(Board b, int depth, int maxDepth)
 {
   if (depth == maxDepth) return;
-  for (unsigned int i = 0; i < b.getMoves().size(); i++)
+  for (int i = 0; i < b.getMoves().size(); i++)
   {
     if (depth == 1)
       std::cout << "Executing move " << i+1 << "/" << b.getMoves().size() << std::endl;
