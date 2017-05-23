@@ -11,6 +11,8 @@ CFLAGS := -std=c++17 -g -Wall -O6
 LIB := -pthread -lprofiler
 INC :=
 
+
+
 $(TARGET): $(OBJECTS)
 	@echo " Linking..."
 	@echo " $(CC) $^ -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
@@ -26,6 +28,10 @@ clean:
 run: $(TARGET)
 	@echo " Running $(TARGET):";
 	$(TARGET)
+
+runDFS: bin/DFS
+	 @echo "Running DFS";
+	 bin/DFS
 
 profile: $(TARGET)
 	@echo " Profiling $(TARGET):";
