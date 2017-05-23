@@ -40,4 +40,8 @@ runtest: test
 	@echo " Running tests:"
 	bin/tester $(flags)
 
+doc: src
+	doxygen
+	make -C doc/latex
+
 .PHONY: clean

@@ -2,7 +2,6 @@
 #define BOARD_LIBRARY_DEFINED
 
 #include <iostream>
-#include <vector>
 
 namespace BoardExceptions {}
 

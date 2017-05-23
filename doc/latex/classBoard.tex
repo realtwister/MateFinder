@@ -1,0 +1,307 @@
+\hypertarget{classBoard}{}\section{Board Class Reference}
+\label{classBoard}\index{Board@{Board}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBoard_a155259ecd3131cbf8c155c1dd19026b0}\label{classBoard_a155259ecd3131cbf8c155c1dd19026b0}} 
+{\bfseries Board} (const char $\ast$str)
+\item 
+\hyperlink{classBoard_a8dd2a85d6b43bcab4eaf83e1541aeb18}{Board} (const char $\ast$str, const bool file)
+\item 
+\mbox{\Hypertarget{classBoard_a8359f43f59d4eb04c679f0415c26add4}\label{classBoard_a8359f43f59d4eb04c679f0415c26add4}} 
+Piece\+::\+Piece {\bfseries get\+Square} (const \hyperlink{structsquare}{square}$<$ int $>$ pos) const
+\item 
+\mbox{\Hypertarget{classBoard_a58ee677360099107d0d33becdc2af888}\label{classBoard_a58ee677360099107d0d33becdc2af888}} 
+bool {\bfseries is\+Check} () const
+\item 
+\mbox{\Hypertarget{classBoard_a78089ae51f1e8e02dfec7c739f3ca74a}\label{classBoard_a78089ae51f1e8e02dfec7c739f3ca74a}} 
+bool {\bfseries black\+To\+Move} () const
+\item 
+\mbox{\Hypertarget{classBoard_adfdc9dd19eb4119b6926a70c89db7d31}\label{classBoard_adfdc9dd19eb4119b6926a70c89db7d31}} 
+bool {\bfseries is\+Mate} () const
+\item 
+\mbox{\Hypertarget{classBoard_a6a9553957873a05f9cca67f8f0677b74}\label{classBoard_a6a9553957873a05f9cca67f8f0677b74}} 
+bool {\bfseries is\+Draw} () const
+\item 
+\mbox{\Hypertarget{classBoard_a993b2839790b3fbe4b1c6ba2a2257fe1}\label{classBoard_a993b2839790b3fbe4b1c6ba2a2257fe1}} 
+\hyperlink{structmoveArray}{move\+Array} \& {\bfseries get\+Moves} ()
+\item 
+void \hyperlink{classBoard_a5732564ae8ce7f247072ded83f71dc75}{exec\+Move} (const \hyperlink{structmove}{move} mv)
+\item 
+\mbox{\Hypertarget{classBoard_ac33aaf879882d2c1abbab14c9727f2f9}\label{classBoard_ac33aaf879882d2c1abbab14c9727f2f9}} 
+void {\bfseries change\+Color} ()
+\item 
+\mbox{\Hypertarget{classBoard_a5f148daa03da25d40dff3fc613568d6f}\label{classBoard_a5f148daa03da25d40dff3fc613568d6f}} 
+void {\bfseries clear\+Board} ()
+\item 
+\mbox{\Hypertarget{classBoard_a2a15fa8b4b4db9d11093c6c806344fc6}\label{classBoard_a2a15fa8b4b4db9d11093c6c806344fc6}} 
+void {\bfseries set\+Piece} (const \hyperlink{structsquare}{square}$<$ int $>$ sq, const Piece\+::\+Piece piece)
+\item 
+\mbox{\Hypertarget{classBoard_a3eb8e7257733fd3b9e00c8c37b8cc433}\label{classBoard_a3eb8e7257733fd3b9e00c8c37b8cc433}} 
+\hyperlink{classBoard}{Board} {\bfseries clone\+And\+Exec\+Move} (const \hyperlink{structmove}{move} mv) const
+\item 
+void \hyperlink{classBoard_a3f5b48d92226217de5d488f3d5fb234a}{print\+Board} () const
+\item 
+void \hyperlink{classBoard_a8bb1bf8da102901b871b538255948dfa}{print\+Legal\+Moves} () const
+\end{DoxyCompactItemize}
+\subsection*{Private Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBoard_a6f2173ec700556df381b6623a5482850}\label{classBoard_a6f2173ec700556df381b6623a5482850}} 
+enum {\bfseries state\+Flags} \+: char \{ \newline
+{\bfseries check\+Mask} = 0x01, 
+{\bfseries white\+Castle\+Kingside\+Mask} = 0x02, 
+{\bfseries white\+Castle\+Queenside\+Mask} = 0x04, 
+{\bfseries black\+Castle\+Kingside\+Mask} = 0x08, 
+\newline
+{\bfseries black\+Castle\+Queenside\+Mask} = 0x10, 
+{\bfseries black\+To\+Move\+Mask} = 0x20, 
+{\bfseries draw\+Mask} = 0x40
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classBoard_a49045c77d568e4b5a00f176a2add54c8}{from\+Str} (const char $\ast$str)
+\item 
+int \hyperlink{classBoard_a4043087fc35e9706d0e83ec07225fe33}{from\+File} (const char $\ast$file\+Name)
+\item 
+void \hyperlink{classBoard_ad4d3ebb2342b74d9455a89924a54aa14}{calc\+Moves} ()
+\item 
+void \hyperlink{classBoard_aa70526dde51ab18ec4011c07a7e38e60}{get\+Piece\+Moves} (\hyperlink{structmoveArray}{move\+Array} \&result, const \hyperlink{structcheck}{check} \&king\+Env, const \hyperlink{structsquare}{square}$<$ int $>$ cur\+Pos, const \hyperlink{structsquare}{square}$<$ int $>$ king\+Pos)
+\item 
+void \hyperlink{classBoard_ab63f400e8fdd7d1747c18642b59cc435}{check\+Dir} (\hyperlink{structmoveArray}{move\+Array} \&result, const \hyperlink{structcheck}{check} \&king\+Env, const \hyperlink{structsquare}{square}$<$ int $>$ base\+Pos, const \hyperlink{structsquare}{square}$<$ int $>$ dir) const
+\item 
+\hyperlink{structcheck}{check} \hyperlink{classBoard_afc291baf2c205a64255e8e55ffeff004}{get\+Check} (const \hyperlink{structsquare}{square}$<$ int $>$ king\+Pos)
+\item 
+bool \hyperlink{classBoard_a900420865c9acc6a18a9e25f94e3b72e}{first\+Piece} (\hyperlink{structcheck}{check} \&result, const \hyperlink{structsquare}{square}$<$ int $>$ cur\+Pos, const \hyperlink{structsquare}{square}$<$ int $>$ dir, const int friendlies) const
+\item 
+\mbox{\Hypertarget{classBoard_ae8183cabc093c8bd030250c42959fa37}\label{classBoard_ae8183cabc093c8bd030250c42959fa37}} 
+bool {\bfseries is\+Attacked} (const \hyperlink{structsquare}{square}$<$ int $>$ piece\+Pos) const
+\item 
+bool \hyperlink{classBoard_a8b9245cb469f2e82c23ac49edd412646}{has\+Attacker} (\hyperlink{structsquare}{square}$<$ int $>$ pos, const \hyperlink{structsquare}{square}$<$ int $>$ dir) const
+\item 
+\mbox{\Hypertarget{classBoard_a5068575e721428ee78754984813713e5}\label{classBoard_a5068575e721428ee78754984813713e5}} 
+bool {\bfseries is\+Friendly} (const Piece\+::\+Piece piece) const
+\item 
+\mbox{\Hypertarget{classBoard_a33b5e15eeeba65612ad3005ff5e60690}\label{classBoard_a33b5e15eeeba65612ad3005ff5e60690}} 
+bool {\bfseries is\+Friendly} (const \hyperlink{structsquare}{square}$<$ int $>$ pos) const
+\item 
+void \hyperlink{classBoard_aeea5a9ddcdeb6e4c087f53e71f6c11ec}{flip\+Board} ()
+\item 
+\hyperlink{classBoard_a632d2e0f09a1ad6fe835dc11ef1238cc}{Board} (const \hyperlink{classBoard}{Board} \&other, const \hyperlink{structmove}{move} mv)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classBoard_acdbd7620b4c8bc08b2e42623c2a12a39}\label{classBoard_acdbd7620b4c8bc08b2e42623c2a12a39}} 
+Piece\+::\+Piece {\bfseries board} \mbox{[}8\mbox{]}\mbox{[}8\mbox{]}
+\item 
+\mbox{\Hypertarget{classBoard_a46a6e23b1b18542b10938f2b333862f1}\label{classBoard_a46a6e23b1b18542b10938f2b333862f1}} 
+char {\bfseries state}
+\item 
+\mbox{\Hypertarget{classBoard_aad3145585c03f739311c35fa8f3277d3}\label{classBoard_aad3145585c03f739311c35fa8f3277d3}} 
+signed char {\bfseries en\+Passant}
+\item 
+\mbox{\Hypertarget{classBoard_aaf6a2575c3bc280ddc9e445efd213e14}\label{classBoard_aaf6a2575c3bc280ddc9e445efd213e14}} 
+\hyperlink{structmoveArray}{move\+Array} {\bfseries legal\+Moves}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classBoard_a632d2e0f09a1ad6fe835dc11ef1238cc}\label{classBoard_a632d2e0f09a1ad6fe835dc11ef1238cc}} 
+\index{Board@{Board}!Board@{Board}}
+\index{Board@{Board}!Board@{Board}}
+\subsubsection{\texorpdfstring{Board()}{Board()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Board\+::\+Board (\begin{DoxyParamCaption}\item[{const \hyperlink{classBoard}{Board} \&}]{other,  }\item[{const \hyperlink{structmove}{move}}]{mv }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This constructor is used when a move is executed. All the pieces must be copied, but copying all the legal moves is not necessary, as they are recalculated anyway. So, this private constructur is only to be used internally, when calling the {\itshape clone\+And\+Exec\+Move} function. \mbox{[}in\mbox{]} other This is the board that is to be cloned. \mbox{[}in\mbox{]} mv This is the move that is to be executed. \mbox{\Hypertarget{classBoard_a8dd2a85d6b43bcab4eaf83e1541aeb18}\label{classBoard_a8dd2a85d6b43bcab4eaf83e1541aeb18}} 
+\index{Board@{Board}!Board@{Board}}
+\index{Board@{Board}!Board@{Board}}
+\subsubsection{\texorpdfstring{Board()}{Board()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Board\+::\+Board (\begin{DoxyParamCaption}\item[{const char $\ast$}]{str,  }\item[{const bool}]{file }\end{DoxyParamCaption})}
+
+\hyperlink{classBoard}{Board} constructor creating \hyperlink{classBoard}{Board} object from either a file or a string 
+\begin{DoxyParams}{Parameters}
+{\em str} & Either the F\+EN string or the filename \\
+\hline
+{\em file} & Boolean whether to read file or string (true is file) \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classBoard_ad4d3ebb2342b74d9455a89924a54aa14}\label{classBoard_ad4d3ebb2342b74d9455a89924a54aa14}} 
+\index{Board@{Board}!calc\+Moves@{calc\+Moves}}
+\index{calc\+Moves@{calc\+Moves}!Board@{Board}}
+\subsubsection{\texorpdfstring{calc\+Moves()}{calcMoves()}}
+{\footnotesize\ttfamily void Board\+::calc\+Moves (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This function calculates all possible moves, and stores them in {\itshape legal\+Moves} member. Additionally, it updates the {\itshape check} flag, to indicate whether the player that is to move is check. Finally, it also updates the {\itshape draw} flag. If there are too few pieces on the board for any mate to occur, then this flag is set. \mbox{\Hypertarget{classBoard_ab63f400e8fdd7d1747c18642b59cc435}\label{classBoard_ab63f400e8fdd7d1747c18642b59cc435}} 
+\index{Board@{Board}!check\+Dir@{check\+Dir}}
+\index{check\+Dir@{check\+Dir}!Board@{Board}}
+\subsubsection{\texorpdfstring{check\+Dir()}{checkDir()}}
+{\footnotesize\ttfamily void Board\+::check\+Dir (\begin{DoxyParamCaption}\item[{\hyperlink{structmoveArray}{move\+Array} \&}]{result,  }\item[{const \hyperlink{structcheck}{check} \&}]{king\+Env,  }\item[{const \hyperlink{structsquare}{square}$<$ int $>$}]{base\+Pos,  }\item[{const \hyperlink{structsquare}{square}$<$ int $>$}]{dir }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [private]}}
+
+This function helps the get\+Piece\+Moves function. It checks to which squares a long range piece (i.\+e. queen, rook or bishop) can move in a given direction, and appends these moves to the array of legal moves. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em result} & This is the array of moves which the found legal moves are appended to. \\
+\hline
+\mbox{\tt in}  & {\em king\+Env} & Through this {\itshape check} object, the information concerning whether a given move resolves check is supplied to the function. \\
+\hline
+\mbox{\tt in}  & {\em base\+Pos} & This is the position of the piece whose legal moves are investigated. \\
+\hline
+\mbox{\tt in}  & {\em dir} & This is the direction in which the legal moves are being checked. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classBoard_a5732564ae8ce7f247072ded83f71dc75}\label{classBoard_a5732564ae8ce7f247072ded83f71dc75}} 
+\index{Board@{Board}!exec\+Move@{exec\+Move}}
+\index{exec\+Move@{exec\+Move}!Board@{Board}}
+\subsubsection{\texorpdfstring{exec\+Move()}{execMove()}}
+{\footnotesize\ttfamily void Board\+::exec\+Move (\begin{DoxyParamCaption}\item[{const \hyperlink{structmove}{move}}]{move }\end{DoxyParamCaption})}
+
+Execute a move on a given board and consequently flip the board and recalculate the legal moves. \mbox{[}in\mbox{]} move This is the move that is to be executed. \mbox{\Hypertarget{classBoard_a900420865c9acc6a18a9e25f94e3b72e}\label{classBoard_a900420865c9acc6a18a9e25f94e3b72e}} 
+\index{Board@{Board}!first\+Piece@{first\+Piece}}
+\index{first\+Piece@{first\+Piece}!Board@{Board}}
+\subsubsection{\texorpdfstring{first\+Piece()}{firstPiece()}}
+{\footnotesize\ttfamily bool Board\+::first\+Piece (\begin{DoxyParamCaption}\item[{\hyperlink{structcheck}{check} \&}]{result,  }\item[{const \hyperlink{structsquare}{square}$<$ int $>$}]{cur\+Pos,  }\item[{const \hyperlink{structsquare}{square}$<$ int $>$}]{dir,  }\item[{const int}]{friendlies }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+This function helps the get\+Check function to investigate the influence of one of the 8 directions on the output of the get\+Check function. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em result} & The check struct that get\+Check is working on. \\
+\hline
+\mbox{\tt in}  & {\em cur\+Pos} & The current position that is being investigated. \\
+\hline
+\mbox{\tt in}  & {\em dir} & The direction in which is being checked whether there are attacks going on. \\
+\hline
+\mbox{\tt in}  & {\em friendlies} & This value determines the number of friendly pieces that were already encountered. If this is 1, and an attacking piece is encountered, then {\itshape result} will indicate that this piece is pinned. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This function returns a boolean. True is returned, if the square indicated by {\itshape cur\+Pos} is under attack from the direction indicated by {\itshape dir}. Otherwise, false is returned. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBoard_aeea5a9ddcdeb6e4c087f53e71f6c11ec}\label{classBoard_aeea5a9ddcdeb6e4c087f53e71f6c11ec}} 
+\index{Board@{Board}!flip\+Board@{flip\+Board}}
+\index{flip\+Board@{flip\+Board}!Board@{Board}}
+\subsubsection{\texorpdfstring{flip\+Board()}{flipBoard()}}
+{\footnotesize\ttfamily void Board\+::flip\+Board (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This function flips the board. More precisely, it mirrors the position of all pieces along the axis between the 4th and 5th rank. So, for example, a piece on e3 is placed on e6, and a piece on a8 is placed on a1. This function is used to ensure that the player that is to move always plays with its pawns advancing to ever higher ranks. \mbox{\Hypertarget{classBoard_a4043087fc35e9706d0e83ec07225fe33}\label{classBoard_a4043087fc35e9706d0e83ec07225fe33}} 
+\index{Board@{Board}!from\+File@{from\+File}}
+\index{from\+File@{from\+File}!Board@{Board}}
+\subsubsection{\texorpdfstring{from\+File()}{fromFile()}}
+{\footnotesize\ttfamily int Board\+::from\+File (\begin{DoxyParamCaption}\item[{const char $\ast$}]{file\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Initialize a \hyperlink{classBoard}{Board} object from a file containing a string in F\+EN notation. 
+\begin{DoxyParams}{Parameters}
+{\em file\+Name} & The name of the file. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This function returns an error code, according to the following table\+: \tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\raggedleft \textbf{ Code }&\textbf{ Description  }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\raggedleft \textbf{ Code }&\textbf{ Description  }\\\cline{1-2}
+\endhead
+\PBS\raggedleft 0 &Success. \\\cline{1-2}
+\PBS\raggedleft 1 &The syntax of str is wrong. \\\cline{1-2}
+\end{longtabu}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBoard_a49045c77d568e4b5a00f176a2add54c8}\label{classBoard_a49045c77d568e4b5a00f176a2add54c8}} 
+\index{Board@{Board}!from\+Str@{from\+Str}}
+\index{from\+Str@{from\+Str}!Board@{Board}}
+\subsubsection{\texorpdfstring{from\+Str()}{fromStr()}}
+{\footnotesize\ttfamily int Board\+::from\+Str (\begin{DoxyParamCaption}\item[{const char $\ast$}]{str }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Initialize a \hyperlink{classBoard}{Board} object from a string in F\+EN notation. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em str} & The string in F\+EN notation \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This function returns an error code, according to the following table\+: \tabulinesep=1mm
+\begin{longtabu} spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\raggedleft \textbf{ Code }&\textbf{ Description  }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\rowcolor{\tableheadbgcolor}\PBS\raggedleft \textbf{ Code }&\textbf{ Description  }\\\cline{1-2}
+\endhead
+\PBS\raggedleft 0 &Success. \\\cline{1-2}
+\PBS\raggedleft 1 &The syntax of str is wrong. \\\cline{1-2}
+\end{longtabu}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBoard_afc291baf2c205a64255e8e55ffeff004}\label{classBoard_afc291baf2c205a64255e8e55ffeff004}} 
+\index{Board@{Board}!get\+Check@{get\+Check}}
+\index{get\+Check@{get\+Check}!Board@{Board}}
+\subsubsection{\texorpdfstring{get\+Check()}{getCheck()}}
+{\footnotesize\ttfamily \hyperlink{structcheck}{check} Board\+::get\+Check (\begin{DoxyParamCaption}\item[{const \hyperlink{structsquare}{square}$<$ int $>$}]{king\+Pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This function finds out what is going on in relation to the king of the player that is to move. In particular, it returns a check struct containing information about pinned pieces and squares that can resolve check. Moreover, it updates the check flag. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em king\+Pos} & The position of the king. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This function returns a check object, containing information about pinned pieces and, in case of check, how many pieces are attacking the king, and, in case of 1 attacking piece, which squares will resolve the check. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBoard_aa70526dde51ab18ec4011c07a7e38e60}\label{classBoard_aa70526dde51ab18ec4011c07a7e38e60}} 
+\index{Board@{Board}!get\+Piece\+Moves@{get\+Piece\+Moves}}
+\index{get\+Piece\+Moves@{get\+Piece\+Moves}!Board@{Board}}
+\subsubsection{\texorpdfstring{get\+Piece\+Moves()}{getPieceMoves()}}
+{\footnotesize\ttfamily void Board\+::get\+Piece\+Moves (\begin{DoxyParamCaption}\item[{\hyperlink{structmoveArray}{move\+Array} \&}]{result,  }\item[{const \hyperlink{structcheck}{check} \&}]{king\+Env,  }\item[{const \hyperlink{structsquare}{square}$<$ int $>$}]{cur\+Pos,  }\item[{const \hyperlink{structsquare}{square}$<$ int $>$}]{king\+Pos }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This function helps the calc\+Moves function. It investigates the legal moves that one particular piece can make, and appends these to the temporary moves array created by calc\+Moves. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt out}  & {\em result} & This is the array that the newly found moves are being appended to. \\
+\hline
+\mbox{\tt in}  & {\em king\+Env} & The function uses this data structure to check whether the piece is pinned, or helps resolving a check. \\
+\hline
+\mbox{\tt in}  & {\em cur\+Pos} & This is the square where the piece, whose legal moves are begin investigated, is located. \\
+\hline
+\mbox{\tt in}  & {\em king\+Pos} & This is the square where the king of the player who is to move is located. Its value is used to speed up special cases of taking en passant. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classBoard_a8b9245cb469f2e82c23ac49edd412646}\label{classBoard_a8b9245cb469f2e82c23ac49edd412646}} 
+\index{Board@{Board}!has\+Attacker@{has\+Attacker}}
+\index{has\+Attacker@{has\+Attacker}!Board@{Board}}
+\subsubsection{\texorpdfstring{has\+Attacker()}{hasAttacker()}}
+{\footnotesize\ttfamily bool Board\+::has\+Attacker (\begin{DoxyParamCaption}\item[{\hyperlink{structsquare}{square}$<$ int $>$}]{pos,  }\item[{const \hyperlink{structsquare}{square}$<$ int $>$}]{dir }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [private]}}
+
+This function helps the is\+Attacked function to determine whether an attack over a long distance from a fixed direction occurs. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em pos} & The position of which is determined whether it is under attack. \\
+\hline
+\mbox{\tt in}  & {\em dir} & The direction in which is being checked whether there is an attacker. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+This function returns a boolean, indicating whether there is an emeny piece attacking the square {\itshape pos} from direction {\itshape dir}. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classBoard_a3f5b48d92226217de5d488f3d5fb234a}\label{classBoard_a3f5b48d92226217de5d488f3d5fb234a}} 
+\index{Board@{Board}!print\+Board@{print\+Board}}
+\index{print\+Board@{print\+Board}!Board@{Board}}
+\subsubsection{\texorpdfstring{print\+Board()}{printBoard()}}
+{\footnotesize\ttfamily void Board\+::print\+Board (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Print a formatted representation of the board. \mbox{\Hypertarget{classBoard_a8bb1bf8da102901b871b538255948dfa}\label{classBoard_a8bb1bf8da102901b871b538255948dfa}} 
+\index{Board@{Board}!print\+Legal\+Moves@{print\+Legal\+Moves}}
+\index{print\+Legal\+Moves@{print\+Legal\+Moves}!Board@{Board}}
+\subsubsection{\texorpdfstring{print\+Legal\+Moves()}{printLegalMoves()}}
+{\footnotesize\ttfamily void Board\+::print\+Legal\+Moves (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const}
+
+Print a list of the legal moves. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+src/Board.\+h\item 
+src/Board.\+cpp\end{DoxyCompactItemize}

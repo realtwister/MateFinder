@@ -1,0 +1,34 @@
+\indexentry{Board@{Board}|hyperpage}{3}
+\indexentry{Board@{Board}!Board@{Board}|hyperpage}{4}
+\indexentry{Board@{Board}!Board@{Board}|hyperpage}{4}
+\indexentry{Board@{Board}!Board@{Board}|hyperpage}{4}
+\indexentry{Board@{Board}!Board@{Board}|hyperpage}{4}
+\indexentry{Board@{Board}!calc\+Moves@{calc\+Moves}|hyperpage}{5}
+\indexentry{calc\+Moves@{calc\+Moves}!Board@{Board}|hyperpage}{5}
+\indexentry{Board@{Board}!check\+Dir@{check\+Dir}|hyperpage}{5}
+\indexentry{check\+Dir@{check\+Dir}!Board@{Board}|hyperpage}{5}
+\indexentry{Board@{Board}!exec\+Move@{exec\+Move}|hyperpage}{5}
+\indexentry{exec\+Move@{exec\+Move}!Board@{Board}|hyperpage}{5}
+\indexentry{Board@{Board}!first\+Piece@{first\+Piece}|hyperpage}{5}
+\indexentry{first\+Piece@{first\+Piece}!Board@{Board}|hyperpage}{5}
+\indexentry{Board@{Board}!flip\+Board@{flip\+Board}|hyperpage}{6}
+\indexentry{flip\+Board@{flip\+Board}!Board@{Board}|hyperpage}{6}
+\indexentry{Board@{Board}!from\+File@{from\+File}|hyperpage}{6}
+\indexentry{from\+File@{from\+File}!Board@{Board}|hyperpage}{6}
+\indexentry{Board@{Board}!from\+Str@{from\+Str}|hyperpage}{7}
+\indexentry{from\+Str@{from\+Str}!Board@{Board}|hyperpage}{7}
+\indexentry{Board@{Board}!get\+Check@{get\+Check}|hyperpage}{7}
+\indexentry{get\+Check@{get\+Check}!Board@{Board}|hyperpage}{7}
+\indexentry{Board@{Board}!get\+Piece\+Moves@{get\+Piece\+Moves}|hyperpage}{7}
+\indexentry{get\+Piece\+Moves@{get\+Piece\+Moves}!Board@{Board}|hyperpage}{7}
+\indexentry{Board@{Board}!has\+Attacker@{has\+Attacker}|hyperpage}{8}
+\indexentry{has\+Attacker@{has\+Attacker}!Board@{Board}|hyperpage}{8}
+\indexentry{Board@{Board}!print\+Board@{print\+Board}|hyperpage}{8}
+\indexentry{print\+Board@{print\+Board}!Board@{Board}|hyperpage}{8}
+\indexentry{Board@{Board}!print\+Legal\+Moves@{print\+Legal\+Moves}|hyperpage}{8}
+\indexentry{print\+Legal\+Moves@{print\+Legal\+Moves}!Board@{Board}|hyperpage}{8}
+\indexentry{check@{check}|hyperpage}{9}
+\indexentry{move@{move}|hyperpage}{9}
+\indexentry{move\+Array@{move\+Array}|hyperpage}{9}
+\indexentry{square$<$ T $>$@{square$<$ T $>$}|hyperpage}{10}
+\indexentry{square$<$ void $>$@{square$<$ void $>$}|hyperpage}{10}
