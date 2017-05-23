@@ -457,14 +457,17 @@ void Board::calcMoves()
     }
   }
   
+  //Store the final movearray
+  legalMoves = tempLegalMoves.shrink_to_fit();
+  
   //Determine if we have a draw
-  if (friendlyCtr + enemyCtr <= 1
-      && (friendlyCtr == 0 || (friendlyCtr == 1 && (lastFriendly == Piece::whiteKnight || lastFriendly == Piece::whiteBishop)))
-      && (enemyCtr == 0 || (enemyCtr == 1 && (lastEnemy == Piece::blackKnight || lastEnemy == Piece::blackBishop))))
+  if ((legalMoves.size() == 0 && !(state & checkMask))
+      || (friendlyCtr + enemyCtr <= 1
+          && (friendlyCtr == 0 || (friendlyCtr == 1 && (lastFriendly == Piece::whiteKnight || lastFriendly == Piece::whiteBishop)))
+          && (enemyCtr == 0 || (enemyCtr == 1 && (lastEnemy == Piece::blackKnight || lastEnemy == Piece::blackBishop)))))
     state |= drawMask;
   
   //Deallocate the temporary variables
-  legalMoves = tempLegalMoves.shrink_to_fit();
   delete[] friendlySquares;
 }
 

@@ -557,6 +557,9 @@ TEST_CASE("calcMoves")
     
     b = Board("8/4b3/2k5/8/8/3K4/8/8 w - -");
     REQUIRE((b.state & Board::drawMask));
+    
+    b = Board("5K1k/5R2/8/8/8/8/8/8 b - -");
+    REQUIRE((b.state & Board::drawMask));
   }
 }
 
