@@ -1,6 +1,14 @@
 #ifndef DFS_LIBRARY_DEFINED
 #define DFS_LIBRARY_DEFINED
 #include "Board.h"
+#include <stack>
+
+struct DFSresult
+{
+  int state;
+  unsigned int depth;
+  std::stack<move> moves;
+};
 
 class DFS{
   #ifdef DEBUG
@@ -9,7 +17,7 @@ public:
   unsigned int maxDepth;
   Board start;
 
-
+  DFSresult best_outcome(Board, unsigned int);
 
 public:
   //constructor
