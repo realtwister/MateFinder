@@ -14,8 +14,8 @@ DFSresult DFS:: best_outcome(Board board, unsigned int depth){
   }
   moveArray& moves = board.getMoves();
   if(moves.size() == 0) return {0,depth, std::stack<move>()};
-  // TODO: Check for  maxDepth;
-  if(depth >= this->maxDepth) return {1, depth, std::stack<move>()};
+  // TODO: Check for  curDepth;
+  if(depth >= this->curDepth) return {1, depth, std::stack<move>()};
 
   DFSresult best = {-3, 0, std::stack<move>()};
   DFSresult res;
@@ -24,6 +24,9 @@ DFSresult DFS:: best_outcome(Board board, unsigned int depth){
     if(res.state > best.state){
       best=res;
       best.moves.push(moves[i]);
+      if(depth%2==1 && best.state > -2){
+        break;
+      }
     }
     else if(res.state == best.state){
       switch(res.state){
@@ -42,27 +45,42 @@ DFSresult DFS:: best_outcome(Board board, unsigned int depth){
           break;
       }
     }
+    if(depth == 0 && best.state == 2 && best.depth < this-> curDepth){
+      LOG("change curDepth %d \n", best.depth);
+      this-> curDepth = best.depth;
+    }
   }
   if(best.state == 2){
     best.state = -2;
   }
   else if(best.state == -2){
-    if(depth % 2 == 1 && best.depth <  this->maxDepth){
-      LOG("change maxDepth %d \n", best.depth);
-      this-> maxDepth = best.depth;
-    }
     best.state = 2;
   }
   return best;
 }
 
-DFS::DFS(Board _start, unsigned int _maxDepth){
+DFS::DFS(Board _start, unsigned int _curDepth){
   start = _start;
-  maxDepth = _maxDepth;
+  curDepth = _curDepth;
 }
 
 int DFS::search(){
-  DFSresult res = this->best_outcome(this->start, 0);
+  this->curDepth = 2;
+  DFSresult res = {1,0,std::stack<move>()};
+  while(res.state == 1 && this->curDepth < this->maxDepth){
+    this->curDepth -=1;
+    this->curDepth *=2;
+    this->curDepth +=1;
+    std::cout<< "curDepth: "<< this->curDepth <<std::endl;
+    res = this->best_outcome(this->start, 0);
+  }
   printf("state: %d in %u \n", res.state, res.depth);
+  bool blackToMove = this->start.blackToMove();
+  while(!res.moves.empty()){
+    std::cout << (blackToMove? "black: " : "white: ");
+    ((move) res.moves.top()).printMove(blackToMove);
+    res.moves.pop();
+    blackToMove = !blackToMove;
+  }
   return res.state;
 }

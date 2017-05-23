@@ -15,6 +15,7 @@ class DFS{
 public:
   #endif
   unsigned int maxDepth;
+  unsigned int curDepth;
   Board start;
 
   DFSresult best_outcome(Board, unsigned int);
