@@ -16,14 +16,15 @@ static square<int> knightMoves[8]={
   {1,2},
   {-1,2}
 };
-// PRIVATE METHODS
 
 /**
- * Create a Board object from a string in FEN notation
- * @param  str The string in FEN notation
- * @return int error codes:
- *                0: No error
- *                1: Syntax of str is wrong
+ * Initialize a Board object from a string in FEN notation.
+ * @param[in] str The string in FEN notation
+ * @return This function returns an error code, according to the following table:
+ * Code | Description
+ * ---: | -----------
+ * 0    | Success.
+ * 1    | The syntax of str is wrong.
  */
 int Board::fromStr(const char * str) {
   int x = 0, y = 7;
@@ -132,12 +133,13 @@ int Board::fromStr(const char * str) {
 }
 
 /**
- * Create a Board object from a file containing a string in FEN notation
- * @param  fileName The filename of the file
- * @return      int Error codes:
- *                    0: No error
- *                    1: Syntax error in FEN notation
- *                    2: Error reading file
+ * Initialize a Board object from a file containing a string in FEN notation.
+ * @param fileName The name of the file.
+ * @return This function returns an error code, according to the following table:
+ * Code | Description
+ * ---: | -----------
+ * 0 | Success.
+ * 1 | The syntax of str is wrong.
  */
 int Board::fromFile(const char *fileName) {
   std::ifstream file;
@@ -176,11 +178,13 @@ bool Board::isAttacked(const square<int> piecePos) const {
 }
 
 /**
- * This function finds out what is going on in relation to the king of the player that is to move
- * In particular, it returns a check struct, containing the number of pieces attacking the king,
- * and 8 charachters containing a bitmap of the entire board, where a set bit indicates either
- * a possible square<int> to resolve check if the number of attackers is one and the square<int> is empty,
- * or a pinned piece if it occupied by a friendly piece. Moreover, it updates the check flag.
+ * This function finds out what is going on in relation to the king of the player that is to move.
+ * In particular, it returns a check struct containing information about pinned pieces and squares that
+ * can resolve check. Moreover, it updates the check flag.
+ * @param[in] kingPos The position of the king.
+ * @return This function returns a check object, containing information about pinned pieces and, in case
+ * of check, how many pieces are attacking the king, and, in case of 1 attacking piece, which squares will
+ * resolve the check.
  */
 check Board::getCheck(const square<int> kingPos)
 {
@@ -243,6 +247,13 @@ check Board::getCheck(const square<int> kingPos)
 /**
  * This function helps the getCheck function to investigate the influence of one of the 8 directions
  * on the output of the getCheck function.
+ * @param[out] result The check struct that getCheck is working on.
+ * @param[in] curPos The current position that is being investigated.
+ * @param[in] dir The direction in which is being checked whether there are attacks going on.
+ * @param[in] friendlies This value determines the number of friendly pieces that were already encountered.
+ * If this is 1, and an attacking piece is encountered, then \a result will indicate that this piece is pinned.
+ * @return This function returns a boolean. True is returned, if the square indicated by \a curPos is under attack
+ * from the direction indicated by \a dir. Otherwise, false is returned.
  */
 bool Board::firstPiece(check & result, const square<int> curPos, const square<int> dir, const int friendlies) const
 {
@@ -288,6 +299,13 @@ bool Board::firstPiece(check & result, const square<int> curPos, const square<in
   return false;
 }
 
+/** 
+ * This function helps the isAttacked function to determine whether an attack over a long distance
+ * from a fixed direction occurs.
+ * @param[in] pos The position of which is determined whether it is under attack.
+ * @param[in] dir The direction in which is being checked whether there is an attacker.
+ * @return This function returns a boolean, indicating whether there is an emeny piece attacking the square \a pos from direction \a dir.
+ */
 bool Board::hasAttacker(square<int> pos, const square<int> dir) const {
   int dist = 0;
   if(dir.x == 0){
@@ -336,13 +354,14 @@ bool Board::hasAttacker(square<int> pos, const square<int> dir) const {
 }
 
 /**
- * This function calculates all possible moves, and stores them in the moveArray moves.
- * Along the way, the check state flag is updated.
+ * This function calculates all possible moves, and stores them in \a legalMoves member.
+ * Additionally, it updates the \a check flag, to indicate whether the player that is to move is check.
+ * Finally, it also updates the \a draw flag. If there are too few pieces on the board for any mate to occur, then this flag is set.
  */
 
 void Board::calcMoves()
 {
-  //First we allocate space for the friendly squares array
+  //First, we allocate space for the friendly squares array
   moveArray tempLegalMoves(256);
   square<int> * friendlySquares = new square<int>[15];
   int friendlySquaresCtr = 0;
@@ -449,6 +468,14 @@ void Board::calcMoves()
   delete[] friendlySquares;
 }
 
+/**
+ * This function helps the calcMoves function. It investigates the legal moves that one particular piece can make,
+ * and appends these to the temporary moves array created by calcMoves.
+ * @param[out] result This is the array that the newly found moves are being appended to.
+ * @param[in] kingEnv The function uses this data structure to check whether the piece is pinned, or helps resolving a check.
+ * @param[in] curPos This is the square where the piece, whose legal moves are begin investigated, is located.
+ * @param[in] kingPos This is the square where the king of the player who is to move is located. Its value is used to speed up special cases of taking en passant.
+ */
 void Board::getPieceMoves(moveArray& result, const check & kingEnv, const square<int> curPos, const square<int> kingPos)
 {
   int xmin, xmax, ymin, ymax;
@@ -565,6 +592,14 @@ void Board::getPieceMoves(moveArray& result, const check & kingEnv, const square
   }
 }
 
+/**
+ * This function helps the getPieceMoves function. It checks to which squares a long range piece (i.e. queen, rook or bishop) can move in a given direction,
+ * and appends these moves to the array of legal moves.
+ * @param[out] result This is the array of moves which the found legal moves are appended to.
+ * @param[in] kingEnv Through this \a check object, the information concerning whether a given move resolves check is supplied to the function.
+ * @param[in] basePos This is the position of the piece whose legal moves are investigated.
+ * @param[in] dir This is the direction in which the legal moves are being checked.
+ */
 inline void Board::checkDir(moveArray& result, const check & kingEnv, const square<int> basePos, const square<int> dir) const
 {
   int dist;
@@ -583,6 +618,11 @@ inline void Board::checkDir(moveArray& result, const check & kingEnv, const squa
   }
 }
 
+/**
+ * This function flips the board. More precisely, it mirrors the position of all pieces along the axis between the 4th and 5th rank.
+ * So, for example, a piece on e3 is placed on e6, and a piece on a8 is placed on a1.
+ * This function is used to ensure that the player that is to move always plays with its pawns advancing to ever higher ranks.
+ */
 void Board::flipBoard()
 {
   char tmp;
@@ -600,6 +640,12 @@ void Board::flipBoard()
   return;
 }
 
+/**
+ * This constructor is used when a move is executed. All the pieces must be copied, but copying all the legal moves is not necessary, as they are recalculated anyway.
+ * So, this private constructur is only to be used internally, when calling the \a cloneAndExecMove function.
+ * @params[in] other This is the board that is to be cloned.
+ * @params[in] mv This is the move that is to be executed.
+ */
 Board::Board(const Board& other, const move mv)
 {
   for (int i = 0; i < 8; i++)
@@ -609,13 +655,10 @@ Board::Board(const Board& other, const move mv)
   execMove(mv);
 }
 
-// PUBLIC FUNCTIONS
-
 /**
  * Board constructor creating Board object from either a file or a string
- * @param   str Either the FEN string or the filename
- * @param  file Boolean whether to read file or string (true is file)
- * @return void
+ * @param str Either the FEN string or the filename
+ * @param file Boolean whether to read file or string (true is file)
  */
 
 Board::Board(const char *str, const bool file)
@@ -646,6 +689,11 @@ Board::Board(const char *str, const bool file)
   
   calcMoves();
 }
+
+/**
+ * Execute a move on a given board and consequently flip the board and recalculate the legal moves.
+ * @params[in] move This is the move that is to be executed.
+ */
 
 void Board::execMove(const move move)
 {
@@ -744,6 +792,9 @@ void Board::printBoard() const
   }
 }
 
+/**
+ * Print a list of the legal moves.
+ */
 void Board::printLegalMoves() const
 {
   std::cout << "Below, we will show a list of legal moves." << std::endl;

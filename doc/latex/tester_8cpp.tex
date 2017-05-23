@@ -1,0 +1,146 @@
+\hypertarget{tester_8cpp}{}\section{test/tester.cpp File Reference}
+\label{tester_8cpp}\index{test/tester.\+cpp@{test/tester.\+cpp}}
+{\ttfamily \#include \char`\"{}doctest.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}../src/\+Board.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}test\+Square.\+cpp\char`\"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{tester_8cpp_a623b8690a262536536a43eab2d7df03d}{D\+O\+C\+T\+E\+S\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+\_\+\+W\+I\+T\+H\+\_\+\+M\+A\+IN}
+\item 
+\#define \hyperlink{tester_8cpp_ad72dbcf6d0153db1b8d8a58001feed83}{D\+E\+B\+UG}
+\item 
+\#define \hyperlink{tester_8cpp_acd2510d5a0faf454a5ccab808f075021}{B\+O\+A\+R\+D\+\_\+\+L\+O\+OP}~for(signed char i=0;i$<$8;i++) for(signed char j=0;j$<$8;j++)
+\item 
+\#define \hyperlink{tester_8cpp_aea8e79a6ba9e0741cc1ac60a5d95391a}{R\+O\+W\+\_\+\+L\+O\+OP}~for (signed char i=0;i$<$8;i++)
+\item 
+\#define \hyperlink{tester_8cpp_a9ccd6d38e3c79a9c87d697c20267d922}{Check\+Board}(B\+O\+A\+R\+D\+S\+TR,  L\+E\+G\+A\+L\+M\+O\+V\+E\+S...)
+\item 
+\#define \hyperlink{tester_8cpp_a99a8d407e1815662d89ebf046fc0df9a}{Check\+Move}(B\+O\+A\+R\+D\+S\+TR,  L\+E\+G\+A\+L\+M\+O\+VE)
+\item 
+\#define \hyperlink{tester_8cpp_a5b99aa654a9377f55b79051500b141d1}{Check\+Move\+Absent}(B\+O\+A\+R\+D\+S\+TR,  L\+E\+G\+A\+L\+M\+O\+VE)
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{tester_8cpp_a025df2fe66e2ee1955277cd8d12fbe8c}{T\+E\+S\+T\+\_\+\+C\+A\+SE} (\char`\"{}Start position\char`\"{})
+\item 
+\hyperlink{tester_8cpp_a0d5d998144e0409554797d14c83af2bd}{T\+E\+S\+T\+\_\+\+C\+A\+SE} (\char`\"{}Check has\+Attacker\char`\"{})
+\item 
+\hyperlink{tester_8cpp_aec6ac29e42592cfc851b6834bdb53be3}{T\+E\+S\+T\+\_\+\+C\+A\+SE} (\char`\"{}Testing get\+Check function\char`\"{})
+\item 
+void \hyperlink{tester_8cpp_a87fd5e7b461d6e904290995ffab02d98}{Check\+Presence} (\hyperlink{classBoard}{Board} $\ast$b, const \hyperlink{structmoveArray}{move\+Array} moves, const char $\ast$movestr, bool check\+Present)
+\item 
+\hyperlink{tester_8cpp_aa3318caee923829c29dfa463357c8be0}{T\+E\+S\+T\+\_\+\+C\+A\+SE} (\char`\"{}calc\+Moves\char`\"{})
+\item 
+\hyperlink{tester_8cpp_ad7314fdde524916a98993e2f704d1b7a}{T\+E\+S\+T\+\_\+\+C\+A\+SE} (\char`\"{}exec\+Move\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{tester_8cpp_acd2510d5a0faf454a5ccab808f075021}\label{tester_8cpp_acd2510d5a0faf454a5ccab808f075021}} 
+\index{tester.\+cpp@{tester.\+cpp}!B\+O\+A\+R\+D\+\_\+\+L\+O\+OP@{B\+O\+A\+R\+D\+\_\+\+L\+O\+OP}}
+\index{B\+O\+A\+R\+D\+\_\+\+L\+O\+OP@{B\+O\+A\+R\+D\+\_\+\+L\+O\+OP}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{B\+O\+A\+R\+D\+\_\+\+L\+O\+OP}{BOARD\_LOOP}}
+{\footnotesize\ttfamily \#define B\+O\+A\+R\+D\+\_\+\+L\+O\+OP~for(signed char i=0;i$<$8;i++) for(signed char j=0;j$<$8;j++)}
+
+\mbox{\Hypertarget{tester_8cpp_a9ccd6d38e3c79a9c87d697c20267d922}\label{tester_8cpp_a9ccd6d38e3c79a9c87d697c20267d922}} 
+\index{tester.\+cpp@{tester.\+cpp}!Check\+Board@{Check\+Board}}
+\index{Check\+Board@{Check\+Board}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{Check\+Board}{CheckBoard}}
+{\footnotesize\ttfamily \#define Check\+Board(\begin{DoxyParamCaption}\item[{}]{B\+O\+A\+R\+D\+S\+TR,  }\item[{}]{L\+E\+G\+A\+L\+M\+O\+V\+E\+S... }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{\hyperlink{classBoard}{Board} b(BOARDSTR); \(\backslash\)
+                                              moveArray moves = b.getMoves(); \(\backslash\)
+                                              const \textcolor{keywordtype}{char} * legalMoves[] = \{LEGALMOVES\}; \(\backslash\)
+                                              REQUIRE(\textcolor{keyword}{sizeof}(legalMoves) / \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}*) == moves.size()); 
+      \(\backslash\)
+                                              for (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i = 0; i < \textcolor{keyword}{sizeof}(legalMoves) / \textcolor{keyword}{sizeof}(\textcolor{keywordtype}{char}
+      *); i++) \(\backslash\)
+                                                \hyperlink{tester_8cpp_a87fd5e7b461d6e904290995ffab02d98}{CheckPresence}(&b, moves, legalMoves[i], \textcolor{keyword}{true});
+      \}
+\end{DoxyCode}
+\mbox{\Hypertarget{tester_8cpp_a99a8d407e1815662d89ebf046fc0df9a}\label{tester_8cpp_a99a8d407e1815662d89ebf046fc0df9a}} 
+\index{tester.\+cpp@{tester.\+cpp}!Check\+Move@{Check\+Move}}
+\index{Check\+Move@{Check\+Move}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{Check\+Move}{CheckMove}}
+{\footnotesize\ttfamily \#define Check\+Move(\begin{DoxyParamCaption}\item[{}]{B\+O\+A\+R\+D\+S\+TR,  }\item[{}]{L\+E\+G\+A\+L\+M\+O\+VE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{\hyperlink{classBoard}{Board} b(BOARDSTR); \(\backslash\)
+                                        moveArray moves = b.getMoves(); \(\backslash\)
+                                        CheckPresence(&b, moves, LEGALMOVE, \textcolor{keyword}{true});\}
+\end{DoxyCode}
+\mbox{\Hypertarget{tester_8cpp_a5b99aa654a9377f55b79051500b141d1}\label{tester_8cpp_a5b99aa654a9377f55b79051500b141d1}} 
+\index{tester.\+cpp@{tester.\+cpp}!Check\+Move\+Absent@{Check\+Move\+Absent}}
+\index{Check\+Move\+Absent@{Check\+Move\+Absent}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{Check\+Move\+Absent}{CheckMoveAbsent}}
+{\footnotesize\ttfamily \#define Check\+Move\+Absent(\begin{DoxyParamCaption}\item[{}]{B\+O\+A\+R\+D\+S\+TR,  }\item[{}]{L\+E\+G\+A\+L\+M\+O\+VE }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\{\hyperlink{classBoard}{Board} b(BOARDSTR); \(\backslash\)
+                                              moveArray moves = b.getMoves(); \(\backslash\)
+                                              CheckPresence(&b, moves, LEGALMOVE, \textcolor{keyword}{false});\}
+\end{DoxyCode}
+\mbox{\Hypertarget{tester_8cpp_ad72dbcf6d0153db1b8d8a58001feed83}\label{tester_8cpp_ad72dbcf6d0153db1b8d8a58001feed83}} 
+\index{tester.\+cpp@{tester.\+cpp}!D\+E\+B\+UG@{D\+E\+B\+UG}}
+\index{D\+E\+B\+UG@{D\+E\+B\+UG}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{D\+E\+B\+UG}{DEBUG}}
+{\footnotesize\ttfamily \#define D\+E\+B\+UG}
+
+\mbox{\Hypertarget{tester_8cpp_a623b8690a262536536a43eab2d7df03d}\label{tester_8cpp_a623b8690a262536536a43eab2d7df03d}} 
+\index{tester.\+cpp@{tester.\+cpp}!D\+O\+C\+T\+E\+S\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+\_\+\+W\+I\+T\+H\+\_\+\+M\+A\+IN@{D\+O\+C\+T\+E\+S\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+\_\+\+W\+I\+T\+H\+\_\+\+M\+A\+IN}}
+\index{D\+O\+C\+T\+E\+S\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+\_\+\+W\+I\+T\+H\+\_\+\+M\+A\+IN@{D\+O\+C\+T\+E\+S\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+\_\+\+W\+I\+T\+H\+\_\+\+M\+A\+IN}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{D\+O\+C\+T\+E\+S\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+\_\+\+W\+I\+T\+H\+\_\+\+M\+A\+IN}{DOCTEST\_CONFIG\_IMPLEMENT\_WITH\_MAIN}}
+{\footnotesize\ttfamily \#define D\+O\+C\+T\+E\+S\+T\+\_\+\+C\+O\+N\+F\+I\+G\+\_\+\+I\+M\+P\+L\+E\+M\+E\+N\+T\+\_\+\+W\+I\+T\+H\+\_\+\+M\+A\+IN}
+
+\mbox{\Hypertarget{tester_8cpp_aea8e79a6ba9e0741cc1ac60a5d95391a}\label{tester_8cpp_aea8e79a6ba9e0741cc1ac60a5d95391a}} 
+\index{tester.\+cpp@{tester.\+cpp}!R\+O\+W\+\_\+\+L\+O\+OP@{R\+O\+W\+\_\+\+L\+O\+OP}}
+\index{R\+O\+W\+\_\+\+L\+O\+OP@{R\+O\+W\+\_\+\+L\+O\+OP}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{R\+O\+W\+\_\+\+L\+O\+OP}{ROW\_LOOP}}
+{\footnotesize\ttfamily \#define R\+O\+W\+\_\+\+L\+O\+OP~for (signed char i=0;i$<$8;i++)}
+
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{tester_8cpp_a87fd5e7b461d6e904290995ffab02d98}\label{tester_8cpp_a87fd5e7b461d6e904290995ffab02d98}} 
+\index{tester.\+cpp@{tester.\+cpp}!Check\+Presence@{Check\+Presence}}
+\index{Check\+Presence@{Check\+Presence}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{Check\+Presence()}{CheckPresence()}}
+{\footnotesize\ttfamily void Check\+Presence (\begin{DoxyParamCaption}\item[{\hyperlink{classBoard}{Board} $\ast$}]{b,  }\item[{const \hyperlink{structmoveArray}{move\+Array}}]{moves,  }\item[{const char $\ast$}]{movestr,  }\item[{bool}]{check\+Present }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{tester_8cpp_a025df2fe66e2ee1955277cd8d12fbe8c}\label{tester_8cpp_a025df2fe66e2ee1955277cd8d12fbe8c}} 
+\index{tester.\+cpp@{tester.\+cpp}!T\+E\+S\+T\+\_\+\+C\+A\+SE@{T\+E\+S\+T\+\_\+\+C\+A\+SE}}
+\index{T\+E\+S\+T\+\_\+\+C\+A\+SE@{T\+E\+S\+T\+\_\+\+C\+A\+SE}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{T\+E\+S\+T\+\_\+\+C\+A\+S\+E()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [1/5]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}Start position\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{tester_8cpp_a0d5d998144e0409554797d14c83af2bd}\label{tester_8cpp_a0d5d998144e0409554797d14c83af2bd}} 
+\index{tester.\+cpp@{tester.\+cpp}!T\+E\+S\+T\+\_\+\+C\+A\+SE@{T\+E\+S\+T\+\_\+\+C\+A\+SE}}
+\index{T\+E\+S\+T\+\_\+\+C\+A\+SE@{T\+E\+S\+T\+\_\+\+C\+A\+SE}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{T\+E\+S\+T\+\_\+\+C\+A\+S\+E()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [2/5]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}Check has\+Attacker\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{tester_8cpp_aec6ac29e42592cfc851b6834bdb53be3}\label{tester_8cpp_aec6ac29e42592cfc851b6834bdb53be3}} 
+\index{tester.\+cpp@{tester.\+cpp}!T\+E\+S\+T\+\_\+\+C\+A\+SE@{T\+E\+S\+T\+\_\+\+C\+A\+SE}}
+\index{T\+E\+S\+T\+\_\+\+C\+A\+SE@{T\+E\+S\+T\+\_\+\+C\+A\+SE}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{T\+E\+S\+T\+\_\+\+C\+A\+S\+E()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [3/5]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}Testing get\+Check function\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{tester_8cpp_aa3318caee923829c29dfa463357c8be0}\label{tester_8cpp_aa3318caee923829c29dfa463357c8be0}} 
+\index{tester.\+cpp@{tester.\+cpp}!T\+E\+S\+T\+\_\+\+C\+A\+SE@{T\+E\+S\+T\+\_\+\+C\+A\+SE}}
+\index{T\+E\+S\+T\+\_\+\+C\+A\+SE@{T\+E\+S\+T\+\_\+\+C\+A\+SE}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{T\+E\+S\+T\+\_\+\+C\+A\+S\+E()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [4/5]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}calc\+Moves\char`\"{}}]{ }\end{DoxyParamCaption})}
+
+\mbox{\Hypertarget{tester_8cpp_ad7314fdde524916a98993e2f704d1b7a}\label{tester_8cpp_ad7314fdde524916a98993e2f704d1b7a}} 
+\index{tester.\+cpp@{tester.\+cpp}!T\+E\+S\+T\+\_\+\+C\+A\+SE@{T\+E\+S\+T\+\_\+\+C\+A\+SE}}
+\index{T\+E\+S\+T\+\_\+\+C\+A\+SE@{T\+E\+S\+T\+\_\+\+C\+A\+SE}!tester.\+cpp@{tester.\+cpp}}
+\subsubsection{\texorpdfstring{T\+E\+S\+T\+\_\+\+C\+A\+S\+E()}{TEST\_CASE()}\hspace{0.1cm}{\footnotesize\ttfamily [5/5]}}
+{\footnotesize\ttfamily T\+E\+S\+T\+\_\+\+C\+A\+SE (\begin{DoxyParamCaption}\item[{\char`\"{}exec\+Move\char`\"{}}]{ }\end{DoxyParamCaption})}
+

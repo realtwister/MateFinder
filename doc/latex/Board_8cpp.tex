@@ -1,0 +1,72 @@
+\hypertarget{Board_8cpp}{}\section{src/\+Board.cpp File Reference}
+\label{Board_8cpp}\index{src/\+Board.\+cpp@{src/\+Board.\+cpp}}
+{\ttfamily \#include \char`\"{}Board.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$exception$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$tgmath.\+h$>$}\newline
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{Board_8cpp_acb5fad0ca827a68fd160c4ea0cbfb8e3}{P\+I\+E\+C\+E\+\_\+\+C\+A\+SE}(c,  p)
+\item 
+\#define \hyperlink{Board_8cpp_a67f5d67591ce0d6eade6cc2ea152a856}{N\+U\+M\+\_\+\+C\+A\+SE}(c,  n)
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+static \hyperlink{structsquare}{square}$<$ int $>$ \hyperlink{Board_8cpp_ada805f17f8bd0de4f29e9f4b266664f4}{knight\+Moves} \mbox{[}8\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{Board_8cpp_a67f5d67591ce0d6eade6cc2ea152a856}\label{Board_8cpp_a67f5d67591ce0d6eade6cc2ea152a856}} 
+\index{Board.\+cpp@{Board.\+cpp}!N\+U\+M\+\_\+\+C\+A\+SE@{N\+U\+M\+\_\+\+C\+A\+SE}}
+\index{N\+U\+M\+\_\+\+C\+A\+SE@{N\+U\+M\+\_\+\+C\+A\+SE}!Board.\+cpp@{Board.\+cpp}}
+\subsubsection{\texorpdfstring{N\+U\+M\+\_\+\+C\+A\+SE}{NUM\_CASE}}
+{\footnotesize\ttfamily \#define N\+U\+M\+\_\+\+C\+A\+SE(\begin{DoxyParamCaption}\item[{}]{c,  }\item[{}]{n }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{case} c: \(\backslash\)
+  if (x > n) \textcolor{keywordflow}{return} 1;               \(\backslash\)
+  board[x][y] = \hyperlink{namespacePiece_a588233307aa6bdb32c1d62c9f20895cca53f5aebe32a34b7d227e2e03da088831}{Piece::none};         \(\backslash\)
+  x++;
+\end{DoxyCode}
+\mbox{\Hypertarget{Board_8cpp_acb5fad0ca827a68fd160c4ea0cbfb8e3}\label{Board_8cpp_acb5fad0ca827a68fd160c4ea0cbfb8e3}} 
+\index{Board.\+cpp@{Board.\+cpp}!P\+I\+E\+C\+E\+\_\+\+C\+A\+SE@{P\+I\+E\+C\+E\+\_\+\+C\+A\+SE}}
+\index{P\+I\+E\+C\+E\+\_\+\+C\+A\+SE@{P\+I\+E\+C\+E\+\_\+\+C\+A\+SE}!Board.\+cpp@{Board.\+cpp}}
+\subsubsection{\texorpdfstring{P\+I\+E\+C\+E\+\_\+\+C\+A\+SE}{PIECE\_CASE}}
+{\footnotesize\ttfamily \#define P\+I\+E\+C\+E\+\_\+\+C\+A\+SE(\begin{DoxyParamCaption}\item[{}]{c,  }\item[{}]{p }\end{DoxyParamCaption})}
+
+{\bfseries Value\+:}
+\begin{DoxyCode}
+\textcolor{keywordflow}{case} c: \(\backslash\)
+  if (x > 7) return 1;                 \(\backslash\)
+  board[x][y] = \hyperlink{namespacePiece}{Piece}::p;              \(\backslash\)
+  x++;                                 \(\backslash\)
+  break;                               \(\backslash\)
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{Board_8cpp_ada805f17f8bd0de4f29e9f4b266664f4}\label{Board_8cpp_ada805f17f8bd0de4f29e9f4b266664f4}} 
+\index{Board.\+cpp@{Board.\+cpp}!knight\+Moves@{knight\+Moves}}
+\index{knight\+Moves@{knight\+Moves}!Board.\+cpp@{Board.\+cpp}}
+\subsubsection{\texorpdfstring{knight\+Moves}{knightMoves}}
+{\footnotesize\ttfamily \hyperlink{structsquare}{square}$<$int$>$ knight\+Moves\mbox{[}8\mbox{]}\hspace{0.3cm}{\ttfamily [static]}}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}
+=\{
+  \{-2,1\},
+  \{-2,-1\},
+  \{2,1\},
+  \{2,-1\},
+  \{1,-2\},
+  \{-1,-2\},
+  \{1,2\},
+  \{-1,2\}
+\}
+\end{DoxyCode}

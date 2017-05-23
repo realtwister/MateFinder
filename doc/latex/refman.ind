@@ -1,0 +1,71 @@
+\begin{theindex}
+
+  \item {Board}, \hyperpage{3}
+    \subitem {Board}, \hyperpage{4}
+    \subitem {calc\+Moves}, \hyperpage{5}
+    \subitem {check\+Dir}, \hyperpage{5}
+    \subitem {exec\+Move}, \hyperpage{5}
+    \subitem {first\+Piece}, \hyperpage{5}
+    \subitem {flip\+Board}, \hyperpage{6}
+    \subitem {from\+File}, \hyperpage{6}
+    \subitem {from\+Str}, \hyperpage{7}
+    \subitem {get\+Check}, \hyperpage{7}
+    \subitem {get\+Piece\+Moves}, \hyperpage{7}
+    \subitem {has\+Attacker}, \hyperpage{8}
+    \subitem {print\+Board}, \hyperpage{8}
+    \subitem {print\+Legal\+Moves}, \hyperpage{8}
+
+  \indexspace
+
+  \item {calc\+Moves}
+    \subitem {Board}, \hyperpage{5}
+  \item {check}, \hyperpage{9}
+  \item {check\+Dir}
+    \subitem {Board}, \hyperpage{5}
+
+  \indexspace
+
+  \item {exec\+Move}
+    \subitem {Board}, \hyperpage{5}
+
+  \indexspace
+
+  \item {first\+Piece}
+    \subitem {Board}, \hyperpage{5}
+  \item {flip\+Board}
+    \subitem {Board}, \hyperpage{6}
+  \item {from\+File}
+    \subitem {Board}, \hyperpage{6}
+  \item {from\+Str}
+    \subitem {Board}, \hyperpage{7}
+
+  \indexspace
+
+  \item {get\+Check}
+    \subitem {Board}, \hyperpage{7}
+  \item {get\+Piece\+Moves}
+    \subitem {Board}, \hyperpage{7}
+
+  \indexspace
+
+  \item {has\+Attacker}
+    \subitem {Board}, \hyperpage{8}
+
+  \indexspace
+
+  \item {move}, \hyperpage{9}
+  \item {move\+Array}, \hyperpage{9}
+
+  \indexspace
+
+  \item {print\+Board}
+    \subitem {Board}, \hyperpage{8}
+  \item {print\+Legal\+Moves}
+    \subitem {Board}, \hyperpage{8}
+
+  \indexspace
+
+  \item {square$<$ T $>$}, \hyperpage{10}
+  \item {square$<$ void $>$}, \hyperpage{10}
+
+\end{theindex}
