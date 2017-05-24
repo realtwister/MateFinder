@@ -39,7 +39,7 @@ struct square
   square<T>(const T x, const T y) : x(x), y(y) {}
   template<typename newT>
   square<T>(const square<newT>& other) : x(other.x), y(other.y) {}
-  
+
   template<typename newT>
   square<typename std::common_type<T,newT>::type> operator+(const square<newT> &other) const {return square<typename std::common_type<T,newT>::type>(x+other.x,y+other.y);}
   square<T> operator+(const square<void> &other) const;
@@ -53,15 +53,15 @@ struct square<void>
 {
   signed char x:4;
   signed char y:4;
-  
+
   square<void>() {}
   square<void>(const int x, const int y) : x(x), y(y) {}
   template<typename newT>
   square<void>(const square<newT>& other) : x(other.x), y(other.y) {}
-  
+
   template<typename newT>
   square<newT> operator+(const square<newT>& other) {return square<newT>(x+other.x,y+other.y);}
-  
+
   template<typename newT>
   square<void>& operator+=(const square<newT>& other) {x += other.x; y += other.y; return *this;}
 };
@@ -77,7 +77,7 @@ struct move
   square<void> start;
   square<void> end;
   Piece::Piece promoteTo; // what to promote to if promotion is possible
-  
+
   void printMove(bool blackToMove)
   {
     std::cout << (char)(start.x + 'a') << ((blackToMove ? 7 - start.y : start.y) + 1) << "-" << (char)(end.x + 'a') << ((blackToMove ? 7 - end.y : end.y) + 1) << std::endl;
@@ -112,7 +112,7 @@ struct moveArray
   int num;
   int ctr;
   move * moves;
-  
+
   moveArray() : num(0), ctr(0), moves(NULL) {}
   moveArray(const int n) : num(n), ctr(0), moves(new move[n]) {}
   moveArray(const moveArray& other)
@@ -124,7 +124,7 @@ struct moveArray
       moves[i] = other.moves[i];
   }
   ~moveArray() {delete[] moves;}
-  
+
   moveArray& operator=(const moveArray& other)
   {
     num = other.num;
@@ -134,7 +134,7 @@ struct moveArray
       moves[i] = other.moves[i];
     return *this;
   }
-  
+
   moveArray& operator=(moveArray&& other)
   {
     num = other.num;
@@ -143,10 +143,10 @@ struct moveArray
     other.moves = NULL;
     return *this;
   }
-  
+
   inline move& operator[](const int n) const {return moves[n];}
   inline int size() const {return ctr;}
-  
+
   inline void push_back(const move toAdd)
   {
     #ifdef DEBUG
@@ -158,7 +158,7 @@ struct moveArray
     #endif
     moves[ctr++] = toAdd;
   }
-  
+
   inline moveArray shrink_to_fit()
   {
     moveArray result(ctr);
@@ -198,7 +198,7 @@ public:
   void calcMoves();                    // Calculate legal moves
   void getPieceMoves(moveArray& result, const check& kingEnv, const square<int> curPos, const square<int> kingPos);	//Calculate the legal moves of the piece on square<int> curPos
   inline void checkDir(moveArray& result, const check& kingEnv, const square<int> basePos, const square<int> dir) const; //Check the possible moves of a piece along some file, rank or diagonal
-  
+
   check getCheck(const square<int> kingPos); // Get the details about a possible check at kingPos
   bool firstPiece(check& result, const square<int> curPos, const square<int> dir, const int friendlies) const; // Investigate the possibility of attacks from dir to curPos (Recursive) with heatmap.
 
@@ -211,9 +211,9 @@ public:
   inline bool isFriendly(const square<int> pos) const {
     return isFriendly(board[pos.x][pos.y]);
   }
-  
+
   void flipBoard();
-  
+
   //Private constructor
   Board(const Board& other, const move mv);
 
@@ -230,13 +230,13 @@ public:
   bool isMate() const {return (legalMoves.size() == 0 && state & checkMask);}  // check if current board is mate
   bool isDraw() const {return (state & drawMask);} //check if the current position is stalemated
   moveArray& getMoves() {return legalMoves;}
-  
+
   // Setters
   void execMove(const move mv); // Execute mv.
   void changeColor() {state ^= blackToMoveMask;}
   void clearBoard() {for(int i=0; i<64; i++) board[i/8][i%8] = Piece::none;}
   void setPiece(const square<int> sq, const Piece::Piece piece) {board[sq.x][sq.y]=piece;}
-  
+
   // Cloning function
   Board cloneAndExecMove(const move mv) const;
 
