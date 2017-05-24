@@ -457,6 +457,7 @@ void Board::calcMoves()
     }
   }
 
+  
   //Store the final movearray
   legalMoves = tempLegalMoves.shrink_to_fit();
 
