@@ -8,19 +8,31 @@
 #define LOG(x...)
 #endif
 
+/**
+ * calculate what the best outcome is for a single node.
+ * @param[in] Board The board the consider
+ * @param[in] unsigned int The current depth
+ * @return This function returns a DFSresult object containing the best state possible of the previous node the depth at which the state occurred and the moves leading to that state from this node.
+ */
 DFSresult DFS:: best_outcome(Board board, unsigned int depth){
+  //check is current board is mate and return the state if true
   if(board.isMate()){
     return {2, depth, std::stack<move>()};
   }
-  moveArray& moves = board.getMoves();
-  if(moves.size() == 0) return {0,depth, std::stack<move>()};
-  // TODO: Check for  curDepth;
+  // check the current board is draw and return the state if true.
+  if(board.isDraw()) return {0,depth, std::stack<move>()};
+  // check if the current maximal depth is reached and return the state if true
   if(depth >= this->curDepth) return {1, depth, std::stack<move>()};
 
+  // create the initial best result (-3 is not a real state but its worse than anything else.)
   DFSresult best = {-3, 0, std::stack<move>()};
   DFSresult res;
+  // get all the moves of the current board and loop over them.
+  moveArray moves = board.getMoves();
   for(int i = 0; i  < moves.size(); i++){
+    // get the result of the children boards due to the current move
     res = best_outcome(board.cloneAndExecMove(moves[i]), depth+1);
+    // if the resulting state is better than the current best state change the best state.
     if(res.state > best.state){
       best=res;
       best.moves.push(moves[i]);
@@ -28,6 +40,7 @@ DFSresult DFS:: best_outcome(Board board, unsigned int depth){
         break;
       }
     }
+    // else if the states are equal check if we can have a faster(slower) enemy mate (ally mate or draw).
     else if(res.state == best.state){
       switch(res.state){
         case 2:
@@ -45,11 +58,13 @@ DFSresult DFS:: best_outcome(Board board, unsigned int depth){
           break;
       }
     }
+    // if we are at the root node and we found a forced mate change the search depth to the worst case depth of the forced mate.
     if(depth == 0 && best.state == 2 && best.depth < this-> curDepth){
       LOG("change curDepth %d \n", best.depth);
       this-> curDepth = best.depth;
     }
   }
+  // flip the mate state resulting from the children nodes to portray the mate state of this node.
   if(best.state == 2){
     best.state = -2;
   }
@@ -58,24 +73,37 @@ DFSresult DFS:: best_outcome(Board board, unsigned int depth){
   }
   return best;
 }
-
-DFS::DFS(Board _start, unsigned int _curDepth){
+/**
+ * DFS or depth first search constructor.
+ * @param Board* Starting board pointer
+ * @param unsigned int Maximal depth to search.
+ */
+DFS::DFS(Board* _start, unsigned int _maxDepth){
   start = _start;
-  curDepth = _curDepth;
+  curDepth = 2;
+  maxDepth = _maxDepth;
 }
 
+/**
+ * Do the actual search.
+ * @return This function returns a DFSresult object containing the best state possible from the start board the worstcase depth at which the state occurred and the moves leading to that state from the position.
+ */
 int DFS::search(){
+  //set initial curDepth
   this->curDepth = 2;
   DFSresult res = {1,0,std::stack<move>()};
+  //keep looking while there is no definitive answer and while the maximum depth is not reached.
   while(res.state == 1 && this->curDepth < this->maxDepth){
+    //search on odd depths as these are the depths where enemy mates occur.
     this->curDepth -=1;
     this->curDepth *=2;
     this->curDepth +=1;
-    std::cout<< "curDepth: "<< this->curDepth <<std::endl;
-    res = this->best_outcome(this->start, 0);
+    res = this->best_outcome(*(this->start), 0);
   }
+
+  // Some printing.
   printf("state: %d in %u \n", res.state, res.depth);
-  bool blackToMove = this->start.blackToMove();
+  bool blackToMove = this->start->blackToMove();
   while(!res.moves.empty()){
     std::cout << (blackToMove? "black: " : "white: ");
     ((move) res.moves.top()).printMove(blackToMove);

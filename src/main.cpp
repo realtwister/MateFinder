@@ -18,7 +18,7 @@ int main(int argc, char * argv[])
 //  b = Board("8/1k6/8/5Q2/1K6/8/8/8 w - -");
 
   Board b= Board("r7/1b1pk2p/p3p3/q3N3/8/1PpB2Q1/P1P2PPP/2KR3R b - -");
-  DFS dfs(b,10);
+  DFS dfs(&b,10);
   dfs.search();
   return 0;
 }
