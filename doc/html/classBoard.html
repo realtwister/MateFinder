@@ -68,50 +68,67 @@ $(function() {
 <div class="title">Board Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="Board_8h_source.html">Board.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a9ee491d4fea680cf69b033374a9fdfcb"><td class="memItemLeft" align="right" valign="top"><a id="a9ee491d4fea680cf69b033374a9fdfcb"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a9ee491d4fea680cf69b033374a9fdfcb">Board</a> ()</td></tr>
+<tr class="memdesc:a9ee491d4fea680cf69b033374a9fdfcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Empty constructor, defaulting to the starting position. <br /></td></tr>
+<tr class="separator:a9ee491d4fea680cf69b033374a9fdfcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a155259ecd3131cbf8c155c1dd19026b0"><td class="memItemLeft" align="right" valign="top"><a id="a155259ecd3131cbf8c155c1dd19026b0"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>Board</b> (const char *str)</td></tr>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a155259ecd3131cbf8c155c1dd19026b0">Board</a> (const char *str)</td></tr>
+<tr class="memdesc:a155259ecd3131cbf8c155c1dd19026b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read from FEN string. <br /></td></tr>
 <tr class="separator:a155259ecd3131cbf8c155c1dd19026b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8dd2a85d6b43bcab4eaf83e1541aeb18"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a8dd2a85d6b43bcab4eaf83e1541aeb18">Board</a> (const char *str, const bool file)</td></tr>
+<tr class="memdesc:a8dd2a85d6b43bcab4eaf83e1541aeb18"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read from FEN notation from file or string and calculate legal moves.  <a href="#a8dd2a85d6b43bcab4eaf83e1541aeb18">More...</a><br /></td></tr>
 <tr class="separator:a8dd2a85d6b43bcab4eaf83e1541aeb18"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8359f43f59d4eb04c679f0415c26add4"><td class="memItemLeft" align="right" valign="top"><a id="a8359f43f59d4eb04c679f0415c26add4"></a>
-Piece::Piece&#160;</td><td class="memItemRight" valign="bottom"><b>getSquare</b> (const <a class="el" href="structsquare.html">square</a>&lt; int &gt; pos) const</td></tr>
+Piece::Piece&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a8359f43f59d4eb04c679f0415c26add4">getSquare</a> (const <a class="el" href="structsquare.html">square</a>&lt; int &gt; pos) const</td></tr>
+<tr class="memdesc:a8359f43f59d4eb04c679f0415c26add4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get what piece is occupying the given square. <br /></td></tr>
 <tr class="separator:a8359f43f59d4eb04c679f0415c26add4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58ee677360099107d0d33becdc2af888"><td class="memItemLeft" align="right" valign="top"><a id="a58ee677360099107d0d33becdc2af888"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isCheck</b> () const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a58ee677360099107d0d33becdc2af888">isCheck</a> () const</td></tr>
+<tr class="memdesc:a58ee677360099107d0d33becdc2af888"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get whether the player to move is checked. <br /></td></tr>
 <tr class="separator:a58ee677360099107d0d33becdc2af888"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78089ae51f1e8e02dfec7c739f3ca74a"><td class="memItemLeft" align="right" valign="top"><a id="a78089ae51f1e8e02dfec7c739f3ca74a"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>blackToMove</b> () const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a78089ae51f1e8e02dfec7c739f3ca74a">blackToMove</a> () const</td></tr>
+<tr class="memdesc:a78089ae51f1e8e02dfec7c739f3ca74a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get whether black is to move. <br /></td></tr>
 <tr class="separator:a78089ae51f1e8e02dfec7c739f3ca74a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adfdc9dd19eb4119b6926a70c89db7d31"><td class="memItemLeft" align="right" valign="top"><a id="adfdc9dd19eb4119b6926a70c89db7d31"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isMate</b> () const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#adfdc9dd19eb4119b6926a70c89db7d31">isMate</a> () const</td></tr>
+<tr class="memdesc:adfdc9dd19eb4119b6926a70c89db7d31"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get whether the current position is mate. <br /></td></tr>
 <tr class="separator:adfdc9dd19eb4119b6926a70c89db7d31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a9553957873a05f9cca67f8f0677b74"><td class="memItemLeft" align="right" valign="top"><a id="a6a9553957873a05f9cca67f8f0677b74"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isDraw</b> () const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a6a9553957873a05f9cca67f8f0677b74">isDraw</a> () const</td></tr>
+<tr class="memdesc:a6a9553957873a05f9cca67f8f0677b74"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get whether the current position is drawn. <br /></td></tr>
 <tr class="separator:a6a9553957873a05f9cca67f8f0677b74"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a993b2839790b3fbe4b1c6ba2a2257fe1"><td class="memItemLeft" align="right" valign="top"><a id="a993b2839790b3fbe4b1c6ba2a2257fe1"></a>
-<a class="el" href="structmoveArray.html">moveArray</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>getMoves</b> ()</td></tr>
+<a class="el" href="structmoveArray.html">moveArray</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a993b2839790b3fbe4b1c6ba2a2257fe1">getMoves</a> ()</td></tr>
+<tr class="memdesc:a993b2839790b3fbe4b1c6ba2a2257fe1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the list of legal moves. <br /></td></tr>
 <tr class="separator:a993b2839790b3fbe4b1c6ba2a2257fe1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5732564ae8ce7f247072ded83f71dc75"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a5732564ae8ce7f247072ded83f71dc75">execMove</a> (const <a class="el" href="structmove.html">move</a> mv)</td></tr>
+<tr class="memdesc:a5732564ae8ce7f247072ded83f71dc75"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a move.  <a href="#a5732564ae8ce7f247072ded83f71dc75">More...</a><br /></td></tr>
 <tr class="separator:a5732564ae8ce7f247072ded83f71dc75"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac33aaf879882d2c1abbab14c9727f2f9"><td class="memItemLeft" align="right" valign="top"><a id="ac33aaf879882d2c1abbab14c9727f2f9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>changeColor</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#ac33aaf879882d2c1abbab14c9727f2f9">changeColor</a> ()</td></tr>
+<tr class="memdesc:ac33aaf879882d2c1abbab14c9727f2f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Change the color of the player that is to move. <br /></td></tr>
 <tr class="separator:ac33aaf879882d2c1abbab14c9727f2f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5f148daa03da25d40dff3fc613568d6f"><td class="memItemLeft" align="right" valign="top"><a id="a5f148daa03da25d40dff3fc613568d6f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>clearBoard</b> ()</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a5f148daa03da25d40dff3fc613568d6f">clearBoard</a> ()</td></tr>
+<tr class="memdesc:a5f148daa03da25d40dff3fc613568d6f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear the entire board. <br /></td></tr>
 <tr class="separator:a5f148daa03da25d40dff3fc613568d6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a15fa8b4b4db9d11093c6c806344fc6"><td class="memItemLeft" align="right" valign="top"><a id="a2a15fa8b4b4db9d11093c6c806344fc6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPiece</b> (const <a class="el" href="structsquare.html">square</a>&lt; int &gt; sq, const Piece::Piece piece)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a2a15fa8b4b4db9d11093c6c806344fc6">setPiece</a> (const <a class="el" href="structsquare.html">square</a>&lt; int &gt; sq, const Piece::Piece piece)</td></tr>
+<tr class="memdesc:a2a15fa8b4b4db9d11093c6c806344fc6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Place a piece on a given square. <br /></td></tr>
 <tr class="separator:a2a15fa8b4b4db9d11093c6c806344fc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3eb8e7257733fd3b9e00c8c37b8cc433"><td class="memItemLeft" align="right" valign="top"><a id="a3eb8e7257733fd3b9e00c8c37b8cc433"></a>
-<a class="el" href="classBoard.html">Board</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cloneAndExecMove</b> (const <a class="el" href="structmove.html">move</a> mv) const</td></tr>
+<tr class="memitem:a3eb8e7257733fd3b9e00c8c37b8cc433"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classBoard.html">Board</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a3eb8e7257733fd3b9e00c8c37b8cc433">cloneAndExecMove</a> (const <a class="el" href="structmove.html">move</a> mv) const</td></tr>
+<tr class="memdesc:a3eb8e7257733fd3b9e00c8c37b8cc433"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clone the current position and execute a move.  <a href="#a3eb8e7257733fd3b9e00c8c37b8cc433">More...</a><br /></td></tr>
 <tr class="separator:a3eb8e7257733fd3b9e00c8c37b8cc433"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f5b48d92226217de5d488f3d5fb234a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a3f5b48d92226217de5d488f3d5fb234a">printBoard</a> () const</td></tr>
+<tr class="memdesc:a3f5b48d92226217de5d488f3d5fb234a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Print a formatted representation of the board.  <a href="#a3f5b48d92226217de5d488f3d5fb234a">More...</a><br /></td></tr>
 <tr class="separator:a3f5b48d92226217de5d488f3d5fb234a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bb1bf8da102901b871b538255948dfa"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a8bb1bf8da102901b871b538255948dfa">printLegalMoves</a> () const</td></tr>
-<tr class="separator:a8bb1bf8da102901b871b538255948dfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -131,51 +148,64 @@ Private Types</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:a49045c77d568e4b5a00f176a2add54c8"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a49045c77d568e4b5a00f176a2add54c8">fromStr</a> (const char *str)</td></tr>
+<tr class="memdesc:a49045c77d568e4b5a00f176a2add54c8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the FEN notation from a string.  <a href="#a49045c77d568e4b5a00f176a2add54c8">More...</a><br /></td></tr>
 <tr class="separator:a49045c77d568e4b5a00f176a2add54c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4043087fc35e9706d0e83ec07225fe33"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a4043087fc35e9706d0e83ec07225fe33">fromFile</a> (const char *fileName)</td></tr>
+<tr class="memdesc:a4043087fc35e9706d0e83ec07225fe33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the FEN notation from a file.  <a href="#a4043087fc35e9706d0e83ec07225fe33">More...</a><br /></td></tr>
 <tr class="separator:a4043087fc35e9706d0e83ec07225fe33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad4d3ebb2342b74d9455a89924a54aa14"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#ad4d3ebb2342b74d9455a89924a54aa14">calcMoves</a> ()</td></tr>
+<tr class="memdesc:ad4d3ebb2342b74d9455a89924a54aa14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate legal moves.  <a href="#ad4d3ebb2342b74d9455a89924a54aa14">More...</a><br /></td></tr>
 <tr class="separator:ad4d3ebb2342b74d9455a89924a54aa14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa70526dde51ab18ec4011c07a7e38e60"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#aa70526dde51ab18ec4011c07a7e38e60">getPieceMoves</a> (<a class="el" href="structmoveArray.html">moveArray</a> &amp;result, const <a class="el" href="structcheck.html">check</a> &amp;kingEnv, const <a class="el" href="structsquare.html">square</a>&lt; int &gt; curPos, const <a class="el" href="structsquare.html">square</a>&lt; int &gt; kingPos)</td></tr>
+<tr class="memdesc:aa70526dde51ab18ec4011c07a7e38e60"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the legal moves of the piece on square&lt;int&gt; curPos.  <a href="#aa70526dde51ab18ec4011c07a7e38e60">More...</a><br /></td></tr>
 <tr class="separator:aa70526dde51ab18ec4011c07a7e38e60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab63f400e8fdd7d1747c18642b59cc435"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#ab63f400e8fdd7d1747c18642b59cc435">checkDir</a> (<a class="el" href="structmoveArray.html">moveArray</a> &amp;result, const <a class="el" href="structcheck.html">check</a> &amp;kingEnv, const <a class="el" href="structsquare.html">square</a>&lt; int &gt; basePos, const <a class="el" href="structsquare.html">square</a>&lt; int &gt; dir) const</td></tr>
+<tr class="memdesc:ab63f400e8fdd7d1747c18642b59cc435"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check the possible moves of a piece along some file, rank or diagonal.  <a href="#ab63f400e8fdd7d1747c18642b59cc435">More...</a><br /></td></tr>
 <tr class="separator:ab63f400e8fdd7d1747c18642b59cc435"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afc291baf2c205a64255e8e55ffeff004"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structcheck.html">check</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#afc291baf2c205a64255e8e55ffeff004">getCheck</a> (const <a class="el" href="structsquare.html">square</a>&lt; int &gt; kingPos)</td></tr>
+<tr class="memdesc:afc291baf2c205a64255e8e55ffeff004"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the details about a possible check at kingPos.  <a href="#afc291baf2c205a64255e8e55ffeff004">More...</a><br /></td></tr>
 <tr class="separator:afc291baf2c205a64255e8e55ffeff004"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a900420865c9acc6a18a9e25f94e3b72e"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a900420865c9acc6a18a9e25f94e3b72e">firstPiece</a> (<a class="el" href="structcheck.html">check</a> &amp;result, const <a class="el" href="structsquare.html">square</a>&lt; int &gt; curPos, const <a class="el" href="structsquare.html">square</a>&lt; int &gt; dir, const int friendlies) const</td></tr>
+<tr class="memdesc:a900420865c9acc6a18a9e25f94e3b72e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Investigate the possibility of attacks from dir to curPos (recursive) with heatmap.  <a href="#a900420865c9acc6a18a9e25f94e3b72e">More...</a><br /></td></tr>
 <tr class="separator:a900420865c9acc6a18a9e25f94e3b72e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae8183cabc093c8bd030250c42959fa37"><td class="memItemLeft" align="right" valign="top"><a id="ae8183cabc093c8bd030250c42959fa37"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isAttacked</b> (const <a class="el" href="structsquare.html">square</a>&lt; int &gt; piecePos) const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#ae8183cabc093c8bd030250c42959fa37">isAttacked</a> (const <a class="el" href="structsquare.html">square</a>&lt; int &gt; piecePos) const</td></tr>
+<tr class="memdesc:ae8183cabc093c8bd030250c42959fa37"><td class="mdescLeft">&#160;</td><td class="mdescRight">Check whether the square&lt;int&gt; at piecePos is attacked. <br /></td></tr>
 <tr class="separator:ae8183cabc093c8bd030250c42959fa37"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b9245cb469f2e82c23ac49edd412646"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a8b9245cb469f2e82c23ac49edd412646">hasAttacker</a> (<a class="el" href="structsquare.html">square</a>&lt; int &gt; pos, const <a class="el" href="structsquare.html">square</a>&lt; int &gt; dir) const</td></tr>
+<tr class="memdesc:a8b9245cb469f2e82c23ac49edd412646"><td class="mdescLeft">&#160;</td><td class="mdescRight">Invesitgate the possibility of attacks from dir at curPos.  <a href="#a8b9245cb469f2e82c23ac49edd412646">More...</a><br /></td></tr>
 <tr class="separator:a8b9245cb469f2e82c23ac49edd412646"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5068575e721428ee78754984813713e5"><td class="memItemLeft" align="right" valign="top"><a id="a5068575e721428ee78754984813713e5"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isFriendly</b> (const Piece::Piece piece) const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a5068575e721428ee78754984813713e5">isFriendly</a> (const Piece::Piece piece) const</td></tr>
+<tr class="memdesc:a5068575e721428ee78754984813713e5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out if a piece is friendly. <br /></td></tr>
 <tr class="separator:a5068575e721428ee78754984813713e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a33b5e15eeeba65612ad3005ff5e60690"><td class="memItemLeft" align="right" valign="top"><a id="a33b5e15eeeba65612ad3005ff5e60690"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>isFriendly</b> (const <a class="el" href="structsquare.html">square</a>&lt; int &gt; pos) const</td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a33b5e15eeeba65612ad3005ff5e60690">isFriendly</a> (const <a class="el" href="structsquare.html">square</a>&lt; int &gt; pos) const</td></tr>
+<tr class="memdesc:a33b5e15eeeba65612ad3005ff5e60690"><td class="mdescLeft">&#160;</td><td class="mdescRight">Find out if a square is occupied by a friendly piece. <br /></td></tr>
 <tr class="separator:a33b5e15eeeba65612ad3005ff5e60690"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeea5a9ddcdeb6e4c087f53e71f6c11ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#aeea5a9ddcdeb6e4c087f53e71f6c11ec">flipBoard</a> ()</td></tr>
-<tr class="separator:aeea5a9ddcdeb6e4c087f53e71f6c11ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a632d2e0f09a1ad6fe835dc11ef1238cc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a632d2e0f09a1ad6fe835dc11ef1238cc">Board</a> (const <a class="el" href="classBoard.html">Board</a> &amp;other, const <a class="el" href="structmove.html">move</a> mv)</td></tr>
+<tr class="memdesc:a632d2e0f09a1ad6fe835dc11ef1238cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Private constructor to circumvent calculating the possible legal moves twice.  <a href="#a632d2e0f09a1ad6fe835dc11ef1238cc">More...</a><br /></td></tr>
 <tr class="separator:a632d2e0f09a1ad6fe835dc11ef1238cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeea5a9ddcdeb6e4c087f53e71f6c11ec"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#aeea5a9ddcdeb6e4c087f53e71f6c11ec">flipBoard</a> ()</td></tr>
+<tr class="memdesc:aeea5a9ddcdeb6e4c087f53e71f6c11ec"><td class="mdescLeft">&#160;</td><td class="mdescRight">Flip the board such that pawns always advance in the direction of increasing rank.  <a href="#aeea5a9ddcdeb6e4c087f53e71f6c11ec">More...</a><br /></td></tr>
+<tr class="separator:aeea5a9ddcdeb6e4c087f53e71f6c11ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:acdbd7620b4c8bc08b2e42623c2a12a39"><td class="memItemLeft" align="right" valign="top"><a id="acdbd7620b4c8bc08b2e42623c2a12a39"></a>
-Piece::Piece&#160;</td><td class="memItemRight" valign="bottom"><b>board</b> [8][8]</td></tr>
+<tr class="memitem:acdbd7620b4c8bc08b2e42623c2a12a39"><td class="memItemLeft" align="right" valign="top">Piece::Piece&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#acdbd7620b4c8bc08b2e42623c2a12a39">board</a> [8][8]</td></tr>
 <tr class="separator:acdbd7620b4c8bc08b2e42623c2a12a39"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a46a6e23b1b18542b10938f2b333862f1"><td class="memItemLeft" align="right" valign="top"><a id="a46a6e23b1b18542b10938f2b333862f1"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>state</b></td></tr>
+<tr class="memitem:a46a6e23b1b18542b10938f2b333862f1"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#a46a6e23b1b18542b10938f2b333862f1">state</a></td></tr>
 <tr class="separator:a46a6e23b1b18542b10938f2b333862f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad3145585c03f739311c35fa8f3277d3"><td class="memItemLeft" align="right" valign="top"><a id="aad3145585c03f739311c35fa8f3277d3"></a>
-signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b></td></tr>
+<tr class="memitem:aad3145585c03f739311c35fa8f3277d3"><td class="memItemLeft" align="right" valign="top">signed char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#aad3145585c03f739311c35fa8f3277d3">enPassant</a></td></tr>
 <tr class="separator:aad3145585c03f739311c35fa8f3277d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaf6a2575c3bc280ddc9e445efd213e14"><td class="memItemLeft" align="right" valign="top"><a id="aaf6a2575c3bc280ddc9e445efd213e14"></a>
-<a class="el" href="structmoveArray.html">moveArray</a>&#160;</td><td class="memItemRight" valign="bottom"><b>legalMoves</b></td></tr>
+<tr class="memitem:aaf6a2575c3bc280ddc9e445efd213e14"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structmoveArray.html">moveArray</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classBoard.html#aaf6a2575c3bc280ddc9e445efd213e14">legalMoves</a></td></tr>
 <tr class="separator:aaf6a2575c3bc280ddc9e445efd213e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Objects of the <a class="el" href="classBoard.html">Board</a> class store exactly one position on the chess board. Methods of this class include methods to calculate the all legal moves in the position, and executing a move to obtain a new position. A lot of optimization has gone into the methods of <a class="el" href="classBoard.html">Board</a> and their internal communication. The following flowchart shows the respective contribution of the methods to the total runtime of the program. It was created using google-pprof. </p><div class="image">
+<img src="../../img/timing.png" alt="timing.png"/>
+</div>
+  </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a632d2e0f09a1ad6fe835dc11ef1238cc"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a632d2e0f09a1ad6fe835dc11ef1238cc">&#9670;&nbsp;</a></span>Board() <span class="overload">[1/2]</span></h2>
 
@@ -209,7 +239,15 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </tr>
 </table>
 </div><div class="memdoc">
-<p>This constructor is used when a move is executed. All the pieces must be copied, but copying all the legal moves is not necessary, as they are recalculated anyway. So, this private constructur is only to be used internally, when calling the <em>cloneAndExecMove</em> function. [in] other This is the board that is to be cloned. [in] mv This is the move that is to be executed. </p>
+
+<p>Private constructor to circumvent calculating the possible legal moves twice. </p>
+<p>This constructor is used when a move is executed. All the pieces must be copied, but copying all the legal moves is not necessary, as they are recalculated anyway. So, this private constructur is only to be used internally, when calling the <em>cloneAndExecMove</em> function. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">other</td><td>This is the board that is to be cloned. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">mv</td><td>This is the move that is to be executed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -238,10 +276,12 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Read from FEN notation from file or string and calculate legal moves. </p>
 <p><a class="el" href="classBoard.html">Board</a> constructor creating <a class="el" href="classBoard.html">Board</a> object from either a file or a string </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">str</td><td>Either the FEN string or the filename </td></tr>
-    <tr><td class="paramname">file</td><td>Boolean whether to read file or string (true is file) </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>Either the FEN string or the filename </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">file</td><td>Boolean whether to read file or string (true is file) </td></tr>
   </table>
   </dd>
 </dl>
@@ -271,6 +311,8 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Calculate legal moves. </p>
 <p>This function calculates all possible moves, and stores them in <em>legalMoves</em> member. Additionally, it updates the <em>check</em> flag, to indicate whether the player that is to move is check. Finally, it also updates the <em>draw</em> flag. If there are too few pieces on the board for any mate to occur, then this flag is set. </p>
 
 </div>
@@ -320,6 +362,8 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Check the possible moves of a piece along some file, rank or diagonal. </p>
 <p>This function helps the getPieceMoves function. It checks to which squares a long range piece (i.e. queen, rook or bishop) can move in a given direction, and appends these moves to the array of legal moves. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">result</td><td>This is the array of moves which the found legal moves are appended to. </td></tr>
@@ -329,6 +373,33 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </table>
   </dd>
 </dl>
+
+</div>
+</div>
+<a id="a3eb8e7257733fd3b9e00c8c37b8cc433"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3eb8e7257733fd3b9e00c8c37b8cc433">&#9670;&nbsp;</a></span>cloneAndExecMove()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classBoard.html">Board</a> Board::cloneAndExecMove </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="structmove.html">move</a>&#160;</td>
+          <td class="paramname"><em>mv</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Clone the current position and execute a move. </p>
+<p>Clone the board and execute the given move. Return the resulting position. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">mv</td><td>The move to be executed. </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>This function returns a new <a class="el" href="classBoard.html">Board</a> object, containing the new position, after the move was executed. </dd></dl>
 
 </div>
 </div>
@@ -347,7 +418,14 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Execute a move on a given board and consequently flip the board and recalculate the legal moves. [in] move This is the move that is to be executed. </p>
+
+<p>Execute a move. </p>
+<p>Execute a move on a given board and consequently flip the board and recalculate the legal moves. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">move</td><td>This is the move that is to be executed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -396,6 +474,8 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Investigate the possibility of attacks from dir to curPos (recursive) with heatmap. </p>
 <p>This function helps the getCheck function to investigate the influence of one of the 8 directions on the output of the getCheck function. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">result</td><td>The check struct that getCheck is working on. </td></tr>
@@ -431,6 +511,8 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Flip the board such that pawns always advance in the direction of increasing rank. </p>
 <p>This function flips the board. More precisely, it mirrors the position of all pieces along the axis between the 4th and 5th rank. So, for example, a piece on e3 is placed on e6, and a piece on a8 is placed on a1. This function is used to ensure that the player that is to move always plays with its pawns advancing to ever higher ranks. </p>
 
 </div>
@@ -458,6 +540,8 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Read the FEN notation from a file. </p>
 <p>Initialize a <a class="el" href="classBoard.html">Board</a> object from a file containing a string in FEN notation. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">fileName</td><td>The name of the file. </td></tr>
@@ -499,6 +583,8 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Read the FEN notation from a string. </p>
 <p>Initialize a <a class="el" href="classBoard.html">Board</a> object from a string in FEN notation. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">str</td><td>The string in FEN notation </td></tr>
@@ -540,6 +626,8 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Get the details about a possible check at kingPos. </p>
 <p>This function finds out what is going on in relation to the king of the player that is to move. In particular, it returns a check struct containing information about pinned pieces and squares that can resolve check. Moreover, it updates the check flag. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">kingPos</td><td>The position of the king. </td></tr>
@@ -595,6 +683,8 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Calculate the legal moves of the piece on square&lt;int&gt; curPos. </p>
 <p>This function helps the calcMoves function. It investigates the legal moves that one particular piece can make, and appends these to the temporary moves array created by calcMoves. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">result</td><td>This is the array that the newly found moves are being appended to. </td></tr>
@@ -640,6 +730,8 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Invesitgate the possibility of attacks from dir at curPos. </p>
 <p>This function helps the isAttacked function to determine whether an attack over a long distance from a fixed direction occurs. </p><dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pos</td><td>The position of which is determined whether it is under attack. </td></tr>
@@ -665,25 +757,150 @@ signed char&#160;</td><td class="memItemRight" valign="bottom"><b>enPassant</b><
         </tr>
       </table>
 </div><div class="memdoc">
+
 <p>Print a formatted representation of the board. </p>
+<p>Give a nice overview of the current position in the terminal window </p>
 
 </div>
 </div>
-<a id="a8bb1bf8da102901b871b538255948dfa"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8bb1bf8da102901b871b538255948dfa">&#9670;&nbsp;</a></span>printLegalMoves()</h2>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="acdbd7620b4c8bc08b2e42623c2a12a39"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acdbd7620b4c8bc08b2e42623c2a12a39">&#9670;&nbsp;</a></span>board</h2>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void Board::printLegalMoves </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
+          <td class="memname">Piece::Piece Board::board[8][8]</td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
-<p>Print a list of the legal moves. </p>
+<p>This character array stores the position of the pieces on the board. Every entry in the character array corresponds to one square. The values of these characters correspond to the widely used FEN notation. </p><table class="doxtable">
+<tr>
+<th>Value </th><th>ASCII representation </th><th>Piece  </th></tr>
+<tr>
+<td>0x20 </td><td>Space </td><td>None </td></tr>
+<tr>
+<td>0x4B </td><td>K </td><td>White king </td></tr>
+<tr>
+<td>0x51 </td><td>Q </td><td>White queen </td></tr>
+<tr>
+<td>0x52 </td><td>R </td><td>White rook </td></tr>
+<tr>
+<td>0x42 </td><td>B </td><td>White bishop </td></tr>
+<tr>
+<td>0x4E </td><td>N </td><td>White knight </td></tr>
+<tr>
+<td>0x50 </td><td>P </td><td>White pawn </td></tr>
+<tr>
+<td>0x6B </td><td>k </td><td>Black king </td></tr>
+<tr>
+<td>0x71 </td><td>q </td><td>Black queen </td></tr>
+<tr>
+<td>0x72 </td><td>r </td><td>Black rook </td></tr>
+<tr>
+<td>0x62 </td><td>b </td><td>Black bishop </td></tr>
+<tr>
+<td>0x6E </td><td>n </td><td>Black knight </td></tr>
+<tr>
+<td>0x70 </td><td>p </td><td>Black pawn </td></tr>
+</table>
+<p>A convenient feature of this notation is that determining whether a piece is black can be done by doing an AND operation with the bitmask 0x20. </p>
+
+</div>
+</div>
+<a id="aad3145585c03f739311c35fa8f3277d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aad3145585c03f739311c35fa8f3277d3">&#9670;&nbsp;</a></span>enPassant</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">signed char Board::enPassant</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This signed character stores whether the opponent in the last move advanced one of his pawns by two squares. If he did not, then the value is -1. Otherwise, it is in the range 0-7, where the value corresponds to the file on which the pawn was advanced in the last move. </p>
+
+</div>
+</div>
+<a id="aaf6a2575c3bc280ddc9e445efd213e14"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaf6a2575c3bc280ddc9e445efd213e14">&#9670;&nbsp;</a></span>legalMoves</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structmoveArray.html">moveArray</a> Board::legalMoves</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Here, all the legal moves that the player to move can play are stored. We have chosen not to go with the std::vector&lt;move&gt; implementation, as our custom implementation saves about 15% of runtime. </p>
+
+</div>
+</div>
+<a id="a46a6e23b1b18542b10938f2b333862f1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a46a6e23b1b18542b10938f2b333862f1">&#9670;&nbsp;</a></span>state</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">char Board::state</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This character contains seven flags. These flags store some auxiliary information about the position. They are listed in the table below. </p><table class="doxtable">
+<tr>
+<th>Bit </th><th>Keyword </th><th>Description  </th></tr>
+<tr>
+<td>0 </td><td>checkMask </td><td>This flag is set if the player to move is checked. </td></tr>
+<tr>
+<td>1 </td><td>whiteCastleKingsideMask </td><td>This flag is set if the player to move has not yet moved his king and kingside rook. </td></tr>
+<tr>
+<td>2 </td><td>whiteCastleQueensideMask </td><td>This flag is set if the player to move has not yet moved his king and queenside rook. </td></tr>
+<tr>
+<td>3 </td><td>blackCastleKingsideMask </td><td>This flag is set if the player that is not to move has not yet moved his king and kingside rook. </td></tr>
+<tr>
+<td>4 </td><td>blackCastleQueensideMask </td><td>This flag is set if the player that is not to move has not yet moved his king and queenside rook. </td></tr>
+<tr>
+<td>5 </td><td>blackToMoveMask </td><td>This flag is set if black currently is to move. </td></tr>
+<tr>
+<td>6 </td><td>drawMask </td><td>This flag is set if there is a stalemate, or if giving checkmate with the pieces that are left on the board is not possible. In both cases, the game is considered to be drawn. </td></tr>
+</table>
+<p>Notice that it is no coincidence that the blackToMoveMask corresponds to the fifth bit. The fifth bit being set in a character yields 0x20, which is exactly the mask that can be used to determine whether a piece is black or white. </p>
 
 </div>
 </div>

@@ -69,50 +69,33 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;iostream&gt;</code><br />
-<code>#include &lt;cstdlib&gt;</code><br />
-<code>#include &lt;ctime&gt;</code><br />
-<code>#include &lt;chrono&gt;</code><br />
-<code>#include &quot;<a class="el" href="Board_8h_source.html">Board.h</a>&quot;</code><br />
+<code>#include &quot;<a class="el" href="DFS_8h_source.html">DFS.h</a>&quot;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:a52bbfa8a6d4c323e43132251aa75f2e5"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a52bbfa8a6d4c323e43132251aa75f2e5">executeAllMoves</a> (<a class="el" href="classBoard.html">Board</a> b, int depth, int maxDepth)</td></tr>
-<tr class="separator:a52bbfa8a6d4c323e43132251aa75f2e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1451d6a0f33f9d0a02a4b055e5839e6e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a1451d6a0f33f9d0a02a4b055e5839e6e">displayHelp</a> ()</td></tr>
+<tr class="separator:a1451d6a0f33f9d0a02a4b055e5839e6e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a332a7b34a13585af91319f1f693c8178"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a332a7b34a13585af91319f1f693c8178">printMoveSequence</a> (bool blackToMove, std::stack&lt; <a class="el" href="structmove.html">move</a> &gt; moves)</td></tr>
+<tr class="separator:a332a7b34a13585af91319f1f693c8178"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0ddf1224851353fc92bfbff6f499fa97"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="main_8cpp.html#a0ddf1224851353fc92bfbff6f499fa97">main</a> (int argc, char *argv[])</td></tr>
 <tr class="separator:a0ddf1224851353fc92bfbff6f499fa97"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Function Documentation</h2>
-<a id="a52bbfa8a6d4c323e43132251aa75f2e5"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a52bbfa8a6d4c323e43132251aa75f2e5">&#9670;&nbsp;</a></span>executeAllMoves()</h2>
+<a id="a1451d6a0f33f9d0a02a4b055e5839e6e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1451d6a0f33f9d0a02a4b055e5839e6e">&#9670;&nbsp;</a></span>displayHelp()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void executeAllMoves </td>
+          <td class="memname">void displayHelp </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classBoard.html">Board</a>&#160;</td>
-          <td class="paramname"><em>b</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>depth</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>maxDepth</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>This function displays the help in the CLI. </p>
 
 </div>
 </div>
@@ -141,6 +124,42 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>The main function. It processes the user input, calls the search algorithm, and displays the results. </p>
+
+</div>
+</div>
+<a id="a332a7b34a13585af91319f1f693c8178"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a332a7b34a13585af91319f1f693c8178">&#9670;&nbsp;</a></span>printMoveSequence()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void printMoveSequence </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>blackToMove</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::stack&lt; <a class="el" href="structmove.html">move</a> &gt;&#160;</td>
+          <td class="paramname"><em>moves</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>This function displays the move sequence that is stored in a stack of moves. </p><dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">blackToMove</td><td>This boolean stores whether black is to move. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">moves</td><td>This stack stores a number of moves that are to be displayed. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>

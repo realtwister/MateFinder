@@ -74,7 +74,6 @@ $(function() {
 <code>#include &lt;fstream&gt;</code><br />
 <code>#include &lt;exception&gt;</code><br />
 <code>#include &lt;cmath&gt;</code><br />
-<code>#include &lt;tgmath.h&gt;</code><br />
 </div><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -114,7 +113,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> c: \</div><div class="line">  if (x &gt; n) <span class="keywordflow">return</span> 1;               \</div><div class="line">  board[x][y] = <a class="code" href="namespacePiece.html#a588233307aa6bdb32c1d62c9f20895cca53f5aebe32a34b7d227e2e03da088831">Piece::none</a>;         \</div><div class="line">  x++;</div><div class="ttc" id="namespacePiece_html_a588233307aa6bdb32c1d62c9f20895cca53f5aebe32a34b7d227e2e03da088831"><div class="ttname"><a href="namespacePiece.html#a588233307aa6bdb32c1d62c9f20895cca53f5aebe32a34b7d227e2e03da088831">Piece::none</a></div><div class="ttdef"><b>Definition:</b> Board.h:23</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> c: \</div><div class="line">  if (x &gt; n) <span class="keywordflow">return</span> 1;               \</div><div class="line">  board[x][y] = <a class="code" href="namespacePiece.html#a588233307aa6bdb32c1d62c9f20895cca53f5aebe32a34b7d227e2e03da088831">Piece::none</a>;         \</div><div class="line">  x++;</div><div class="ttc" id="namespacePiece_html_a588233307aa6bdb32c1d62c9f20895cca53f5aebe32a34b7d227e2e03da088831"><div class="ttname"><a href="namespacePiece.html#a588233307aa6bdb32c1d62c9f20895cca53f5aebe32a34b7d227e2e03da088831">Piece::none</a></div><div class="ttdef"><b>Definition:</b> Piece.h:18</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -143,7 +142,7 @@ Variables</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> c: \</div><div class="line">  if (x &gt; 7) return 1;                 \</div><div class="line">  board[x][y] = <a class="code" href="namespacePiece.html">Piece</a>::p;              \</div><div class="line">  x++;                                 \</div><div class="line">  break;                               \</div><div class="ttc" id="namespacePiece_html"><div class="ttname"><a href="namespacePiece.html">Piece</a></div><div class="ttdef"><b>Definition:</b> Board.h:9</div></div>
+<b>Value:</b><div class="fragment"><div class="line"><span class="keywordflow">case</span> c: \</div><div class="line">  if (x &gt; 7) return 1;                 \</div><div class="line">  board[x][y] = <a class="code" href="namespacePiece.html">Piece</a>::p;              \</div><div class="line">  x++;                                 \</div><div class="line">  break;                               \</div><div class="ttc" id="namespacePiece_html"><div class="ttname"><a href="namespacePiece.html">Piece</a></div><div class="ttdef"><b>Definition:</b> Piece.h:4</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -167,7 +166,8 @@ Variables</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">={</div><div class="line">  {-2,1},</div><div class="line">  {-2,-1},</div><div class="line">  {2,1},</div><div class="line">  {2,-1},</div><div class="line">  {1,-2},</div><div class="line">  {-1,-2},</div><div class="line">  {1,2},</div><div class="line">  {-1,2}</div><div class="line">}</div></div><!-- fragment -->
+<b>Initial value:</b><div class="fragment"><div class="line">={</div><div class="line">  {-2,1},</div><div class="line">  {-2,-1},</div><div class="line">  {2,1},</div><div class="line">  {2,-1},</div><div class="line">  {1,-2},</div><div class="line">  {-1,-2},</div><div class="line">  {1,2},</div><div class="line">  {-1,2}</div><div class="line">}</div></div><!-- fragment --><p>These are the offsets of the moves a knight can make. It is faster to store them in an array, then to calculate these positions. </p>
+
 </div>
 </div>
 </div><!-- contents -->

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['search',['search',['../classDFS.html#a49982f77146f1839b15a36c6974e43d1',1,'DFS']]],
   ['setpiece',['setPiece',['../classBoard.html#a2a15fa8b4b4db9d11093c6c806344fc6',1,'Board']]],
   ['shrink_5fto_5ffit',['shrink_to_fit',['../structmoveArray.html#a698865395b51d324daa961adb18eb398',1,'moveArray']]],
   ['size',['size',['../structmoveArray.html#a51d7076907d805b0ba70a70f73e3bf65',1,'moveArray']]],

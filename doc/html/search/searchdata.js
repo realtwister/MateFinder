@@ -1,21 +1,24 @@
 var indexSectionsWithContent =
 {
-  0: "bcefghmps",
-  1: "bcms",
-  2: "bcefghp"
+  0: "bcdefghilmpst",
+  1: "bcdms",
+  2: "bcdefghips",
+  3: "bcdehlmst"
 };
 
 var indexSectionNames =
 {
   0: "all",
   1: "classes",
-  2: "functions"
+  2: "functions",
+  3: "variables"
 };
 
 var indexSectionLabels =
 {
   0: "All",
   1: "Classes",
-  2: "Functions"
+  2: "Functions",
+  3: "Variables"
 };
 

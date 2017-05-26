@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['boardexceptions',['BoardExceptions',['../namespaceBoardExceptions.html',1,'']]]
+  ['piece',['Piece',['../namespacePiece.html',1,'']]]
 ];

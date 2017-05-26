@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['square',['square',['../structsquare.html',1,'']]],
-  ['square_3c_20void_20_3e',['square&lt; void &gt;',['../structsquare_3_01void_01_4.html',1,'']]]
+  ['move',['move',['../structmove.html',1,'']]],
+  ['movearray',['moveArray',['../structmoveArray.html',1,'']]]
 ];

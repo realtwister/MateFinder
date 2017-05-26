@@ -8,8 +8,13 @@
 #endif
 
 /**
- * calculate what the best outcome is for a single node.
- * @param[in] board The board the consider
+ * Calculate what the best outcome is for a single node.
+ * First of all, it is checked whether the current position is a mate or a draw. If this is the case, this is reported to the calling function.
+ * Next, all the moves that are possible in the position are investigated one by one.
+ * For every move, it is returned to this function whether it results in a win, loss, draw, or an undecided position, and how many moves it takes.
+ * This function, then, chooses the best option among all of these moves, and returns that to the calling function.
+ * In turbo mode, at odd depths of search (so when the opponent is to move), not necessarily the best move is returned, but just a move that avoids being checkmated, whenever possible.
+ * @param[in] board The board to consider
  * @param[in] depth The current depth
  * @return This function returns a DFSresult object containing the best state possible of the previous node the depth at which the state occurred and the moves leading to that state from this node.
  */
@@ -75,11 +80,12 @@ DFSresult DFS::best_outcome(Board board, unsigned int depth){
   }
   return best;
 }
+
 /**
  * DFS or depth first search constructor.
  * @param[in] _start Starting board pointer
  * @param[in] _maxDepth Maximal depth to search.
- * @param[in] _turbo turbo mode.
+ * @param[in] _turbo Turbo mode.
  */
 DFS::DFS(Board* _start, unsigned int _maxDepth, bool _turbo)
 {
@@ -90,7 +96,11 @@ DFS::DFS(Board* _start, unsigned int _maxDepth, bool _turbo)
 }
 
 /**
- * Do the actual search.
+ * Do the actual search. The search is conducted as follows. First of all, all the possible moves are investigated with depth 1.
+ * If this does not yield a decisive result, then the depth at which is searched is increased by 2. This is done until the maximum depth is reached.
+ * Increasing the depth like this does not increase the total time complexity of the program,
+ * and is therefore perfectly suitable for obtaining preliminary results without having to conduct the entire search, while not giving rise to unacceptable amounts of overhead.
+ * Only at the maximum depth level, progress reports are being shown.
  * @return This function returns a DFSresult object containing the best state possible from the start board the worstcase depth at which the state occurred and the moves leading to that state from the position.
  */
 DFSresult DFS::search(){

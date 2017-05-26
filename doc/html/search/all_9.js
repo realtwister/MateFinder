@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['legalmoves',['legalMoves',['../classBoard.html#aaf6a2575c3bc280ddc9e445efd213e14',1,'Board']]],
-  ['len',['len',['../structcheck.html#a004e9a83f3635e9ec1e40c98d3ba0519',1,'check']]]
+  ['maxdepth',['maxDepth',['../classDFS.html#aacbeeaf0eebb3a37ad25b0c42bd27e64',1,'DFS']]],
+  ['move',['move',['../structmove.html',1,'']]],
+  ['movearray',['moveArray',['../structmoveArray.html',1,'']]],
+  ['moves',['moves',['../structDFSresult.html#acbab901f87df79e0ff718f4fd9435a0f',1,'DFSresult']]]
 ];

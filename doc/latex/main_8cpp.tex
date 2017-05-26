@@ -1,29 +1,41 @@
 \hypertarget{main_8cpp}{}\section{src/main.cpp File Reference}
 \label{main_8cpp}\index{src/main.\+cpp@{src/main.\+cpp}}
 {\ttfamily \#include $<$iostream$>$}\newline
-{\ttfamily \#include $<$cstdlib$>$}\newline
-{\ttfamily \#include $<$ctime$>$}\newline
-{\ttfamily \#include $<$chrono$>$}\newline
-{\ttfamily \#include \char`\"{}Board.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}D\+F\+S.\+h\char`\"{}}\newline
 \subsection*{Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{main_8cpp_a52bbfa8a6d4c323e43132251aa75f2e5}{execute\+All\+Moves} (\hyperlink{classBoard}{Board} b, int depth, int max\+Depth)
+void \hyperlink{main_8cpp_a1451d6a0f33f9d0a02a4b055e5839e6e}{display\+Help} ()
+\item 
+void \hyperlink{main_8cpp_a332a7b34a13585af91319f1f693c8178}{print\+Move\+Sequence} (bool black\+To\+Move, std\+::stack$<$ \hyperlink{structmove}{move} $>$ moves)
 \item 
 int \hyperlink{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}{main} (int argc, char $\ast$argv\mbox{[}$\,$\mbox{]})
 \end{DoxyCompactItemize}
 
 
 \subsection{Function Documentation}
-\mbox{\Hypertarget{main_8cpp_a52bbfa8a6d4c323e43132251aa75f2e5}\label{main_8cpp_a52bbfa8a6d4c323e43132251aa75f2e5}} 
-\index{main.\+cpp@{main.\+cpp}!execute\+All\+Moves@{execute\+All\+Moves}}
-\index{execute\+All\+Moves@{execute\+All\+Moves}!main.\+cpp@{main.\+cpp}}
-\subsubsection{\texorpdfstring{execute\+All\+Moves()}{executeAllMoves()}}
-{\footnotesize\ttfamily void execute\+All\+Moves (\begin{DoxyParamCaption}\item[{\hyperlink{classBoard}{Board}}]{b,  }\item[{int}]{depth,  }\item[{int}]{max\+Depth }\end{DoxyParamCaption})}
+\mbox{\Hypertarget{main_8cpp_a1451d6a0f33f9d0a02a4b055e5839e6e}\label{main_8cpp_a1451d6a0f33f9d0a02a4b055e5839e6e}} 
+\index{main.\+cpp@{main.\+cpp}!display\+Help@{display\+Help}}
+\index{display\+Help@{display\+Help}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{display\+Help()}{displayHelp()}}
+{\footnotesize\ttfamily void display\+Help (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
 
-\mbox{\Hypertarget{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}} 
+This function displays the help in the C\+LI. \mbox{\Hypertarget{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}\label{main_8cpp_a0ddf1224851353fc92bfbff6f499fa97}} 
 \index{main.\+cpp@{main.\+cpp}!main@{main}}
 \index{main@{main}!main.\+cpp@{main.\+cpp}}
 \subsubsection{\texorpdfstring{main()}{main()}}
 {\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$}]{argv\mbox{[}$\,$\mbox{]} }\end{DoxyParamCaption})}
 
+The main function. It processes the user input, calls the search algorithm, and displays the results. \mbox{\Hypertarget{main_8cpp_a332a7b34a13585af91319f1f693c8178}\label{main_8cpp_a332a7b34a13585af91319f1f693c8178}} 
+\index{main.\+cpp@{main.\+cpp}!print\+Move\+Sequence@{print\+Move\+Sequence}}
+\index{print\+Move\+Sequence@{print\+Move\+Sequence}!main.\+cpp@{main.\+cpp}}
+\subsubsection{\texorpdfstring{print\+Move\+Sequence()}{printMoveSequence()}}
+{\footnotesize\ttfamily void print\+Move\+Sequence (\begin{DoxyParamCaption}\item[{bool}]{black\+To\+Move,  }\item[{std\+::stack$<$ \hyperlink{structmove}{move} $>$}]{moves }\end{DoxyParamCaption})}
+
+This function displays the move sequence that is stored in a stack of moves. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em black\+To\+Move} & This boolean stores whether black is to move. \\
+\hline
+\mbox{\tt in}  & {\em moves} & This stack stores a number of moves that are to be displayed. \\
+\hline
+\end{DoxyParams}

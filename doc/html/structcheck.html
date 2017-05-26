@@ -59,29 +59,67 @@ $(function() {
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="structcheck-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">check Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="Board_8h_source.html">Board.h</a>&gt;</code></p>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:aed4f12a675b5f11aa8cf8891024a7ed1"><td class="memItemLeft" align="right" valign="top"><a id="aed4f12a675b5f11aa8cf8891024a7ed1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>display</b> ()</td></tr>
-<tr class="separator:aed4f12a675b5f11aa8cf8891024a7ed1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a004e9a83f3635e9ec1e40c98d3ba0519"><td class="memItemLeft" align="right" valign="top"><a id="a004e9a83f3635e9ec1e40c98d3ba0519"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>len</b></td></tr>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcheck.html#a004e9a83f3635e9ec1e40c98d3ba0519">len</a></td></tr>
+<tr class="memdesc:a004e9a83f3635e9ec1e40c98d3ba0519"><td class="mdescLeft">&#160;</td><td class="mdescRight">The number of pieces attacking the king. <br /></td></tr>
 <tr class="separator:a004e9a83f3635e9ec1e40c98d3ba0519"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20edc7f43122fbfd399629ed8b41dc6a"><td class="memItemLeft" align="right" valign="top"><a id="a20edc7f43122fbfd399629ed8b41dc6a"></a>
-char&#160;</td><td class="memItemRight" valign="bottom"><b>heatMap</b> [8][8]</td></tr>
+<tr class="memitem:a20edc7f43122fbfd399629ed8b41dc6a"><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structcheck.html#a20edc7f43122fbfd399629ed8b41dc6a">heatMap</a> [8][8]</td></tr>
 <tr class="separator:a20edc7f43122fbfd399629ed8b41dc6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The check struct stores all the information that is somewhat related to the king, and is used for internal communication within the <em>calcMoves</em> method only. On the one hand, it stores the number of pieces that are giving check to the king, and if the king is checked, which squares can be used to resolve this check. Furthermore, it stores whether a piece is pinned, and if so, in which direction. </p>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a id="a20edc7f43122fbfd399629ed8b41dc6a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a20edc7f43122fbfd399629ed8b41dc6a">&#9670;&nbsp;</a></span>heatMap</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">char check::heatMap[8][8]</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>All the 64 character entries of the heatmap correspond to exactly one square on the chess board. The encoding of the heatmap depends on the piece that is occupying the square. The table below lists all the cases. </p><table class="doxtable">
+<tr>
+<th>Occupation of the square </th><th>Value </th><th>Description </th></tr>
+<tr>
+<td rowspan="2">Empty </td><td>0 </td><td>No peculiarities. </td></tr>
+<tr>
+<td>1 </td><td>Placing a friendly piece here will resolve check. </td></tr>
+<tr>
+<td rowspan="2">Enemy piece </td><td>0 </td><td>No peculiarities. </td></tr>
+<tr>
+<td>1 </td><td>Taking this piece will resolve check. </td></tr>
+<tr>
+<td rowspan="5">Friendly piece </td><td>0 </td><td>No peculiarities. </td></tr>
+<tr>
+<td>1 </td><td>This piece is pinned, such that it can only move in the northwest-southeast direction. </td></tr>
+<tr>
+<td>2 </td><td>This piece is pinned, such that it can only move in the horizontal direction. </td></tr>
+<tr>
+<td>3 </td><td>This piece is pinned, such that it can only move in the northeast-southwest direction. </td></tr>
+<tr>
+<td>4 </td><td>This piece is pinned, such that it can only move in the vertical direction. </td></tr>
+</table>
+<p>Some edge cases are not included in the check structure. For example, consider the following board: </p><div class="image">
+<img src="../../img/EnPassantPin.png" alt="EnPassantPin.png"/>
+</div>
+  If white now decides to take the black pawn en passant, then white checks himself, so this is not a legal move. Yet the white pawn is not considered to be pinned, as it can advance without checking anyone. This, then, is a situation that cannot be stored in the check struct, and needs to be handled separately. </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/<a class="el" href="Board_8h_source.html">Board.h</a></li>
 </ul>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['heatmap',['heatMap',['../structcheck.html#a20edc7f43122fbfd399629ed8b41dc6a',1,'check']]]
+  ['enpassant',['enPassant',['../classBoard.html#aad3145585c03f739311c35fa8f3277d3',1,'Board']]]
 ];

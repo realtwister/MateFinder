@@ -1,6 +1,9 @@
 #include <iostream>
 #include "DFS.h"
 
+/**
+ * This function displays the help in the CLI.
+ */
 void displayHelp()
 {
   std::cout << "This program will calculate if there is a mate position, from a position on the chess board." << std::endl << std::endl;
@@ -13,6 +16,11 @@ void displayHelp()
   std::cout << "  -h             Display the help." << std::endl;
 }
 
+/**
+ * This function displays the move sequence that is stored in a stack of moves.
+ * @param[in] blackToMove This boolean stores whether black is to move.
+ * @param[in] moves This stack stores a number of moves that are to be displayed.
+ */
 void printMoveSequence(bool blackToMove, std::stack<move> moves)
 {
   int movectr = 1;
@@ -37,6 +45,9 @@ void printMoveSequence(bool blackToMove, std::stack<move> moves)
   if (blackToMove) {std::cout << std::endl;}
 }
 
+/**
+ * The main function. It processes the user input, calls the search algorithm, and displays the results.
+ */
 int main(int argc, char * argv[])
 {
   //Read the user input

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['move',['move',['../structmove.html',1,'']]],
-  ['movearray',['moveArray',['../structmoveArray.html',1,'']]]
+  ['dfs',['DFS',['../classDFS.html',1,'']]],
+  ['dfsresult',['DFSresult',['../structDFSresult.html',1,'']]]
 ];

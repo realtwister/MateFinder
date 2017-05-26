@@ -2,10 +2,11 @@
 #include <iostream>
 #include <fstream>
 #include <exception>
-#include <iostream>
 #include <cmath>
-#include <tgmath.h>
 
+/**
+ * These are the offsets of the moves a knight can make. It is faster to store them in an array, then to calculate these positions.
+ */
 static square<int> knightMoves[8]={
   {-2,1},
   {-2,-1},
@@ -645,8 +646,8 @@ void Board::flipBoard()
 /**
  * This constructor is used when a move is executed. All the pieces must be copied, but copying all the legal moves is not necessary, as they are recalculated anyway.
  * So, this private constructur is only to be used internally, when calling the \a cloneAndExecMove function.
- * @params[in] other This is the board that is to be cloned.
- * @params[in] mv This is the move that is to be executed.
+ * @param[in] other This is the board that is to be cloned.
+ * @param[in] mv This is the move that is to be executed.
  */
 Board::Board(const Board& other, const move mv)
 {
@@ -659,8 +660,8 @@ Board::Board(const Board& other, const move mv)
 
 /**
  * Board constructor creating Board object from either a file or a string
- * @param str Either the FEN string or the filename
- * @param file Boolean whether to read file or string (true is file)
+ * @param[in] str Either the FEN string or the filename
+ * @param[in] file Boolean whether to read file or string (true is file)
  */
 
 Board::Board(const char *str, const bool file)
@@ -694,7 +695,7 @@ Board::Board(const char *str, const bool file)
 
 /**
  * Execute a move on a given board and consequently flip the board and recalculate the legal moves.
- * @params[in] move This is the move that is to be executed.
+ * @param[in] move This is the move that is to be executed.
  */
 
 void Board::execMove(const move move)
@@ -734,78 +735,48 @@ void Board::execMove(const move move)
   calcMoves();
 }
 
+/**
+ * Clone the board and execute the given move. Return the resulting position.
+ * @param[in] mv The move to be executed.
+ * @return This function returns a new Board object, containing the new position, after the move was executed.
+ */
 Board Board::cloneAndExecMove(const move mv) const
 {
   return Board(*this, mv);
 }
 
 /**
- * Print a formatted representation of the board.
+ * Give a nice overview of the current position in the terminal window
  */
 void Board::printBoard() const
 {
+  // Flip the board if necessary
   Board c = *this;
   if (c.state & blackToMoveMask) {c.flipBoard();}
 
-  // Board
+  // Draw the board
   std::cout << " +------------------------+" << std::endl;
-
-  for (int i = 7; i >= 0; i--) {
+  for (int i = 7; i >= 0; i--)
+  {
     std::cout << i + 1 << '|';
-
-    for (int j = 0; j < 8; j++) {
-      std::cout << ' '
-                << (char)c.board[j][i]
-                << ' ';
-    }
+    for (int j = 0; j < 8; j++)
+      std::cout << ' ' << (char)c.board[j][i] << ' ';
     std::cout << '|' << std::endl;
   }
-  std::cout << " +------------------------+"
-            << std::endl
-            << "   A  B  C  D  E  F  G  H "
-            << std::endl
-            << std::endl;
+  std::cout << " +------------------------+" << std::endl;
+  std::cout << "   A  B  C  D  E  F  G  H "  << std::endl;
+  std::cout << std::endl;
 
   // Who to move
-  std::cout << "        "
-            << ((c.state & blackToMoveMask) ? "black" : "white")
-            << " to move"
-            << std::endl
-            << std::endl;
+  std::cout << "        " << ((c.state & blackToMoveMask) ? "black" : "white") << " to move" << std::endl;
+  std::cout << std::endl;
 
   // Castle details
-  std::cout << "CASTLE| queenside kingside"
-            << std::endl
-            << " White|      "
-            << ((c.state & whiteCastleQueensideMask) ? "1" : "0")
-            << "        "
-            << ((c.state & whiteCastleKingsideMask) ? "1" : "0")
-            << std::endl
-
-            << " Black|      "
-            << ((c.state & blackCastleQueensideMask) ? "1" : "0")
-            << "        "
-            << ((c.state & blackCastleKingsideMask) ? "1" : "0")
-            << std::endl;
+  std::cout << "CASTLE| queenside kingside" << std::endl;
+  std::cout << " White|      " << ((c.state & whiteCastleQueensideMask) ? "1" : "0") << "        " << ((c.state & whiteCastleKingsideMask) ? "1" : "0") << std::endl;
+  std::cout << " Black|      " << ((c.state & blackCastleQueensideMask) ? "1" : "0") << "        " << ((c.state & blackCastleKingsideMask) ? "1" : "0") << std::endl;
 
   // enPassant
-  if (c.enPassant >= 0) {
+  if (c.enPassant >= 0)
     std::cout << "En passant on file: " << char('a' + c.enPassant) << std::endl;
-  }
-}
-
-/**
- * Print a list of the legal moves.
- */
-void Board::printLegalMoves() const
-{
-  std::cout << "Below, we will show a list of legal moves." << std::endl;
-  std::cout << "The current position is depicted below." << std::endl;
-  printBoard();
-  std::cout << "There are " << legalMoves.size() << " legal moves." << std::endl;
-  for (int i = 0; i < legalMoves.size(); i++)
-  {
-    std::cout << (i+1) << ": " << (char)(legalMoves[i].start.x + 'a') << ((state & blackToMoveMask ? 7 - legalMoves[i].start.y : legalMoves[i].start.y) + 1)
-              << "-" << (char)(legalMoves[i].end.x + 'a') << ((state & blackToMoveMask ? 7 - legalMoves[i].end.y : legalMoves[i].end.y) + 1) << std::endl;
-  }
 }

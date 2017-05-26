@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['board_5floop',['BOARD_LOOP',['../tester_8cpp.html#acd2510d5a0faf454a5ccab808f075021',1,'tester.cpp']]]
+  ['log',['LOG',['../DFS_8cpp.html#ae79a25608a20290a960b05290e318426',1,'DFS.cpp']]]
 ];
