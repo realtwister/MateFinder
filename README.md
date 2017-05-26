@@ -3,12 +3,12 @@ A C++ program to find a checkmate given some boardposition
 
 One can build it using:
 
-  make
+  ```make```
 
 Then, an executable MateFinder will be created in the root directory (which is the directory where this ReadMe is located). Now, one can run it using:
 
-  ./MateFinder
+  ```./MateFinder```
 
 The help will guide you further. To see the program in action, run:
 
-  ./MateFinder -f FEN -d 9 -t
+  ```./MateFinder -f FEN -d 9 -t```
