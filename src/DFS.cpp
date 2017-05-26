@@ -13,7 +13,8 @@
  * @param[in] depth The current depth
  * @return This function returns a DFSresult object containing the best state possible of the previous node the depth at which the state occurred and the moves leading to that state from this node.
  */
-DFSresult DFS:: best_outcome(Board board, unsigned int depth){
+template<bool T>
+DFSresult DFS::best_outcome(Board board, unsigned int depth){
   //check is current board is mate and return the state if true
   if(board.isMate()){
     return {2, depth, std::stack<move>()};
@@ -29,17 +30,17 @@ DFSresult DFS:: best_outcome(Board board, unsigned int depth){
   // get all the moves of the current board and loop over them.
   moveArray moves = board.getMoves();
   for(int i = 0; i < moves.size(); i++){
-    if (depth == 0 && this->curDepth == this->maxDepth)
-      std::cout << "Progress: branch " << (i+1) << "/" << moves.size() << "." << std::endl;
+    if(T)
+      if(this->curDepth == this->maxDepth)
+        std::cout << "Progress: branch " << (i+1) << "/" << moves.size() << "." << std::endl;
     // get the result of the children boards due to the current move
-    res = best_outcome(board.cloneAndExecMove(moves[i]), depth+1);
+    res = best_outcome<false>(board.cloneAndExecMove(moves[i]), depth+1);
     // if the resulting state is better than the current best state change the best state.
     if(res.state > best.state){
       best=res;
       best.moves.push(moves[i]);
-      if(this->turbo && depth%2==1 && best.state > -2){
-        break;
-      }
+      if(this->turbo && depth%2==1 && best.state > -2)
+	      break;
     }
     // else if the states are equal check if we can have a faster(slower) enemy mate (ally mate or draw).
     else if(res.state == best.state){
@@ -80,7 +81,8 @@ DFSresult DFS:: best_outcome(Board board, unsigned int depth){
  * @param[in] _maxDepth Maximal depth to search.
  * @param[in] _turbo turbo mode.
  */
-DFS::DFS(Board* _start, unsigned int _maxDepth, bool _turbo){
+DFS::DFS(Board* _start, unsigned int _maxDepth, bool _turbo)
+{
   start = _start;
   curDepth = 1;
   maxDepth = _maxDepth;
@@ -99,7 +101,7 @@ DFSresult DFS::search(){
   while(res.state == 1 && this->curDepth <= this->maxDepth)
   {
     //search on odd depths as these are the depths where enemy mates occur.
-    res = this->best_outcome(*(this->start), 0);
+    res = this->best_outcome<true>(*(this->start), 0);
     this->curDepth += 2;
     if (this->curDepth > this->maxDepth && this->curDepth < this->maxDepth + 2) {this->curDepth = this->maxDepth;}
   }

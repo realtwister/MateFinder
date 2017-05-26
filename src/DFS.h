@@ -18,7 +18,8 @@ public:
   unsigned int curDepth;
   Board* start;
   bool turbo;
-
+  
+  template<bool T>
   DFSresult best_outcome(Board, unsigned int);
 
 public:
