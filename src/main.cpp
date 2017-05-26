@@ -2,6 +2,11 @@
 #include "DFS.h"
 
 /**
+ * @file
+ * This file contains the CLI.
+ */
+
+/**
  * This function displays the help in the CLI.
  */
 void displayHelp()
@@ -47,6 +52,9 @@ void printMoveSequence(bool blackToMove, std::stack<move> moves)
 
 /**
  * The main function. It processes the user input, calls the search algorithm, and displays the results.
+ * @param[in] argc The number of arguments that the user passed to the program.
+ * @param[in] argv A list of arguments.
+ * @returns An exit code. 0 indicates that everything went according to plan. 1 indicates that an error occurred.
  */
 int main(int argc, char * argv[])
 {

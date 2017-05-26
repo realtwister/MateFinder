@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['x',['x',['../structsquare.html#a9a6e49424fdfad5fe4ce893bb57ba467',1,'square::x()'],['../structsquare_3_01void_01_4.html#a1b2185b1eacd68916a02287c21916a25',1,'square&lt; void &gt;::x()']]]
+  ['y',['y',['../structsquare.html#a7b976f9389a2fc271a332b5014dfd1e9',1,'square::y()'],['../structsquare_3_01void_01_4.html#a2f5565ddd32970d151f1973db2fc3881',1,'square&lt; void &gt;::y()']]]
 ];

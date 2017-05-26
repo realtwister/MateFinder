@@ -16,7 +16,7 @@
 \hyperlink{classBoard_a8dd2a85d6b43bcab4eaf83e1541aeb18}{Board} (const char $\ast$str, const bool file)
 \begin{DoxyCompactList}\small\item\em Read from F\+EN notation from file or string and calculate legal moves. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classBoard_a8359f43f59d4eb04c679f0415c26add4}\label{classBoard_a8359f43f59d4eb04c679f0415c26add4}} 
-Piece\+::\+Piece \hyperlink{classBoard_a8359f43f59d4eb04c679f0415c26add4}{get\+Square} (const \hyperlink{structsquare}{square}$<$ int $>$ pos) const
+\hyperlink{namespacePiece_a588233307aa6bdb32c1d62c9f20895cc}{Piece\+::\+Piece} \hyperlink{classBoard_a8359f43f59d4eb04c679f0415c26add4}{get\+Square} (const \hyperlink{structsquare}{square}$<$ int $>$ pos) const
 \begin{DoxyCompactList}\small\item\em Get what piece is occupying the given square. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classBoard_a58ee677360099107d0d33becdc2af888}\label{classBoard_a58ee677360099107d0d33becdc2af888}} 
 bool \hyperlink{classBoard_a58ee677360099107d0d33becdc2af888}{is\+Check} () const
@@ -42,7 +42,7 @@ void \hyperlink{classBoard_ac33aaf879882d2c1abbab14c9727f2f9}{change\+Color} ()
 void \hyperlink{classBoard_a5f148daa03da25d40dff3fc613568d6f}{clear\+Board} ()
 \begin{DoxyCompactList}\small\item\em Clear the entire board. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classBoard_a2a15fa8b4b4db9d11093c6c806344fc6}\label{classBoard_a2a15fa8b4b4db9d11093c6c806344fc6}} 
-void \hyperlink{classBoard_a2a15fa8b4b4db9d11093c6c806344fc6}{set\+Piece} (const \hyperlink{structsquare}{square}$<$ int $>$ sq, const Piece\+::\+Piece piece)
+void \hyperlink{classBoard_a2a15fa8b4b4db9d11093c6c806344fc6}{set\+Piece} (const \hyperlink{structsquare}{square}$<$ int $>$ sq, const \hyperlink{namespacePiece_a588233307aa6bdb32c1d62c9f20895cc}{Piece\+::\+Piece} piece)
 \begin{DoxyCompactList}\small\item\em Place a piece on a given square. \end{DoxyCompactList}\item 
 \hyperlink{classBoard}{Board} \hyperlink{classBoard_a3eb8e7257733fd3b9e00c8c37b8cc433}{clone\+And\+Exec\+Move} (const \hyperlink{structmove}{move} mv) const
 \begin{DoxyCompactList}\small\item\em Clone the current position and execute a move. \end{DoxyCompactList}\item 
@@ -86,7 +86,7 @@ bool \hyperlink{classBoard_ae8183cabc093c8bd030250c42959fa37}{is\+Attacked} (con
 bool \hyperlink{classBoard_a8b9245cb469f2e82c23ac49edd412646}{has\+Attacker} (\hyperlink{structsquare}{square}$<$ int $>$ pos, const \hyperlink{structsquare}{square}$<$ int $>$ dir) const
 \begin{DoxyCompactList}\small\item\em Invesitgate the possibility of attacks from dir at cur\+Pos. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classBoard_a5068575e721428ee78754984813713e5}\label{classBoard_a5068575e721428ee78754984813713e5}} 
-bool \hyperlink{classBoard_a5068575e721428ee78754984813713e5}{is\+Friendly} (const Piece\+::\+Piece piece) const
+bool \hyperlink{classBoard_a5068575e721428ee78754984813713e5}{is\+Friendly} (const \hyperlink{namespacePiece_a588233307aa6bdb32c1d62c9f20895cc}{Piece\+::\+Piece} piece) const
 \begin{DoxyCompactList}\small\item\em Find out if a piece is friendly. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{classBoard_a33b5e15eeeba65612ad3005ff5e60690}\label{classBoard_a33b5e15eeeba65612ad3005ff5e60690}} 
 bool \hyperlink{classBoard_a33b5e15eeeba65612ad3005ff5e60690}{is\+Friendly} (const \hyperlink{structsquare}{square}$<$ int $>$ pos) const
@@ -98,7 +98,7 @@ void \hyperlink{classBoard_aeea5a9ddcdeb6e4c087f53e71f6c11ec}{flip\+Board} ()
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
-Piece\+::\+Piece \hyperlink{classBoard_acdbd7620b4c8bc08b2e42623c2a12a39}{board} \mbox{[}8\mbox{]}\mbox{[}8\mbox{]}
+\hyperlink{namespacePiece_a588233307aa6bdb32c1d62c9f20895cc}{Piece\+::\+Piece} \hyperlink{classBoard_acdbd7620b4c8bc08b2e42623c2a12a39}{board} \mbox{[}8\mbox{]}\mbox{[}8\mbox{]}
 \item 
 char \hyperlink{classBoard_a46a6e23b1b18542b10938f2b333862f1}{state}
 \item 
@@ -389,17 +389,17 @@ Give a nice overview of the current position in the terminal window
 \index{Board@{Board}!board@{board}}
 \index{board@{board}!Board@{Board}}
 \subsubsection{\texorpdfstring{board}{board}}
-{\footnotesize\ttfamily Piece\+::\+Piece Board\+::board\mbox{[}8\mbox{]}\mbox{[}8\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}
+{\footnotesize\ttfamily \hyperlink{namespacePiece_a588233307aa6bdb32c1d62c9f20895cc}{Piece\+::\+Piece} Board\+::board\mbox{[}8\mbox{]}\mbox{[}8\mbox{]}\hspace{0.3cm}{\ttfamily [private]}}
 
 This character array stores the position of the pieces on the board. Every entry in the character array corresponds to one square. The values of these characters correspond to the widely used F\+EN notation. \tabulinesep=1mm
 \begin{longtabu} spread 0pt [c]{*{3}{|X[-1]}|}
 \hline
-\rowcolor{\tableheadbgcolor}\textbf{ Value }&\textbf{ A\+S\+C\+II representation }&\textbf{ Piece  }\\\cline{1-3}
+\rowcolor{\tableheadbgcolor}\textbf{ Value }&\textbf{ A\+S\+C\+II representation }&\textbf{ \hyperlink{namespacePiece}{Piece}  }\\\cline{1-3}
 \endfirsthead
 \hline
 \endfoot
 \hline
-\rowcolor{\tableheadbgcolor}\textbf{ Value }&\textbf{ A\+S\+C\+II representation }&\textbf{ Piece  }\\\cline{1-3}
+\rowcolor{\tableheadbgcolor}\textbf{ Value }&\textbf{ A\+S\+C\+II representation }&\textbf{ \hyperlink{namespacePiece}{Piece}  }\\\cline{1-3}
 \endhead
 0x20 &Space &None \\\cline{1-3}
 0x4B &K &White king \\\cline{1-3}

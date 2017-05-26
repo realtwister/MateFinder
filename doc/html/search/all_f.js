@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['turbo',['turbo',['../classDFS.html#a3c4278e719f9a1d9766b4d5c60548137',1,'DFS']]]
+  ['whitepieces',['whitePieces',['../namespacePiece.html#a8c9ba77d6f9a9bb67a5a5d8e95a9f945',1,'Piece']]]
 ];

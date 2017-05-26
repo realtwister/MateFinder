@@ -1,109 +1,143 @@
 \begin{theindex}
 
   \item {best\+\_\+outcome}
-    \subitem {D\+FS}, \hyperpage{15}
-  \item {Board}, \hyperpage{3}
-    \subitem {Board}, \hyperpage{5, 6}
-    \subitem {board}, \hyperpage{11}
-    \subitem {calc\+Moves}, \hyperpage{6}
-    \subitem {check\+Dir}, \hyperpage{6}
-    \subitem {clone\+And\+Exec\+Move}, \hyperpage{7}
-    \subitem {en\+Passant}, \hyperpage{11}
-    \subitem {exec\+Move}, \hyperpage{7}
-    \subitem {first\+Piece}, \hyperpage{7}
-    \subitem {flip\+Board}, \hyperpage{8}
-    \subitem {from\+File}, \hyperpage{8}
-    \subitem {from\+Str}, \hyperpage{8}
-    \subitem {get\+Check}, \hyperpage{9}
-    \subitem {get\+Piece\+Moves}, \hyperpage{9}
-    \subitem {has\+Attacker}, \hyperpage{10}
-    \subitem {legal\+Moves}, \hyperpage{11}
-    \subitem {print\+Board}, \hyperpage{10}
-    \subitem {state}, \hyperpage{11}
+    \subitem {D\+FS}, \hyperpage{21}
+  \item {black\+Pieces}
+    \subitem {Piece}, \hyperpage{8}
+  \item {Board}, \hyperpage{9}
+    \subitem {Board}, \hyperpage{11, 12}
+    \subitem {board}, \hyperpage{17}
+    \subitem {calc\+Moves}, \hyperpage{12}
+    \subitem {check\+Dir}, \hyperpage{12}
+    \subitem {clone\+And\+Exec\+Move}, \hyperpage{13}
+    \subitem {en\+Passant}, \hyperpage{17}
+    \subitem {exec\+Move}, \hyperpage{13}
+    \subitem {first\+Piece}, \hyperpage{13}
+    \subitem {flip\+Board}, \hyperpage{14}
+    \subitem {from\+File}, \hyperpage{14}
+    \subitem {from\+Str}, \hyperpage{14}
+    \subitem {get\+Check}, \hyperpage{15}
+    \subitem {get\+Piece\+Moves}, \hyperpage{15}
+    \subitem {has\+Attacker}, \hyperpage{16}
+    \subitem {legal\+Moves}, \hyperpage{17}
+    \subitem {print\+Board}, \hyperpage{16}
+    \subitem {state}, \hyperpage{17}
   \item {board}
-    \subitem {Board}, \hyperpage{11}
+    \subitem {Board}, \hyperpage{17}
 
   \indexspace
 
   \item {calc\+Moves}
-    \subitem {Board}, \hyperpage{6}
-  \item {check}, \hyperpage{12}
-    \subitem {heat\+Map}, \hyperpage{12}
+    \subitem {Board}, \hyperpage{12}
+  \item {check}, \hyperpage{18}
+    \subitem {heat\+Map}, \hyperpage{18}
   \item {check\+Dir}
-    \subitem {Board}, \hyperpage{6}
+    \subitem {Board}, \hyperpage{12}
   \item {clone\+And\+Exec\+Move}
-    \subitem {Board}, \hyperpage{7}
+    \subitem {Board}, \hyperpage{13}
 
   \indexspace
 
-  \item {D\+F\+Sresult}, \hyperpage{16}
-    \subitem {depth}, \hyperpage{16}
-    \subitem {moves}, \hyperpage{16}
-    \subitem {state}, \hyperpage{16}
-  \item {D\+FS}, \hyperpage{13}
-    \subitem {best\+\_\+outcome}, \hyperpage{15}
-    \subitem {D\+FS}, \hyperpage{14}
-    \subitem {search}, \hyperpage{15}
+  \item {D\+F\+Sresult}, \hyperpage{22}
+    \subitem {depth}, \hyperpage{22}
+    \subitem {moves}, \hyperpage{22}
+    \subitem {state}, \hyperpage{22}
+  \item {D\+FS}, \hyperpage{19}
+    \subitem {best\+\_\+outcome}, \hyperpage{21}
+    \subitem {D\+FS}, \hyperpage{20}
+    \subitem {search}, \hyperpage{21}
   \item {depth}
-    \subitem {D\+F\+Sresult}, \hyperpage{16}
+    \subitem {D\+F\+Sresult}, \hyperpage{22}
+  \item {display\+Help}
+    \subitem {main.\+cpp}, \hyperpage{27}
 
   \indexspace
 
   \item {en\+Passant}
-    \subitem {Board}, \hyperpage{11}
+    \subitem {Board}, \hyperpage{17}
+  \item {end}
+    \subitem {move}, \hyperpage{23}
   \item {exec\+Move}
-    \subitem {Board}, \hyperpage{7}
+    \subitem {Board}, \hyperpage{13}
 
   \indexspace
 
   \item {first\+Piece}
-    \subitem {Board}, \hyperpage{7}
+    \subitem {Board}, \hyperpage{13}
   \item {flip\+Board}
-    \subitem {Board}, \hyperpage{8}
+    \subitem {Board}, \hyperpage{14}
   \item {from\+File}
-    \subitem {Board}, \hyperpage{8}
+    \subitem {Board}, \hyperpage{14}
   \item {from\+Str}
-    \subitem {Board}, \hyperpage{8}
+    \subitem {Board}, \hyperpage{14}
 
   \indexspace
 
   \item {get\+Check}
-    \subitem {Board}, \hyperpage{9}
+    \subitem {Board}, \hyperpage{15}
   \item {get\+Piece\+Moves}
-    \subitem {Board}, \hyperpage{9}
+    \subitem {Board}, \hyperpage{15}
 
   \indexspace
 
   \item {has\+Attacker}
-    \subitem {Board}, \hyperpage{10}
+    \subitem {Board}, \hyperpage{16}
   \item {heat\+Map}
-    \subitem {check}, \hyperpage{12}
+    \subitem {check}, \hyperpage{18}
 
   \indexspace
 
   \item {legal\+Moves}
-    \subitem {Board}, \hyperpage{11}
+    \subitem {Board}, \hyperpage{17}
 
   \indexspace
 
-  \item {move}, \hyperpage{17}
-  \item {move\+Array}, \hyperpage{17}
+  \item {main}
+    \subitem {main.\+cpp}, \hyperpage{27}
+  \item {main.\+cpp}
+    \subitem {display\+Help}, \hyperpage{27}
+    \subitem {main}, \hyperpage{27}
+    \subitem {print\+Move\+Sequence}, \hyperpage{28}
+  \item {move}, \hyperpage{23}
+    \subitem {end}, \hyperpage{23}
+    \subitem {print\+Move}, \hyperpage{23}
+    \subitem {promote\+To}, \hyperpage{23}
+    \subitem {start}, \hyperpage{24}
+  \item {move\+Array}, \hyperpage{24}
   \item {moves}
-    \subitem {D\+F\+Sresult}, \hyperpage{16}
+    \subitem {D\+F\+Sresult}, \hyperpage{22}
 
   \indexspace
 
+  \item {Piece}, \hyperpage{7}
+    \subitem {black\+Pieces}, \hyperpage{8}
+    \subitem {Piece}, \hyperpage{7}
+    \subitem {white\+Pieces}, \hyperpage{8}
   \item {print\+Board}
-    \subitem {Board}, \hyperpage{10}
+    \subitem {Board}, \hyperpage{16}
+  \item {print\+Move}
+    \subitem {move}, \hyperpage{23}
+  \item {print\+Move\+Sequence}
+    \subitem {main.\+cpp}, \hyperpage{28}
+  \item {promote\+To}
+    \subitem {move}, \hyperpage{23}
 
   \indexspace
 
   \item {search}
-    \subitem {D\+FS}, \hyperpage{15}
-  \item {square$<$ T $>$}, \hyperpage{18}
-  \item {square$<$ void $>$}, \hyperpage{18}
+    \subitem {D\+FS}, \hyperpage{21}
+  \item {square$<$ T $>$}, \hyperpage{25}
+  \item {square$<$ void $>$}, \hyperpage{26}
+  \item {src/main.\+cpp}, \hyperpage{27}
+  \item {start}
+    \subitem {move}, \hyperpage{24}
   \item {state}
-    \subitem {Board}, \hyperpage{11}
-    \subitem {D\+F\+Sresult}, \hyperpage{16}
+    \subitem {Board}, \hyperpage{17}
+    \subitem {D\+F\+Sresult}, \hyperpage{22}
+
+  \indexspace
+
+  \item {white\+Pieces}
+    \subitem {Piece}, \hyperpage{8}
 
 \end{theindex}

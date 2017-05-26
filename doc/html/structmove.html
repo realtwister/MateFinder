@@ -66,25 +66,99 @@ $(function() {
 <div class="title">move Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p><code>#include &lt;<a class="el" href="Move_8h_source.html">Move.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a1586ed1c5f7173c4b60fa306522e4f64"><td class="memItemLeft" align="right" valign="top"><a id="a1586ed1c5f7173c4b60fa306522e4f64"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>printMove</b> (bool blackToMove)</td></tr>
+<tr class="memitem:a1586ed1c5f7173c4b60fa306522e4f64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmove.html#a1586ed1c5f7173c4b60fa306522e4f64">printMove</a> (bool blackToMove)</td></tr>
 <tr class="separator:a1586ed1c5f7173c4b60fa306522e4f64"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a3f8a82f7c7bc55f55874026ac254cd85"><td class="memItemLeft" align="right" valign="top"><a id="a3f8a82f7c7bc55f55874026ac254cd85"></a>
-<a class="el" href="structsquare.html">square</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>start</b></td></tr>
+<tr class="memitem:a3f8a82f7c7bc55f55874026ac254cd85"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsquare.html">square</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmove.html#a3f8a82f7c7bc55f55874026ac254cd85">start</a></td></tr>
 <tr class="separator:a3f8a82f7c7bc55f55874026ac254cd85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a205ae16ec975ed71eb4233bb38d21a75"><td class="memItemLeft" align="right" valign="top"><a id="a205ae16ec975ed71eb4233bb38d21a75"></a>
-<a class="el" href="structsquare.html">square</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>end</b></td></tr>
+<tr class="memitem:a205ae16ec975ed71eb4233bb38d21a75"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structsquare.html">square</a>&lt; void &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmove.html#a205ae16ec975ed71eb4233bb38d21a75">end</a></td></tr>
 <tr class="separator:a205ae16ec975ed71eb4233bb38d21a75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a87fc4fc521c961cce03613dcb6cd0c6b"><td class="memItemLeft" align="right" valign="top"><a id="a87fc4fc521c961cce03613dcb6cd0c6b"></a>
-Piece::Piece&#160;</td><td class="memItemRight" valign="bottom"><b>promoteTo</b></td></tr>
+<tr class="memitem:a87fc4fc521c961cce03613dcb6cd0c6b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespacePiece.html#a588233307aa6bdb32c1d62c9f20895cc">Piece::Piece</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structmove.html#a87fc4fc521c961cce03613dcb6cd0c6b">promoteTo</a></td></tr>
 <tr class="separator:a87fc4fc521c961cce03613dcb6cd0c6b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>The move struct stores one move. It stores both the start and end squares in a compact way, to reduce memory copying overheads. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a1586ed1c5f7173c4b60fa306522e4f64"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1586ed1c5f7173c4b60fa306522e4f64">&#9670;&nbsp;</a></span>printMove()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void move::printMove </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>blackToMove</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>This function displays the move in the terminal. </p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a205ae16ec975ed71eb4233bb38d21a75"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a205ae16ec975ed71eb4233bb38d21a75">&#9670;&nbsp;</a></span>end</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsquare.html">square</a>&lt;void&gt; move::end</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The square where the piece lands after the move. </p>
+
+</div>
+</div>
+<a id="a87fc4fc521c961cce03613dcb6cd0c6b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a87fc4fc521c961cce03613dcb6cd0c6b">&#9670;&nbsp;</a></span>promoteTo</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespacePiece.html#a588233307aa6bdb32c1d62c9f20895cc">Piece::Piece</a> move::promoteTo</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The piece a pawn promotes to if it reaches the other side of the board, using FEN notation. The piece is always stored in white. </p>
+
+</div>
+</div>
+<a id="a3f8a82f7c7bc55f55874026ac254cd85"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3f8a82f7c7bc55f55874026ac254cd85">&#9670;&nbsp;</a></span>start</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structsquare.html">square</a>&lt;void&gt; move::start</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>The square from which the piece starts its move. </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>src/<a class="el" href="Move_8h_source.html">Move.h</a></li>
 </ul>

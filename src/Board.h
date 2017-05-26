@@ -50,7 +50,7 @@ struct check
  */
 class Board {
 #ifdef DEBUG
-public:
+public: //The test functions also test the private methods, so that is why this debug hack is needed.
 #endif
   //Member variables
   /**

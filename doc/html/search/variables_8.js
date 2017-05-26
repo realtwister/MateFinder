@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['turbo',['turbo',['../classDFS.html#a3c4278e719f9a1d9766b4d5c60548137',1,'DFS']]]
+  ['promoteto',['promoteTo',['../structmove.html#a87fc4fc521c961cce03613dcb6cd0c6b',1,'move']]]
 ];

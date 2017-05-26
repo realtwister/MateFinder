@@ -1,24 +1,57 @@
 \hypertarget{structmove}{}\section{move Struct Reference}
 \label{structmove}\index{move@{move}}
+
+
+{\ttfamily \#include $<$Move.\+h$>$}
+
 \subsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{structmove_a1586ed1c5f7173c4b60fa306522e4f64}\label{structmove_a1586ed1c5f7173c4b60fa306522e4f64}} 
-void {\bfseries print\+Move} (bool black\+To\+Move)
+void \hyperlink{structmove_a1586ed1c5f7173c4b60fa306522e4f64}{print\+Move} (bool black\+To\+Move)
 \end{DoxyCompactItemize}
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{structmove_a3f8a82f7c7bc55f55874026ac254cd85}\label{structmove_a3f8a82f7c7bc55f55874026ac254cd85}} 
-\hyperlink{structsquare}{square}$<$ void $>$ {\bfseries start}
+\hyperlink{structsquare}{square}$<$ void $>$ \hyperlink{structmove_a3f8a82f7c7bc55f55874026ac254cd85}{start}
 \item 
-\mbox{\Hypertarget{structmove_a205ae16ec975ed71eb4233bb38d21a75}\label{structmove_a205ae16ec975ed71eb4233bb38d21a75}} 
-\hyperlink{structsquare}{square}$<$ void $>$ {\bfseries end}
+\hyperlink{structsquare}{square}$<$ void $>$ \hyperlink{structmove_a205ae16ec975ed71eb4233bb38d21a75}{end}
 \item 
-\mbox{\Hypertarget{structmove_a87fc4fc521c961cce03613dcb6cd0c6b}\label{structmove_a87fc4fc521c961cce03613dcb6cd0c6b}} 
-Piece\+::\+Piece {\bfseries promote\+To}
+\hyperlink{namespacePiece_a588233307aa6bdb32c1d62c9f20895cc}{Piece\+::\+Piece} \hyperlink{structmove_a87fc4fc521c961cce03613dcb6cd0c6b}{promote\+To}
 \end{DoxyCompactItemize}
 
+
+\subsection{Detailed Description}
+The move struct stores one move. It stores both the start and end squares in a compact way, to reduce memory copying overheads. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{structmove_a1586ed1c5f7173c4b60fa306522e4f64}\label{structmove_a1586ed1c5f7173c4b60fa306522e4f64}} 
+\index{move@{move}!print\+Move@{print\+Move}}
+\index{print\+Move@{print\+Move}!move@{move}}
+\subsubsection{\texorpdfstring{print\+Move()}{printMove()}}
+{\footnotesize\ttfamily void move\+::print\+Move (\begin{DoxyParamCaption}\item[{bool}]{black\+To\+Move }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+This function displays the move in the terminal. 
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{structmove_a205ae16ec975ed71eb4233bb38d21a75}\label{structmove_a205ae16ec975ed71eb4233bb38d21a75}} 
+\index{move@{move}!end@{end}}
+\index{end@{end}!move@{move}}
+\subsubsection{\texorpdfstring{end}{end}}
+{\footnotesize\ttfamily \hyperlink{structsquare}{square}$<$void$>$ move\+::end}
+
+The square where the piece lands after the move. \mbox{\Hypertarget{structmove_a87fc4fc521c961cce03613dcb6cd0c6b}\label{structmove_a87fc4fc521c961cce03613dcb6cd0c6b}} 
+\index{move@{move}!promote\+To@{promote\+To}}
+\index{promote\+To@{promote\+To}!move@{move}}
+\subsubsection{\texorpdfstring{promote\+To}{promoteTo}}
+{\footnotesize\ttfamily \hyperlink{namespacePiece_a588233307aa6bdb32c1d62c9f20895cc}{Piece\+::\+Piece} move\+::promote\+To}
+
+The piece a pawn promotes to if it reaches the other side of the board, using F\+EN notation. The piece is always stored in white. \mbox{\Hypertarget{structmove_a3f8a82f7c7bc55f55874026ac254cd85}\label{structmove_a3f8a82f7c7bc55f55874026ac254cd85}} 
+\index{move@{move}!start@{start}}
+\index{start@{start}!move@{move}}
+\subsubsection{\texorpdfstring{start}{start}}
+{\footnotesize\ttfamily \hyperlink{structsquare}{square}$<$void$>$ move\+::start}
+
+The square from which the piece starts its move. 
 
 The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

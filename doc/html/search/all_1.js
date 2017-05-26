@@ -6,5 +6,6 @@ var searchData=
   ['checkdir',['checkDir',['../classBoard.html#ab63f400e8fdd7d1747c18642b59cc435',1,'Board']]],
   ['clearboard',['clearBoard',['../classBoard.html#a5f148daa03da25d40dff3fc613568d6f',1,'Board']]],
   ['cloneandexecmove',['cloneAndExecMove',['../classBoard.html#a3eb8e7257733fd3b9e00c8c37b8cc433',1,'Board']]],
+  ['ctr',['ctr',['../structmoveArray.html#a9dbadb0980be9c133d9587c8572a1c49',1,'moveArray']]],
   ['curdepth',['curDepth',['../classDFS.html#a17abe1c016f7efe83c51c4ee9ba541f3',1,'DFS']]]
 ];
