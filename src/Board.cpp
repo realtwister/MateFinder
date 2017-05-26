@@ -144,14 +144,12 @@ int Board::fromStr(const char * str) {
 int Board::fromFile(const char *fileName) {
   std::ifstream file;
 
-  std::cout << fileName << std::endl;
   file.open(fileName);
 
   if (!file.good()) return 2;  // Error reading file
 
   char str[255];
   file.getline(str, 255);
-  std::cout << str << std::endl;
   return fromStr(str);
 }
 
@@ -679,15 +677,15 @@ Board::Board(const char *str, const bool file)
   if (error) {
     switch (error) {
     case 1:
-      throw std::invalid_argument("Syntax error encountered during FEN reading");
+      throw std::invalid_argument("Error initializing board: Syntax error encountered during FEN reading");
       break;
 
     case 2:
-      throw std::invalid_argument("Error while reading file");
+      throw std::invalid_argument("Error initializing board: Error while reading file");
       break;
 
     default:
-      throw std::runtime_error("Unexpected return value");
+      throw std::runtime_error("Error initializing board: Unexpected return value");
     }
   }
 

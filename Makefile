@@ -14,6 +14,7 @@ INC :=
 
 
 $(TARGET): $(OBJECTS)
+	@mkdir -p bin
 	@echo " Linking..."
 	@echo " $(CC) $^ -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
 
@@ -27,11 +28,11 @@ clean:
 
 run: $(TARGET)
 	@echo " Running $(TARGET):";
-	$(TARGET)
+	@$(TARGET)
 
 runDFS: bin/DFS
-	 @echo "Running DFS";
-	 bin/DFS
+	@echo " Running DFS";
+	@bin/DFS
 
 profile: $(TARGET)
 	@echo " Profiling $(TARGET):";
@@ -44,10 +45,10 @@ test: test/tester.cpp build/Board.o
 
 runtest: test
 	@echo " Running tests:"
-	bin/tester $(flags)
+	@bin/tester $(flags)
 
 doc: src
-	doxygen
-	make -C doc/latex
+	@doxygen
+	@make -C doc/latex
 
 .PHONY: clean

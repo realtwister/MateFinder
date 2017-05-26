@@ -1,24 +1,146 @@
 #include <iostream>
-#include <cstdlib>
-#include <ctime>
-#include <chrono>
 #include "DFS.h"
+
+void displayHelp()
+{
+  std::cout << "This program will calculate if there is a mate position, from a position on the chess board." << std::endl << std::endl;
+  std::cout << "Usage: matefinder [\"FEN\"] [OPTIONS]" << std::endl;
+  std::cout << "Make sure the FEN is enclosed within double quotation marks." << std::endl;
+  std::cout << "Optional arguments are:" << std::endl;
+  std::cout << "  -f <filename>  Read the FEN from a file. When using this option, the normal \"FEN\" argument can be omitted." << std::endl;
+  std::cout << "  -d <depth>     This option allows you to specify the depth with which the position should be searched, expressed in the number of half-moves." << std::endl;
+  std::cout << "  -t             Enables the turbo mode. In this mode, the program will correctly find mates for the player that is to move, but it will not detect whether he can get mated himself." << std::endl;
+  std::cout << "  -h             Display the help." << std::endl;
+}
+
+void printMoveSequence(bool blackToMove, std::stack<move> moves)
+{
+  int movectr = 1;
+  if (blackToMove) {std::cout << "1. .....";}
+  while (!moves.empty())
+  {
+    if (blackToMove)
+    {
+      std::cout << " - ";
+      moves.top().printMove(true);
+      std::cout << std::endl;
+      movectr++;
+    }
+    else
+    {
+      std::cout << movectr << ". ";
+      moves.top().printMove(false);
+    }
+    moves.pop();
+    blackToMove = !blackToMove;
+  }
+  if (blackToMove) {std::cout << std::endl;}
+}
 
 int main(int argc, char * argv[])
 {
-  //Board b("5rk1/p5pp/2pN4/1p1n4/8/4QP1N/qP2K2P/n6R w - -");
-  //b = Board("1k6/8/QK6/PP6/8/8/8/8 w - -"); //in 1
-  //b = Board("1k6/8/8/PPK5/8/8/Q7/8 w - -");
-  //b = Board("1k6/8/1K6/PP6/8/8/Q7/8 b - -");
-//  b=Board("8/2k5/8/8/8/6R1/4K3/1Q6 w - -"); //in 3
-  //b=Board("1k3n2/8/1b6/8/6Q1/5B2/R2K4/8 w - -"); // in 4
-  //b = Board("1k6/8/8/PPK2Q2/8/8/8/8 w - -");
-  //b = Board("1k6/8/8/2K2Q2/8/8/8/8 w - -");
-  //b = Board("1k6/8/8/5Q2/8/1K6/8/8 w - -");
-//  b = Board("8/1k6/8/5Q2/1K6/8/8/8 w - -");
-
-  Board b= Board("r7/1b1pk2p/p3p3/q3N3/8/1PpB2Q1/P1P2PPP/2KR3R b - -");
-  DFS dfs(&b,10);
-  dfs.search();
+  //Read the user input
+  if (argc == 1)
+  {
+    std::cout << "Welcome to MateFinder!" << std::endl;
+    displayHelp();
+    return 0;
+  }
+  
+  Board b;
+  int depth = 5;
+  
+  bool FENinput = false;
+  bool depthinput = false;
+  bool turbo = false;
+  try
+  {
+    for (int i = 1; i < argc; i++)
+    {
+      if (argv[i][0] == '-')
+      {
+        switch(argv[i][1])
+        {
+          case 0x0:
+            continue;
+          case 'h':
+            displayHelp();
+            return 0;
+          case 'd':
+            depth = atoi(argv[++i]);
+            if (depth < 0) throw std::invalid_argument("Error: depth cannot be negative.");
+            depthinput = true;
+            continue;
+          case 'f':
+            if (i + 1 == argc) throw std::invalid_argument("Error: another argument following -f is expected.");
+            b = Board(argv[++i], true);
+            FENinput = true;
+            continue;
+          case 't':
+            turbo = true;
+            continue;
+          default:
+            throw std::invalid_argument("Unrecognized option identifier.");
+        }
+      }
+      b = Board(argv[i]);
+      FENinput = true;
+    }
+  }
+  catch (const std::invalid_argument &e)
+  {
+    std::cout << e.what() << std::endl;
+    return 1;
+  }
+  if (!FENinput)
+  {
+    std::cout << "No input position specified." << std::endl;
+    std::cout << "The starting position will be used by default." << std::endl;
+  }
+  if (!depthinput)
+  {
+    std::cout << "No depth parameter specified." << std::endl;
+    std::cout << "The default value of 5 half-moves will be used." << std::endl;
+  }
+  
+  //Do the search
+  std::cout << "Examining the following position:" << std::endl;
+  b.printBoard();
+  DFS dfs(&b, depth, turbo);
+  std::cout << "---------------------------" << std::endl;
+  std::cout << "Starting search..." << std::endl;
+  DFSresult res = dfs.search();
+  std::cout << "...Search done!" << std::endl;
+  
+  //Display the results
+  switch(res.state)
+  {
+    case -2:
+      std::cout << "There is a mate in " << (res.depth + 1)/2 << " move";
+      if (res.depth > 1) {std::cout << "s";}
+      std::cout << "." << std::endl;
+      std::cout << "The best move sequence is:" << std::endl;
+      printMoveSequence(b.blackToMove(), res.moves);
+      break;
+    case 0:
+      std::cout << "A draw is reached." << std::endl;
+      std::cout << "The best move sequence is:" << std::endl;
+      printMoveSequence(b.blackToMove(), res.moves);
+      break;
+    case 1:
+      std::cout << "The maximum depth was reached without a decisive result." << std::endl;
+      std::cout << "An example continuation is:" << std::endl;
+      printMoveSequence(b.blackToMove(), res.moves);
+      break;
+    case 2:
+      std::cout << "You will be mated in " << res.depth/2 << " move";
+      if (res.depth > 1) {std::cout << "s";}
+      std::cout << "." << std::endl;
+      std::cout << "The best move sequence is:" << std::endl;
+      printMoveSequence(b.blackToMove(), res.moves);
+      break;
+    default:
+      std::cout << "Unexpected return value." << std::endl;
+  }
   return 0;
 }

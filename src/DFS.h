@@ -17,14 +17,15 @@ public:
   unsigned int maxDepth;
   unsigned int curDepth;
   Board* start;
+  bool turbo;
 
   DFSresult best_outcome(Board, unsigned int);
 
 public:
   //constructor
-  DFS(Board* _start, unsigned int _maxDepth);
-  DFS(Board* _start): DFS(_start, 10){}
+  DFS(Board* _start, unsigned int _maxDepth, bool _turbo);
+  DFS(Board* _start): DFS(_start, 5, false){}
 
-  int search();
+  DFSresult search();
 };
 #endif

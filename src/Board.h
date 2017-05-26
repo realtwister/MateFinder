@@ -80,7 +80,7 @@ struct move
 
   void printMove(bool blackToMove)
   {
-    std::cout << (char)(start.x + 'a') << ((blackToMove ? 7 - start.y : start.y) + 1) << "-" << (char)(end.x + 'a') << ((blackToMove ? 7 - end.y : end.y) + 1) << std::endl;
+    std::cout << (char)(start.x + 'a') << ((blackToMove ? 7 - start.y : start.y) + 1) << "-" << (char)(end.x + 'a') << ((blackToMove ? 7 - end.y : end.y) + 1);
   }
 };
 

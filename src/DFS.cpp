@@ -1,5 +1,4 @@
 #include "DFS.h"
-#define DEBUG
 #ifdef DEBUG
 #define concat(first, second) first second
 #define LOG(fmt,...)    \
@@ -10,8 +9,8 @@
 
 /**
  * calculate what the best outcome is for a single node.
- * @param[in] Board The board the consider
- * @param[in] unsigned int The current depth
+ * @param[in] board The board the consider
+ * @param[in] depth The current depth
  * @return This function returns a DFSresult object containing the best state possible of the previous node the depth at which the state occurred and the moves leading to that state from this node.
  */
 DFSresult DFS:: best_outcome(Board board, unsigned int depth){
@@ -29,14 +28,16 @@ DFSresult DFS:: best_outcome(Board board, unsigned int depth){
   DFSresult res;
   // get all the moves of the current board and loop over them.
   moveArray moves = board.getMoves();
-  for(int i = 0; i  < moves.size(); i++){
+  for(int i = 0; i < moves.size(); i++){
+    if (depth == 0 && this->curDepth == this->maxDepth)
+      std::cout << "Progress: branch " << (i+1) << "/" << moves.size() << "." << std::endl;
     // get the result of the children boards due to the current move
     res = best_outcome(board.cloneAndExecMove(moves[i]), depth+1);
     // if the resulting state is better than the current best state change the best state.
     if(res.state > best.state){
       best=res;
       best.moves.push(moves[i]);
-      if(depth%2==1 && best.state > -2){
+      if(this->turbo && depth%2==1 && best.state > -2){
         break;
       }
     }
@@ -75,40 +76,32 @@ DFSresult DFS:: best_outcome(Board board, unsigned int depth){
 }
 /**
  * DFS or depth first search constructor.
- * @param Board* Starting board pointer
- * @param unsigned int Maximal depth to search.
+ * @param[in] _start Starting board pointer
+ * @param[in] _maxDepth Maximal depth to search.
+ * @param[in] _turbo turbo mode.
  */
-DFS::DFS(Board* _start, unsigned int _maxDepth){
+DFS::DFS(Board* _start, unsigned int _maxDepth, bool _turbo){
   start = _start;
-  curDepth = 2;
+  curDepth = 1;
   maxDepth = _maxDepth;
+  turbo = _turbo;
 }
 
 /**
  * Do the actual search.
  * @return This function returns a DFSresult object containing the best state possible from the start board the worstcase depth at which the state occurred and the moves leading to that state from the position.
  */
-int DFS::search(){
+DFSresult DFS::search(){
   //set initial curDepth
-  this->curDepth = 2;
+  this->curDepth = 1;
   DFSresult res = {1,0,std::stack<move>()};
   //keep looking while there is no definitive answer and while the maximum depth is not reached.
-  while(res.state == 1 && this->curDepth < this->maxDepth){
+  while(res.state == 1 && this->curDepth <= this->maxDepth)
+  {
     //search on odd depths as these are the depths where enemy mates occur.
-    this->curDepth -=1;
-    this->curDepth *=2;
-    this->curDepth +=1;
     res = this->best_outcome(*(this->start), 0);
+    this->curDepth += 2;
+    if (this->curDepth > this->maxDepth && this->curDepth < this->maxDepth + 2) {this->curDepth = this->maxDepth;}
   }
-
-  // Some printing.
-  printf("state: %d in %u \n", res.state, res.depth);
-  bool blackToMove = this->start->blackToMove();
-  while(!res.moves.empty()){
-    std::cout << (blackToMove? "black: " : "white: ");
-    ((move) res.moves.top()).printMove(blackToMove);
-    res.moves.pop();
-    blackToMove = !blackToMove;
-  }
-  return res.state;
+  return res;
 }
