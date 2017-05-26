@@ -15,7 +15,7 @@ The help will guide you further. To see the program in action, run:
 
 In order to build the tester that comes with this project, run:
 
-  ````make test```
+  ```make test```
 
 In order to run the tests, run:
 
