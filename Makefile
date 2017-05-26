@@ -1,53 +1,54 @@
 CC := g++
 SRCDIR := src
+TESTDIR := test
 BUILDDIR := build
-TARGET := bin/main
-TEST := bin/tester
+BINDIR := bin
+TARGET := MateFinder
+TEST := tester
 
 SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
+TESTSOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT) -not -name main.cpp) test/tester.cpp
+DOCSOURCES := $(shell find $(SRCDIR) -type f)
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
-CFLAGS := -std=c++17 -g -Wall -O6
-LIB := -pthread -lprofiler
+TESTOBJECTS := $(patsubst $(TESTDIR)/%,$(BUILDDIR)/%,$(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(TESTSOURCES:.$(SRCEXT)=.o)))
+CFLAGS := -std=c++17 -g -Wall -O12
+LIB := 
 INC :=
 
-
-
 $(TARGET): $(OBJECTS)
-	@mkdir -p bin
+	@mkdir -p $(BINDIR)
 	@echo " Linking..."
 	@echo " $(CC) $^ -o $(TARGET) $(LIB)"; $(CC) $^ -o $(TARGET) $(LIB)
+
+$(BINDIR)/$(TEST): $(TESTOBJECTS)
+	@mkdir -p $(BINDIR)
+	@echo " Linking..."
+	@echo " $(CC) $^ -o $(BINDIR)/$(TEST) $(LIB)"; $(CC) $^ -o $(BINDIR)/$(TEST) $(LIB)
 
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
 	@mkdir -p $(BUILDDIR)
 	@echo " $(CC) $(CFLAGS) $(INC) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
 
+$(BUILDDIR)/%.o: $(TESTDIR)/%.$(SRCEXT)
+	@mkdir -p $(BUILDDIR)
+	@echo " $(CC) $(CFLAGS) $(INT) -c -o $@ $<"; $(CC) $(CFLAGS) $(INC) -c -o $@ $<
+
 clean:
 	@echo " Cleaning...";
-	@echo " $(RM) -r $(BUILDDIR) $(TARGET)"; $(RM) -r $(BUILDDIR) $(TARGET)
+	@echo " $(RM) -r $(BUILDDIR) $(BINDIR) $(TARGET) $(SRCDIR)/*.gch $(TESTDIR)/*.gch"; $(RM) -r $(BUILDDIR) $(BINDIR) $(TARGET) $(SRCDIR)/*.gch $(TESTDIR)/*.gch
 
 run: $(TARGET)
 	@echo " Running $(TARGET):";
-	@$(TARGET)
+	@./$(TARGET) $(flags)
 
-runDFS: bin/DFS
-	@echo " Running DFS";
-	@bin/DFS
+test: $(BINDIR)/$(TEST)
 
-profile: $(TARGET)
-	@echo " Profiling $(TARGET):";
-	LD_PRELOAD=/usr/lib/libprofiler.so CPUPROFILE=/tmp/prof.out $(TARGET) $(depth)
-	google-pprof --gv $(TARGET) /tmp/prof.out
+runtest: $(BINDIR)/$(TEST)
+	@echo " Running $(BINDIR)/$(TEST):"
+	@$(BINDIR)/$(TEST) $(flags)
 
-# Tests
-test: test/tester.cpp build/Board.o
-	$(CC) $(CFLAGS) build/Board.o test/tester.cpp $(INC) $(LIB) -o bin/tester
-
-runtest: test
-	@echo " Running tests:"
-	@bin/tester $(flags)
-
-doc: src
+doc: $(DOCSOURCES)
 	@doxygen
 	@make -C doc/latex
 

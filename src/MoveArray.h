@@ -31,6 +31,7 @@ struct moveArray
   //Copy assignment operator
   moveArray& operator=(const moveArray& other)
   {
+    delete[] moves;
     num = other.num;
     ctr = other.ctr;
     moves = new move[num];
@@ -42,6 +43,7 @@ struct moveArray
   //Move assignment operator
   moveArray& operator=(moveArray&& other)
   {
+    delete[] moves;
     num = other.num;
     ctr = other.ctr;
     moves = other.moves;
@@ -56,13 +58,7 @@ struct moveArray
   inline int size() const {return ctr;} //!< Method that returns the size of the array.
   inline void push_back(const move toAdd)
   {
-    #ifdef DEBUG
-    if (ctr >= num)
-    {
-      std::cout << "Overflow in the moveArray." << std::endl;
-      return;
-    }
-    #endif
+    //Note that we do not need to check whether the array overflows, as we can mathematically prove that the capacity can never be reached (the maximum number of moves on a board is less than 256).
     moves[ctr++] = toAdd;
   } //!< Method that adds a move to the back of the array.
 
