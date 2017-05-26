@@ -49,7 +49,9 @@ struct check
  * @image latex "../../img/timing.png" width=8cm
  */
 class Board {
-private:
+#ifdef DEBUG
+public:
+#endif
   //Member variables
   /**
    * This character array stores the position of the pieces on the board. Every entry in the character array corresponds to one square.

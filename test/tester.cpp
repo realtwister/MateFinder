@@ -354,7 +354,6 @@ void CheckPresence(Board * b, const moveArray moves, const char * movestr, bool 
     {
       if (!checkPresent)
       {
-        b->printLegalMoves();
         std::cout << "The move " << movestr << " is not present." << std::endl;
         REQUIRE(0);
       }
@@ -368,7 +367,6 @@ void CheckPresence(Board * b, const moveArray moves, const char * movestr, bool 
   }
   if (checkPresent)
   {
-    b->printLegalMoves();
     std::cout << "The move " << movestr << " is not present." << std::endl;
     REQUIRE(0);
   }
