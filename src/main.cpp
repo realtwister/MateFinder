@@ -2,6 +2,21 @@
 #include "DFS.h"
 
 /**
+ * @mainpage
+ * Welcome to MateFinder! This program will attempt to find out whether a chess player mate his or her opponent from a given position on the board.
+ * 
+ * @section Preliminaries
+ * First of all, get the source from github: https://github.com/realtwister/matefinder.
+ * Next, build the program by running make.
+ * 
+ * @section Authors
+ * This program was braught to you by Erik Meulman and Arjan Cornelissen.
+ * 
+ * @section About
+ * This project was part of the course Object Oriented Scientific Programming with C++ at Delft University of Technology.
+ */
+
+/**
  * @file
  * This file contains the CLI.
  */
