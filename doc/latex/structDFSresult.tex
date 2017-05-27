@@ -19,33 +19,24 @@ std\+::stack$<$ \hyperlink{structmove}{move} $>$ \hyperlink{structDFSresult_acba
 The \hyperlink{structDFSresult}{D\+F\+Sresult} structure contains the result of the Depth First Search. It stores whether the given position is a win, a loss, a draw, or undecided, and it contains the move sequence the search routine considered best. 
 
 \subsection{Member Data Documentation}
-\mbox{\Hypertarget{structDFSresult_a0d91b41c51df56f42e450f9ce82fa4f2}\label{structDFSresult_a0d91b41c51df56f42e450f9ce82fa4f2}} 
 \index{D\+F\+Sresult@{D\+F\+Sresult}!depth@{depth}}
 \index{depth@{depth}!D\+F\+Sresult@{D\+F\+Sresult}}
-\subsubsection{\texorpdfstring{depth}{depth}}
-{\footnotesize\ttfamily unsigned int D\+F\+Sresult\+::depth}
-
-The member variable depth stores the length of the resulting stack, so it equals the number of half-\/moves that the stack contains. \mbox{\Hypertarget{structDFSresult_acbab901f87df79e0ff718f4fd9435a0f}\label{structDFSresult_acbab901f87df79e0ff718f4fd9435a0f}} 
-\index{D\+F\+Sresult@{D\+F\+Sresult}!moves@{moves}}
+\subsubsection[{\texorpdfstring{depth}{depth}}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int D\+F\+Sresult\+::depth}\hypertarget{structDFSresult_a0d91b41c51df56f42e450f9ce82fa4f2}{}\label{structDFSresult_a0d91b41c51df56f42e450f9ce82fa4f2}
+The member variable depth stores the length of the resulting stack, so it equals the number of half-\/moves that the stack contains. \index{D\+F\+Sresult@{D\+F\+Sresult}!moves@{moves}}
 \index{moves@{moves}!D\+F\+Sresult@{D\+F\+Sresult}}
-\subsubsection{\texorpdfstring{moves}{moves}}
-{\footnotesize\ttfamily std\+::stack$<$\hyperlink{structmove}{move}$>$ D\+F\+Sresult\+::moves}
-
-The member variable moves stores the best move sequence that the search algorithm came up with. It uses the std\+::stack implementation. \mbox{\Hypertarget{structDFSresult_a05517437c3e1db1f5b212f2862801b85}\label{structDFSresult_a05517437c3e1db1f5b212f2862801b85}} 
-\index{D\+F\+Sresult@{D\+F\+Sresult}!state@{state}}
+\subsubsection[{\texorpdfstring{moves}{moves}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::stack$<${\bf move}$>$ D\+F\+Sresult\+::moves}\hypertarget{structDFSresult_acbab901f87df79e0ff718f4fd9435a0f}{}\label{structDFSresult_acbab901f87df79e0ff718f4fd9435a0f}
+The member variable moves stores the best move sequence that the search algorithm came up with. It uses the std\+::stack implementation. \index{D\+F\+Sresult@{D\+F\+Sresult}!state@{state}}
 \index{state@{state}!D\+F\+Sresult@{D\+F\+Sresult}}
-\subsubsection{\texorpdfstring{state}{state}}
-{\footnotesize\ttfamily int D\+F\+Sresult\+::state}
-
+\subsubsection[{\texorpdfstring{state}{state}}]{\setlength{\rightskip}{0pt plus 5cm}int D\+F\+Sresult\+::state}\hypertarget{structDFSresult_a05517437c3e1db1f5b212f2862801b85}{}\label{structDFSresult_a05517437c3e1db1f5b212f2862801b85}
 This is the return state of the search routine. It is encoded as follows. \tabulinesep=1mm
-\begin{longtabu} spread 0pt [c]{*{2}{|X[-1]}|}
+\begin{longtabu} spread 0pt [c]{*2{|X[-1]}|}
 \hline
-\rowcolor{\tableheadbgcolor}\textbf{ Value }&\textbf{ Description  }\\\cline{1-2}
+\rowcolor{\tableheadbgcolor}{\bf Value }&{\bf Description  }\\\cline{1-2}
 \endfirsthead
 \hline
 \endfoot
 \hline
-\rowcolor{\tableheadbgcolor}\textbf{ Value }&\textbf{ Description  }\\\cline{1-2}
+\rowcolor{\tableheadbgcolor}{\bf Value }&{\bf Description  }\\\cline{1-2}
 \endhead
 -\/2 &The position is winning for the player that currently is to move, provided that he plays correctly. \\\cline{1-2}
 0 &The position is a draw. \\\cline{1-2}

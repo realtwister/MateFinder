@@ -1,4 +1,32 @@
-Welcome to Mate\+Finder! This program will attempt to find out whether a chess player mate his or her opponent from a given position on the board.\hypertarget{index_Preliminaries}{}\section{Preliminaries}\label{index_Preliminaries}
-First of all, get the source from github\+: \href{https://github.com/realtwister/matefinder}{\tt https\+://github.\+com/realtwister/matefinder}. Next, build the program by running make.\hypertarget{index_Authors}{}\section{Authors}\label{index_Authors}
-This program was braught to you by Erik Meulman and Arjan Cornelissen.\hypertarget{index_About}{}\section{About}\label{index_About}
+Welcome to Mate\+Finder! This program will search for the shortest forced mating sequence given a position on the board up to some specifiable maximum depth.\hypertarget{index_HowTo}{}\section{How to build from source}\label{index_HowTo}
+\hypertarget{index_Preliminaries}{}\subsection{Preliminaries}\label{index_Preliminaries}
+To follow this \char`\"{}\+How to\char`\"{} one needs
+\begin{DoxyItemize}
+\item g++ (with c++17)
+\item make
+\item git
+\item Linux is advisable \+:)
+\item (doxygen and latex if you want to render the documentation yourself) 
+\end{DoxyItemize}\hypertarget{index_Instructions}{}\subsection{Instructions}\label{index_Instructions}
+Open a terminal in whichever folder you want to put the program in. Next, run 
+\begin{DoxyCode}
+1 git clone https://www.github.com/realtwister/MateFinder.git
+2 cd MateFinder
+3 make
+\end{DoxyCode}
+ and that\textquotesingle{}s it. You can now execute the program by 
+\begin{DoxyCode}
+1 ./MateFinder [\(\backslash\)"FEN\(\backslash\)"] [OPTIONS]
+\end{DoxyCode}
+ or go 
+\begin{DoxyCode}
+1 ./MateFinder -h
+\end{DoxyCode}
+ for the help.\hypertarget{index_Testing}{}\section{Testing}\label{index_Testing}
+After following the \char`\"{}\+How to\char`\"{} above the tests can be ran by 
+\begin{DoxyCode}
+1 make runtest
+\end{DoxyCode}
+ The tests make use of the {\ttfamily doctest.\+h} framework which is included in the {\ttfamily test} folder. \hypertarget{index_Authors}{}\section{Authors}\label{index_Authors}
+This program was brought to you by Erik Meulman and Arjan Cornelissen.\hypertarget{index_About}{}\section{About}\label{index_About}
 This project was part of the course Object Oriented Scientific Programming with C++ at Delft University of Technology. 

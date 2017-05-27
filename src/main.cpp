@@ -3,14 +3,42 @@
 
 /**
  * @mainpage
- * Welcome to MateFinder! This program will attempt to find out whether a chess player mate his or her opponent from a given position on the board.
+ * Welcome to MateFinder! This program will search for the shortest forced mating sequence given a position on the board up to some specifiable maximum depth.
  * 
- * @section Preliminaries
- * First of all, get the source from github: https://github.com/realtwister/matefinder.
- * Next, build the program by running make.
- * 
+ * @section HowTo How to build from source
+ * @subsection Preliminaries
+ * To follow this "How to" one needs
+ *  - g++ (with c++17)
+ *  - make
+ *  - git
+ *  - Linux is advisable :)
+ *  - (doxygen and latex if you want to render the documentation yourself)
+ * @subsection Instructions
+ * Open a terminal in whichever folder you want to put the program in.
+ * Next, run
+ * ```bash
+ * git clone https://www.github.com/realtwister/MateFinder.git
+ * cd MateFinder
+ * make
+ * ```
+ * and that's it. You can now execute the program by
+ * ```bash
+ * ./MateFinder [\"FEN\"] [OPTIONS]
+ * ```
+ * or go
+ * ```bash
+ * ./MateFinder -h
+ * ```
+ * for the help.
+ *
+ * @section Testing
+ * After following the "How to" above the tests can be ran by
+ * ```bash
+ * make runtest
+ * ```
+ * The tests make use of the `doctest.h` framework which is included in the `test` folder.
  * @section Authors
- * This program was braught to you by Erik Meulman and Arjan Cornelissen.
+ * This program was brought to you by Erik Meulman and Arjan Cornelissen.
  * 
  * @section About
  * This project was part of the course Object Oriented Scientific Programming with C++ at Delft University of Technology.
@@ -27,7 +55,7 @@
 void displayHelp()
 {
   std::cout << "This program will calculate if there is a mate position, from a position on the chess board." << std::endl << std::endl;
-  std::cout << "Usage: matefinder [\"FEN\"] [OPTIONS]" << std::endl;
+  std::cout << "Usage: MateFinder [\"FEN\"] [OPTIONS]" << std::endl;
   std::cout << "Make sure the FEN is enclosed within double quotation marks." << std::endl;
   std::cout << "Optional arguments are:" << std::endl;
   std::cout << "  -f <filename>  Read the FEN from a file. When using this option, the normal \"FEN\" argument can be omitted." << std::endl;

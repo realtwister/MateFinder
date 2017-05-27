@@ -7,8 +7,8 @@
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{structcheck_a004e9a83f3635e9ec1e40c98d3ba0519}\label{structcheck_a004e9a83f3635e9ec1e40c98d3ba0519}} 
-int \hyperlink{structcheck_a004e9a83f3635e9ec1e40c98d3ba0519}{len}
+int \hyperlink{structcheck_a004e9a83f3635e9ec1e40c98d3ba0519}{len}\hypertarget{structcheck_a004e9a83f3635e9ec1e40c98d3ba0519}{}\label{structcheck_a004e9a83f3635e9ec1e40c98d3ba0519}
+
 \begin{DoxyCompactList}\small\item\em The number of pieces attacking the king. \end{DoxyCompactList}\item 
 char \hyperlink{structcheck_a20edc7f43122fbfd399629ed8b41dc6a}{heat\+Map} \mbox{[}8\mbox{]}\mbox{[}8\mbox{]}
 \end{DoxyCompactItemize}
@@ -18,21 +18,18 @@ char \hyperlink{structcheck_a20edc7f43122fbfd399629ed8b41dc6a}{heat\+Map} \mbox{
 The check struct stores all the information that is somewhat related to the king, and is used for internal communication within the {\itshape calc\+Moves} method only. On the one hand, it stores the number of pieces that are giving check to the king, and if the king is checked, which squares can be used to resolve this check. Furthermore, it stores whether a piece is pinned, and if so, in which direction. 
 
 \subsection{Member Data Documentation}
-\mbox{\Hypertarget{structcheck_a20edc7f43122fbfd399629ed8b41dc6a}\label{structcheck_a20edc7f43122fbfd399629ed8b41dc6a}} 
 \index{check@{check}!heat\+Map@{heat\+Map}}
 \index{heat\+Map@{heat\+Map}!check@{check}}
-\subsubsection{\texorpdfstring{heat\+Map}{heatMap}}
-{\footnotesize\ttfamily char check\+::heat\+Map\mbox{[}8\mbox{]}\mbox{[}8\mbox{]}}
-
+\subsubsection[{\texorpdfstring{heat\+Map}{heatMap}}]{\setlength{\rightskip}{0pt plus 5cm}char check\+::heat\+Map\mbox{[}8\mbox{]}\mbox{[}8\mbox{]}}\hypertarget{structcheck_a20edc7f43122fbfd399629ed8b41dc6a}{}\label{structcheck_a20edc7f43122fbfd399629ed8b41dc6a}
 All the 64 character entries of the heatmap correspond to exactly one square on the chess board. The encoding of the heatmap depends on the piece that is occupying the square. The table below lists all the cases. \tabulinesep=1mm
-\begin{longtabu} spread 0pt [c]{*{3}{|X[-1]}|}
+\begin{longtabu} spread 0pt [c]{*3{|X[-1]}|}
 \hline
-\rowcolor{\tableheadbgcolor}\textbf{ Occupation of the square }&\textbf{ Value }&\textbf{ Description }\\\cline{1-3}
+\rowcolor{\tableheadbgcolor}{\bf Occupation of the square }&{\bf Value }&{\bf Description }\\\cline{1-3}
 \endfirsthead
 \hline
 \endfoot
 \hline
-\rowcolor{\tableheadbgcolor}\textbf{ Occupation of the square }&\textbf{ Value }&\textbf{ Description }\\\cline{1-3}
+\rowcolor{\tableheadbgcolor}{\bf Occupation of the square }&{\bf Value }&{\bf Description }\\\cline{1-3}
 \endhead
 \multirow{2}{\linewidth}{Empty }&0 &No peculiarities. \\\cline{2-3}
 &1 &Placing a friendly piece here will resolve check. \\\cline{1-3}
