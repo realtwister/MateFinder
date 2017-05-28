@@ -8,4 +8,4 @@ cd MateFinder
 make
 ./MateFinder -h
 ```
-For more information, consult the documentation, at https://realtwister.github.io/matefinder.
+For more information, consult the documentation, at https://realtwister.github.io/MateFinder.
