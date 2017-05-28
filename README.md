@@ -6,6 +6,6 @@ Quick guide to get started:
 git clone https://www.github.com/realtwister/MateFinder.git
 cd MateFinder
 make
-./MateFinder
+./MateFinder -h
 ```
 For more information, consult the documentation, at https://realtwister.github.io/matefinder.
