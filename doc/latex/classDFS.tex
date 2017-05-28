@@ -9,8 +9,8 @@
 \item 
 \hyperlink{classDFS_a8db913929c53b5cba8f145c281ef99f8}{D\+FS} (\hyperlink{classBoard}{Board} $\ast$\+\_\+start, unsigned int \+\_\+max\+Depth, bool \+\_\+turbo)
 \begin{DoxyCompactList}\small\item\em The constructor. \end{DoxyCompactList}\item 
-\hyperlink{classDFS_ac8748bddd420ae23a10620cb4b5714c5}{D\+FS} (\hyperlink{classBoard}{Board} $\ast$\+\_\+start)\hypertarget{classDFS_ac8748bddd420ae23a10620cb4b5714c5}{}\label{classDFS_ac8748bddd420ae23a10620cb4b5714c5}
-
+\mbox{\Hypertarget{classDFS_ac8748bddd420ae23a10620cb4b5714c5}\label{classDFS_ac8748bddd420ae23a10620cb4b5714c5}} 
+\hyperlink{classDFS_ac8748bddd420ae23a10620cb4b5714c5}{D\+FS} (\hyperlink{classBoard}{Board} $\ast$\+\_\+start)
 \begin{DoxyCompactList}\small\item\em Default constructor, using the default values. \end{DoxyCompactList}\item 
 \hyperlink{structDFSresult}{D\+F\+Sresult} \hyperlink{classDFS_a49982f77146f1839b15a36c6974e43d1}{search} ()
 \end{DoxyCompactItemize}
@@ -22,17 +22,17 @@
 \subsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
-unsigned int \hyperlink{classDFS_aacbeeaf0eebb3a37ad25b0c42bd27e64}{max\+Depth}\hypertarget{classDFS_aacbeeaf0eebb3a37ad25b0c42bd27e64}{}\label{classDFS_aacbeeaf0eebb3a37ad25b0c42bd27e64}
-
+\mbox{\Hypertarget{classDFS_aacbeeaf0eebb3a37ad25b0c42bd27e64}\label{classDFS_aacbeeaf0eebb3a37ad25b0c42bd27e64}} 
+unsigned int \hyperlink{classDFS_aacbeeaf0eebb3a37ad25b0c42bd27e64}{max\+Depth}
 \begin{DoxyCompactList}\small\item\em The maximum number of half-\/moves to be executed from the initial position. \end{DoxyCompactList}\item 
-unsigned int \hyperlink{classDFS_a17abe1c016f7efe83c51c4ee9ba541f3}{cur\+Depth}\hypertarget{classDFS_a17abe1c016f7efe83c51c4ee9ba541f3}{}\label{classDFS_a17abe1c016f7efe83c51c4ee9ba541f3}
-
+\mbox{\Hypertarget{classDFS_a17abe1c016f7efe83c51c4ee9ba541f3}\label{classDFS_a17abe1c016f7efe83c51c4ee9ba541f3}} 
+unsigned int \hyperlink{classDFS_a17abe1c016f7efe83c51c4ee9ba541f3}{cur\+Depth}
 \begin{DoxyCompactList}\small\item\em The number of half-\/moves at which the current branches that are under investigation are being pruned. \end{DoxyCompactList}\item 
-\hyperlink{classBoard}{Board} $\ast$ \hyperlink{classDFS_a34ffac99b64c8f83889e66d47fa94787}{start}\hypertarget{classDFS_a34ffac99b64c8f83889e66d47fa94787}{}\label{classDFS_a34ffac99b64c8f83889e66d47fa94787}
-
+\mbox{\Hypertarget{classDFS_a34ffac99b64c8f83889e66d47fa94787}\label{classDFS_a34ffac99b64c8f83889e66d47fa94787}} 
+\hyperlink{classBoard}{Board} $\ast$ \hyperlink{classDFS_a34ffac99b64c8f83889e66d47fa94787}{start}
 \begin{DoxyCompactList}\small\item\em A pointer to the \hyperlink{classBoard}{Board} object storing the initial position. \end{DoxyCompactList}\item 
-bool \hyperlink{classDFS_a3c4278e719f9a1d9766b4d5c60548137}{turbo}\hypertarget{classDFS_a3c4278e719f9a1d9766b4d5c60548137}{}\label{classDFS_a3c4278e719f9a1d9766b4d5c60548137}
-
+\mbox{\Hypertarget{classDFS_a3c4278e719f9a1d9766b4d5c60548137}\label{classDFS_a3c4278e719f9a1d9766b4d5c60548137}} 
+bool \hyperlink{classDFS_a3c4278e719f9a1d9766b4d5c60548137}{turbo}
 \begin{DoxyCompactList}\small\item\em A boolean variable storing whether the search should be conducted using turbo mode, affecting the behavior of the best\+\_\+outcome method. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
@@ -40,15 +40,12 @@ bool \hyperlink{classDFS_a3c4278e719f9a1d9766b4d5c60548137}{turbo}\hypertarget{c
 The \hyperlink{classDFS}{D\+FS} class performs the Depth First Search through all the possible positions. It allows two possible search modes. One is the standard mode of search. It searches through the entire tree of possible game continuations with a given depth, and returns the best move sequence of all these continuations. The other is referred to as the turbo mode. This mode is aimed at finding checkmates for the player that initially is to move. Using this mode, the algorithm will correctly find forced mate sequences, if they exist, but in other cases it might not identify the best game continuation for the opponent. 
 
 \subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classDFS_a8db913929c53b5cba8f145c281ef99f8}\label{classDFS_a8db913929c53b5cba8f145c281ef99f8}} 
 \index{D\+FS@{D\+FS}!D\+FS@{D\+FS}}
 \index{D\+FS@{D\+FS}!D\+FS@{D\+FS}}
-\subsubsection[{\texorpdfstring{D\+F\+S(\+Board $\ast$\+\_\+start, unsigned int \+\_\+max\+Depth, bool \+\_\+turbo)}{DFS(Board *_start, unsigned int _maxDepth, bool _turbo)}}]{\setlength{\rightskip}{0pt plus 5cm}D\+F\+S\+::\+D\+FS (
-\begin{DoxyParamCaption}
-\item[{{\bf Board} $\ast$}]{\+\_\+start, }
-\item[{unsigned int}]{\+\_\+max\+Depth, }
-\item[{bool}]{\+\_\+turbo}
-\end{DoxyParamCaption}
-)}\hypertarget{classDFS_a8db913929c53b5cba8f145c281ef99f8}{}\label{classDFS_a8db913929c53b5cba8f145c281ef99f8}
+\subsubsection{\texorpdfstring{D\+F\+S()}{DFS()}}
+{\footnotesize\ttfamily D\+F\+S\+::\+D\+FS (\begin{DoxyParamCaption}\item[{\hyperlink{classBoard}{Board} $\ast$}]{\+\_\+start,  }\item[{unsigned int}]{\+\_\+max\+Depth,  }\item[{bool}]{\+\_\+turbo }\end{DoxyParamCaption})}
+
 
 
 The constructor. 
@@ -65,14 +62,13 @@ The constructor.
 
 
 \subsection{Member Function Documentation}
+\mbox{\Hypertarget{classDFS_a8b4c8f013eb056faee52530deb5a9971}\label{classDFS_a8b4c8f013eb056faee52530deb5a9971}} 
 \index{D\+FS@{D\+FS}!best\+\_\+outcome@{best\+\_\+outcome}}
 \index{best\+\_\+outcome@{best\+\_\+outcome}!D\+FS@{D\+FS}}
-\subsubsection[{\texorpdfstring{best\+\_\+outcome(\+Board, unsigned int)}{best_outcome(Board, unsigned int)}}]{\setlength{\rightskip}{0pt plus 5cm}template$<$bool T$>$ {\bf D\+F\+Sresult} D\+F\+S\+::best\+\_\+outcome (
-\begin{DoxyParamCaption}
-\item[{{\bf Board}}]{board, }
-\item[{unsigned int}]{depth}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [private]}}\hypertarget{classDFS_a8b4c8f013eb056faee52530deb5a9971}{}\label{classDFS_a8b4c8f013eb056faee52530deb5a9971}
+\subsubsection{\texorpdfstring{best\+\_\+outcome()}{best\_outcome()}}
+{\footnotesize\ttfamily template$<$bool T$>$ \\
+\hyperlink{structDFSresult}{D\+F\+Sresult} D\+F\+S\+::best\+\_\+outcome (\begin{DoxyParamCaption}\item[{\hyperlink{classBoard}{Board}}]{board,  }\item[{unsigned int}]{depth }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
 Calculate what the best outcome is for a single node. First of all, it is checked whether the current position is a mate or a draw. If this is the case, this is reported to the calling function. Next, all the moves that are possible in the position are investigated one by one. For every move, it is returned to this function whether it results in a win, loss, draw, or an undecided position, and how many moves it takes. This function, then, chooses the best option among all of these moves, and returns that to the calling function. In turbo mode, at odd depths of search (so when the opponent is to move), not necessarily the best move is returned, but just a move that avoids being checkmated, whenever possible. 
 \begin{DoxyParams}[1]{Parameters}
 \mbox{\tt in}  & {\em board} & The board to consider \\
@@ -83,13 +79,12 @@ Calculate what the best outcome is for a single node. First of all, it is checke
 \begin{DoxyReturn}{Returns}
 This function returns a \hyperlink{structDFSresult}{D\+F\+Sresult} object containing the best state possible of the previous node the depth at which the state occurred and the moves leading to that state from this node. 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classDFS_a49982f77146f1839b15a36c6974e43d1}\label{classDFS_a49982f77146f1839b15a36c6974e43d1}} 
 \index{D\+FS@{D\+FS}!search@{search}}
 \index{search@{search}!D\+FS@{D\+FS}}
-\subsubsection[{\texorpdfstring{search()}{search()}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf D\+F\+Sresult} D\+F\+S\+::search (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{classDFS_a49982f77146f1839b15a36c6974e43d1}{}\label{classDFS_a49982f77146f1839b15a36c6974e43d1}
+\subsubsection{\texorpdfstring{search()}{search()}}
+{\footnotesize\ttfamily \hyperlink{structDFSresult}{D\+F\+Sresult} D\+F\+S\+::search (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
 Do the actual search. The search is conducted as follows. First of all, all the possible moves are investigated with depth 1. If this does not yield a decisive result, then the depth at which is searched is increased by 2. This is done until the maximum depth is reached. Increasing the depth like this does not increase the total time complexity of the program, and is therefore perfectly suitable for obtaining preliminary results without having to conduct the entire search, while not giving rise to unacceptable amounts of overhead. Only at the maximum depth level, progress reports are being shown. \begin{DoxyReturn}{Returns}
 This function returns a \hyperlink{structDFSresult}{D\+F\+Sresult} object containing the best state possible from the start board the worstcase depth at which the state occurred and the moves leading to that state from the position. 
 \end{DoxyReturn}

@@ -29,7 +29,8 @@
  * ```bash
  * ./MateFinder -h
  * ```
- * for the help.
+ * for the help. More information about FEN's can be found <a href = "https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">here</a>.
+ * A nice tool for creating your own FEN's is <a href = "https://en.lichess.org/editor">this</a> one.
  *
  * @section Testing
  * After following the "How to" above the tests can be ran by
@@ -37,8 +38,9 @@
  * make runtest
  * ```
  * The tests make use of the `doctest.h` framework which is included in the `test` folder.
+ * 
  * @section Authors
- * This program was brought to you by Erik Meulman and Arjan Cornelissen.
+ * This program was created by Erik Meulman and Arjan Cornelissen, in the spring of 2017.
  * 
  * @section About
  * This project was part of the course Object Oriented Scientific Programming with C++ at Delft University of Technology.

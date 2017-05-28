@@ -3,36 +3,36 @@
   \item {best\+\_\+outcome}
     \subitem {D\+FS}, \hyperpage{23}
   \item {black\+Pieces}
-    \subitem {Piece}, \hyperpage{9}
+    \subitem {Piece}, \hyperpage{10}
   \item {Board}, \hyperpage{11}
-    \subitem {Board}, \hyperpage{13}
+    \subitem {Board}, \hyperpage{13, 14}
     \subitem {board}, \hyperpage{19}
-    \subitem {calc\+Moves}, \hyperpage{15}
-    \subitem {check\+Dir}, \hyperpage{15}
+    \subitem {calc\+Moves}, \hyperpage{14}
+    \subitem {check\+Dir}, \hyperpage{14}
     \subitem {clone\+And\+Exec\+Move}, \hyperpage{15}
-    \subitem {en\+Passant}, \hyperpage{20}
+    \subitem {en\+Passant}, \hyperpage{19}
     \subitem {exec\+Move}, \hyperpage{15}
-    \subitem {first\+Piece}, \hyperpage{16}
+    \subitem {first\+Piece}, \hyperpage{15}
     \subitem {flip\+Board}, \hyperpage{16}
     \subitem {from\+File}, \hyperpage{16}
-    \subitem {from\+Str}, \hyperpage{17}
+    \subitem {from\+Str}, \hyperpage{16}
     \subitem {get\+Check}, \hyperpage{17}
     \subitem {get\+Piece\+Moves}, \hyperpage{17}
-    \subitem {has\+Attacker}, \hyperpage{19}
-    \subitem {legal\+Moves}, \hyperpage{20}
-    \subitem {print\+Board}, \hyperpage{19}
-    \subitem {state}, \hyperpage{20}
+    \subitem {has\+Attacker}, \hyperpage{18}
+    \subitem {legal\+Moves}, \hyperpage{19}
+    \subitem {print\+Board}, \hyperpage{18}
+    \subitem {state}, \hyperpage{19}
   \item {board}
     \subitem {Board}, \hyperpage{19}
 
   \indexspace
 
   \item {calc\+Moves}
-    \subitem {Board}, \hyperpage{15}
-  \item {check}, \hyperpage{21}
-    \subitem {heat\+Map}, \hyperpage{21}
+    \subitem {Board}, \hyperpage{14}
+  \item {check}, \hyperpage{20}
+    \subitem {heat\+Map}, \hyperpage{20}
   \item {check\+Dir}
-    \subitem {Board}, \hyperpage{15}
+    \subitem {Board}, \hyperpage{14}
   \item {clone\+And\+Exec\+Move}
     \subitem {Board}, \hyperpage{15}
 
@@ -42,9 +42,9 @@
     \subitem {depth}, \hyperpage{24}
     \subitem {moves}, \hyperpage{24}
     \subitem {state}, \hyperpage{24}
-  \item {D\+FS}, \hyperpage{22}
+  \item {D\+FS}, \hyperpage{21}
     \subitem {best\+\_\+outcome}, \hyperpage{23}
-    \subitem {D\+FS}, \hyperpage{23}
+    \subitem {D\+FS}, \hyperpage{22}
     \subitem {search}, \hyperpage{23}
   \item {depth}
     \subitem {D\+F\+Sresult}, \hyperpage{24}
@@ -54,7 +54,7 @@
   \indexspace
 
   \item {en\+Passant}
-    \subitem {Board}, \hyperpage{20}
+    \subitem {Board}, \hyperpage{19}
   \item {end}
     \subitem {move}, \hyperpage{25}
   \item {exec\+Move}
@@ -63,13 +63,13 @@
   \indexspace
 
   \item {first\+Piece}
-    \subitem {Board}, \hyperpage{16}
+    \subitem {Board}, \hyperpage{15}
   \item {flip\+Board}
     \subitem {Board}, \hyperpage{16}
   \item {from\+File}
     \subitem {Board}, \hyperpage{16}
   \item {from\+Str}
-    \subitem {Board}, \hyperpage{17}
+    \subitem {Board}, \hyperpage{16}
 
   \indexspace
 
@@ -81,14 +81,14 @@
   \indexspace
 
   \item {has\+Attacker}
-    \subitem {Board}, \hyperpage{19}
+    \subitem {Board}, \hyperpage{18}
   \item {heat\+Map}
-    \subitem {check}, \hyperpage{21}
+    \subitem {check}, \hyperpage{20}
 
   \indexspace
 
   \item {legal\+Moves}
-    \subitem {Board}, \hyperpage{20}
+    \subitem {Board}, \hyperpage{19}
 
   \indexspace
 
@@ -110,11 +110,11 @@
   \indexspace
 
   \item {Piece}, \hyperpage{9}
-    \subitem {black\+Pieces}, \hyperpage{9}
+    \subitem {black\+Pieces}, \hyperpage{10}
     \subitem {Piece}, \hyperpage{9}
-    \subitem {white\+Pieces}, \hyperpage{9}
+    \subitem {white\+Pieces}, \hyperpage{10}
   \item {print\+Board}
-    \subitem {Board}, \hyperpage{19}
+    \subitem {Board}, \hyperpage{18}
   \item {print\+Move}
     \subitem {move}, \hyperpage{25}
   \item {print\+Move\+Sequence}
@@ -132,12 +132,12 @@
   \item {start}
     \subitem {move}, \hyperpage{26}
   \item {state}
-    \subitem {Board}, \hyperpage{20}
+    \subitem {Board}, \hyperpage{19}
     \subitem {D\+F\+Sresult}, \hyperpage{24}
 
   \indexspace
 
   \item {white\+Pieces}
-    \subitem {Piece}, \hyperpage{9}
+    \subitem {Piece}, \hyperpage{10}
 
 \end{theindex}
